@@ -1,0 +1,1 @@
+(function(a){if(typeof a.preload!=="function"){a.preload=function(e){if(typeof e==="object"){for(var c=0,d=new Array();c<e.length;c++){d[c]=new Image(),d[c].src=e[c]}}else{if(typeof e==="string"){var b=new Image();b.src=e}}}}})(jQuery);

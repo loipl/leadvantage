@@ -1,0 +1,327 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: header.php and footer.php.
+This constructs the general layout of the site.
+*/
+div#body-wrapper /* Parent: <body>. */
+	{
+		z-index: 0;
+		position: relative;
+		margin: 0 auto 0 auto;
+	}
+div#body-wrapper > div#body-inner-wrapper-a
+	{
+	}
+div#body-wrapper > div#body-inner-wrapper-a > div#body-inner-wrapper-b
+	{
+	}
+div#body-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+/*
+The body header section.
+*/
+div#body-header-wrapper /* Parent: div#body-container. */
+	{
+		z-index: 1;
+		width: 955px;
+		height: 185px;
+		position: relative;
+		margin: 0 auto 0 auto;
+	}
+div#body-header-wrapper > div#body-header-inner-wrapper-a
+	{
+	}
+div#body-header-wrapper > div#body-header-inner-wrapper-a > div#body-header-inner-wrapper-b
+	{
+	}
+div#body-header-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+/*
+The body header logo.
+*/
+div#body-header-logo
+	{
+		top: 10px;
+		left: -8px;
+		z-index: 1;
+		position: absolute;
+	}
+div#body-header-logo,
+div#body-header-logo > a > img
+	{
+		width: 400px;
+		height: 100px;
+	}
+/*
+The body header navigation menu.
+*/
+div#body-header-nav /* Parent: ^ container. */
+	{
+		top: 120px;
+		z-index: 1;
+		position: absolute;
+	}
+div#body-header-nav-menu /* Parent: ^ nav. */
+	{
+	}
+div#body-header-nav-menu > ul > li
+	{
+		background: #003356;
+		border: 1px solid #003356;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+div#body-header-nav-menu > ul ul
+	{
+		background: #FFFFFF;
+		border: 1px solid #000000;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+div#body-header-nav-menu > ul > li.divider
+	{
+		width: 0;
+		border: 0;
+		height: 1px;
+		background: transparent;
+		margin: 0px 5px 0 5px;
+	}
+div#body-header-nav-menu > ul > li > a,
+div#body-header-nav-menu > ul > li > ins.arrow
+	{
+		color: #EEEEEE;
+		font-size: 130%;
+		text-decoration: none;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div#body-header-nav-menu > ul > li > ins.arrow
+	{
+		width: 16px;
+		height: 16px;
+		background: url('<?php echo $i; ?>/body-header-nav-li-ins-arrow-down.png') no-repeat center center;
+	}
+div#body-header-nav-menu > ul > li:hover,
+div#body-header-nav-menu > ul > li.current,
+div#body-header-nav-menu > ul > li.depressed
+	{
+		background: #FFFFFF;
+	}
+div#body-header-nav-menu > ul > li:hover,
+div#body-header-nav-menu > ul > li.current,
+div#body-header-nav-menu > ul > li:hover > a,
+div#body-header-nav-menu > ul > li.current > a,
+div#body-header-nav-menu > ul > li > ins.arrow:hover,
+div#body-header-nav-menu > ul > li.cats:hover > ins.arrow
+	{
+		color: #000000;
+	}
+div#body-header-nav-menu > ul > li.depressed > a,
+div#body-header-nav-menu > ul > li.depressed:hover > a,
+div#body-header-nav-menu > ul > li.depressed > ins.arrow,
+div#body-header-nav-menu > ul > li.depressed:hover > ins.arrow
+	{
+		color: #CCCCCC;
+	}
+div#body-header-nav-menu > ul ul li > a,
+div#body-header-nav-menu > ul ul li > ins.arrow
+	{
+		color: #999999;
+		font-size: 120%;
+		text-shadow: none;
+		text-decoration: none;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div#body-header-nav-menu > ul ul li > ins.arrow
+	{
+		width: 16px;
+		height: 16px;
+		background: url('<?php echo $i; ?>/body-header-nav-li-ins-arrow-right.png') no-repeat center center;
+	}
+div#body-header-nav-menu > ul ul li.current,
+div#body-header-nav-menu > ul ul li.current > a,
+div#body-header-nav-menu > ul ul li > a:hover,
+div#body-header-nav-menu > ul ul li > ins.arrow:hover,
+div#body-header-nav-menu > ul ul li.cats:hover > a,
+div#body-header-nav-menu > ul ul li.cats:hover > ins.arrow
+	{
+		color: #000000;
+	}
+div#body-header-nav-menu > ul ul li.depressed > a,
+div#body-header-nav-menu > ul ul li.depressed:hover > a,
+div#body-header-nav-menu > ul ul li.depressed > ins.arrow,
+div#body-header-nav-menu > ul ul li.depressed:hover > ins.arrow
+	{
+		color: #CCCCCC;
+	}
+div#body-header-nav-menu > ul li ins.arrow,
+div#body-header-nav-menu > ul li.cats > a,
+div#body-header-nav-menu > ul li.cats > ins.arrow
+	{
+		outline: 0 !important;
+		text-decoration: none !important;
+	}
+html.msie-lt-8 div#body-header-nav-menu > ul li > a
+	{
+		margin-top: -3px;
+	}
+/*
+The body header login box controls.
+*/
+div#body-header-login-box-controls
+	{
+		top: 10px;
+		right: 0;
+		z-index: 1;
+		height: 90px;
+		width: 300px;
+		color: #CCCCCC;
+		font-size: 120%;
+		position: absolute;
+		padding: 35px 0 0 0;
+		background: url('<?php echo $i; ?>/body-header-login-box-controls-bg.png') no-repeat;
+	}
+div#body-header-login-box-controls > a
+	{
+		color: #CCCCCC;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+		text-decoration: none;
+		text-shadow: 1px 1px 1px #000000;
+	}
+div#body-header-login-box-controls > a:hover,
+div#body-header-login-box-controls > a.current
+	{
+		color: #FFFFFF;
+	}
+div#body-header-login-box-controls > a#login-box-opener
+	{
+		outline: none;
+		margin: 0 10px 0 0;
+		padding: 0 22px 0 0;
+		display: inline-block;
+		background: url('<?php echo $i; ?>/login-box-opener-arrow-down.png') no-repeat right center;
+	}
+div#body-header-login-box-controls > a#login-box-opener.current
+	{
+		background: url('<?php echo $i; ?>/login-box-opener-arrow-up.png') no-repeat right center;
+	}
+/*
+The body header login box.
+*/
+div#body-header-login-box
+	{
+		top: 72px;
+		right: 10px;
+		z-index: 2;
+		width: 278px;
+		padding: 10px;
+		display: none;
+		position: absolute;
+		background: #FFFFFF;
+		border: 1px solid #000000;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+div#body-header-login-box > form
+	{
+		margin: 0;
+	}
+div#body-header-login-box > form > div > input[type = text],
+div#body-header-login-box > form > div > input[type = password]
+	{
+		width: 266px;
+	}
+div#body-header-login-box > form > div > input[type = submit]
+	{
+		width: 276px;
+	}
+div#body-header-login-box > form > div.log-pwd-label
+	{
+		font-weight: bold;
+		margin-bottom: 3px;
+		font-variant: small-caps;
+	}
+div#body-header-login-box > form > div.log-pwd-label > div
+	{
+		float: right;
+		text-align: right;
+	}
+div#body-header-login-box > form > div.log
+	{
+	}
+div#body-header-login-box > form > div.pwd
+	{
+		margin: 5px 0 0 0;
+	}
+div#body-header-login-box > form > div.lostpassword
+	{
+		float: right;
+		margin: 10px 0 0 0;
+	}
+div#body-header-login-box > form > div.rememberme
+	{
+		margin: 10px 0 0 0;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+	}
+div#body-header-login-box > form > div.wp-submit
+	{
+		margin: 10px 0 0 0;
+	}
+/*
+The body content section.
+*/
+div#body-content-wrapper /* Parent: div#body-container. */
+	{
+		z-index: 0;
+		position: relative;
+		margin: 0 auto 0 auto;
+		width: 970px;
+	}
+div#body-content-wrapper > div#body-content-inner-wrapper-a
+	{
+		padding: 20px 0 0 0;
+		background: url('<?php echo $i; ?>/body-content-inner-wrapper-a-bg.png') no-repeat top center;
+	}
+div#body-content-wrapper > div#body-content-inner-wrapper-a > div#body-content-inner-wrapper-b
+	{
+		padding: 0 0 20px 0;
+		background: url('<?php echo $i; ?>/body-content-inner-wrapper-b-bg.png') no-repeat bottom center;
+	}
+div#body-content-container /* Parent: ^ inner-wrapper-b. */
+	{
+		padding: 3px 23px 3px 23px;
+		width: 924px; /* Divisible by 2, 3, 4. */
+		background: url('<?php echo $i; ?>/body-content-container-bg.png') repeat-y top center;
+	}
+/*
+The body footer section.
+*/
+div#body-footer-wrapper /* Parent: div#body-container. */
+	{
+		display: none;
+	}
+div#body-footer-wrapper > div#body-footer-inner-wrapper-a
+	{
+	}
+div#body-footer-wrapper > div#body-footer-inner-wrapper-a > div#body-footer-inner-wrapper-b
+	{
+	}
+div#body-footer-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}

@@ -1,0 +1,926 @@
+<div class="head">
+    <h2>Partners</h2>
+
+    <div class="breadcrumb">
+        <div style="float:left">
+            <p><a href="/partners/">Partners &gt;</a> <a href="/partners/edit.html?id=<?php echo $data['id']; ?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Fields</p>
+        </div>
+        <?php if ($data['partner_type'] == Model_Partner::PARTNER_TYPE_PING_POST): ?>
+            <div id="ping-post-tab" class="pingtree-form">
+                <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+                    <ul>
+                        <li id="pingTab" class="current">PING</li>
+                        <li id="postTab">POST</li>
+                    </ul>
+                <?php else: ?>
+                    <ul>
+                        <li id="pingTab">PING</li>
+                        <li id="postTab" class="current">POST</li>
+                    </ul>
+                <?php endif; ?>
+            
+                <div class="clear"></div>
+            </div><!--breadcrumb-->
+        <?php endif; ?>
+    <div class="clear"></div>
+</div><!--head-->
+
+
+<style>
+
+#campaign-fields-table button {
+	height: 26px;
+	line-height: 24px;
+}
+
+#campaign-fields-table button.modifier {
+	width: 120px;
+	background-color: #344A53;
+	border: 1px solid #344A53;
+    text-transform: uppercase;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+#campaign-fields-table button.has-modifier {
+	background-color: orange;
+	border: 1px solid #aaa;
+}
+
+#campaign-fields-table td {
+    vertical-align: middle;
+}
+
+span.span-draggable {
+	cursor: pointer;
+	font-size: 13px;
+}
+
+#content table .white input.can-drop, #content table .grey input.can-drop, .can-drop {
+	border: 1px solid green;
+	background-color: #aeb;
+}
+
+#content table input.disabled_text {
+	background-color: #d4d0c8;
+	color: #aaa;
+}
+
+#dlg-modify-table {
+	width: 100%;
+	margin-top: 10px;
+	border-right:   1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+#dlg-modify-table th {
+	border-left:   1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 5px 10px;
+	background-color: #344a53;
+	color: #fff;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+#dlg-modify-table td {
+	border-left:   1px solid #ccc;
+	height: 30px;
+	background-color: #fff;
+	padding: 0 4px;
+}
+
+#dlg-modify-table input, #dlg-modify-table select {
+    border: 1px solid #ccc;
+	background-color: #fff;
+    margin: 4px;
+}
+
+input.dlg-modifier-radio {
+	margin-left: 20px;
+}
+
+option.missing {
+	display: none;
+}
+
+td.cvalues {
+    text-weight: bold;
+}
+
+</style>
+
+<form style="margin: 0;" method="POST" id="main-fields-form">
+
+<h1 id="js-warning">This page requires JavaScript!</h1>
+<script type="text/javascript">
+$('#js-warning').remove();
+</script>
+
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<table id="campaign-fields-table" class="fields" cellpadding="0" cellspacing="0">
+<tbody>
+	<tr class="top">
+		<td class="first">Field name <?php Helper_Tooltip::toolTipFromWP('what-is-partner-field-name'); ?></td>
+		<td class="second">Value <?php Helper_Tooltip::toolTipFromWP('what-is-partner-field-value'); ?></td>
+		<td class="third">Modify? <?php Helper_Tooltip::toolTipFromWP('what-is-the-partner-field-modify-button'); ?></td>
+		<td class="last">&nbsp;</td>
+	</tr>
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="4" style="border: 0; padding-left: 0; border-top: 1px solid #ccc;">
+	<div class="addfield" style="margin: 10px 0; border: 0;">
+
+            <span style="float: left; margin-right: 10px;"><p><a href="#" id="add-new-campaign-field"><img src="/images/add-bcg.png"/> Add Field</a></p></span>
+            
+            <?php if ($data['partner_type'] == Model_Partner::PARTNER_TYPE_PING_POST): ?>
+                <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+                    <span style="float: left;"><p><a href="#" id="copy-field" abbr="<?php echo $data['post_partner_id'];?>"> Copy Post Fields</a></p></span>
+                <?php else: ?>
+                    <span style="float: left;"><p><a href="#" id="copy-field" abbr="<?php echo $pingPartnerId;?>"> Copy Ping Fields</a></p></span>
+                <?php endif; ?>
+            <?php endif; ?>
+
+		<div class="clear"></div>
+	</div><!--addfield-->
+	<!--addfield-->
+	</td></tr>
+</tfoot>
+</table>
+
+	<div class="drop">
+		<h4 style="padding: 5px 5px 6px;">Drag &amp; drop tokens to "value" fields</h4>
+		<table cellpadding="0" cellspacing="0" style="border: 0;">
+			<tbody>
+<?php
+
+$max = max(sizeof($ftypes), sizeof($systemFields), sizeof($extTokens));
+$ft = array_values($ftypes);
+$sf = array_values($systemFields);
+$et = array_values($extTokens);
+$sf = array_merge($sf,$et);
+$sf = array_unique($sf);
+sort($sf);
+unset($et);
+$max = max(sizeof($ft), sizeof($sf));
+$odd = false;
+for ($i = 0; $i < $max; $i++) {
+    $odd = !$odd;
+    $c = $odd ? 'white' : 'grey';
+    echo "\t\t\t\t<tr class=\"$c\">\n";
+    echo "\t\t\t\t\t<td>";
+    if (isset($ft[$i])) {
+        echo "<span class=\"span-draggable\" style=\"font-weight: bold;\">[" . escapeHtml($ft[$i]) . "]</span>";
+    } else {
+        echo '&nbsp;';
+    }
+    echo "</td>\n";
+
+    echo "\t\t\t\t\t<td class=\"two\">";
+    if (isset($sf[$i])) {
+        echo "<span class=\"span-draggable\">[" . escapeHtml($sf[$i]) . "]</span>";
+    } else {
+        echo '&nbsp;';
+    }
+    echo "</td>\n";
+
+    echo "\t\t\t\t</tr>\n\n";
+}
+
+?>
+			</tbody>
+		</table>
+    </div><!--  drop -->
+<div class="clear"></div>
+
+
+<div class="pingtree-form">
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />SAVE</button>
+<button type="submit" name="redir" value="edit"    id="editSettings"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png"       />Edit Settings</button>
+<button type="submit" name="redir" value="filters" id="editFilters"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+<?php if ($data['ping_post_type'] != Model_Partner::PING_POST_TYPE_PING): ?>
+<button type="submit" name="redir" value="caps" id="editCaps"><img style="margin-top: -2px; width: 11px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cap.gif" />Edit Caps</button>
+<?php endif; ?>
+<?php
+
+if (
+        ($data['posting_type'] == Model_Partner::POST_TYPE_EMAIL) || 
+        ($data['posting_type'] == Model_Partner::POST_TYPE_XML) || 
+        ($data['posting_type'] == Model_Partner::POST_TYPE_JSON) ||
+        ($data['posting_type'] == Model_Partner::POST_TYPE_XML_FIELD)
+    ) {?>
+<button type="submit" name="redir" value="template" id="editTemplate"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/page_edit.png" />Edit Template</button>
+
+<?php } ?>
+<button type="button" id="cancelButton"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png"        />Cancel</button>
+</div>
+</form>
+<script type="text/javascript">
+
+var newCounter = 1;
+var checkDirty = true;
+var loadedColumns = 0;
+var originalState = [];
+var externalEngines = [<?php
+
+		$comma = false;
+		foreach($extTokensAssoc as $token => $engine) {
+		    if ($comma) {
+		        echo ",";
+		    } else {
+		        $comma = true;
+		    }
+		    echo "'" . escapeJSVal($token) . "',";
+		    echo "'" . escapeJSVal($engine) . "'";
+		}
+
+?>];
+
+var filterMatches = [<?php
+    $addComa = false;
+    $firstMatchId = 0;
+    foreach ($filterMatches as $k => $v) {
+        if ($addComa) {
+            echo ', ';
+        } else {
+            $firstMatchId = $k;
+            $addComa = true;
+        }
+        echo "['$k', '" . escapeAttrVal($v) . "']";
+    }
+?>];
+
+var dictCols = [<?php
+
+$addComaDict = false;
+foreach ($dictCols as $dictId => $arr) {
+    if ($addComaDict) {
+        echo ",";
+    } else {
+        $addComaDict = true;
+    };
+    echo "\n[$dictId, [";
+    $addComaCols = false;
+    foreach ($arr as $cid => $cname) {
+        if ($addComaCols) {
+            echo ", ";
+        } else {
+            $addComaCols = true;
+        }
+        echo "[$cid, '" . escapeJSVal($cname) . "']";
+    }
+    echo ']]';
+}
+
+?>
+
+];
+
+var droppableObj = {
+	accept: 'span.span-draggable',
+	drop: function(event, ui) {
+		if ($(this).hasClass('disabled_text')) {
+			return;
+		}
+		var s = $(this).val();
+		s += (ui.draggable).text();
+		$(this).val(s);
+		$(this).removeClass('can-drop');
+	},
+	over: function(event, ui) {
+		$(this).addClass('can-drop');
+	},
+	out: function(event, ui) {
+		$(this).removeClass('can-drop');
+	}
+};
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+	checkDirty = true;
+});
+
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	$('span.span-draggable').draggable({revert: true, revertDuration: 0});
+
+	$('#dlg-modify-add-option').click(addBlankModifyDialogOption);
+
+<?php
+    if (!empty($fields) && is_array($fields)) {
+        foreach ($fields as $c) {
+	        echo "\n	addCampaignField({$c['id']}, '" . escapeJSVal($c['name']) . "', '" .
+	        escapeJSVal($c['value']) . "', \"" . escapeJSVal($c['modifier']) . "\", 0);";
+        }
+	} ?>
+
+	$('#add-new-campaign-field').click(function(e) {
+		e.preventDefault();
+		addCampaignField(newCounter++, '', '', '', 1);
+		updateRowColors();
+	});
+        
+        $('#copy-field').click(function(e) {
+            e.preventDefault();
+            var targetId = $(this).attr('abbr');
+            if (! (/^\d+$/.test(targetId))) return;
+            var existingFields = getExistingField();    
+            
+            var url = 'ajaxGetPartnerFields?id=' + targetId;
+            $.get(url, function(data) {
+                for (var i in data) {
+                    var field = data[i];
+                    if (existingFields.indexOf(field['name']) === -1)
+                        addCampaignField(newCounter++, field['name'], field['value'], field['modifier'], 1);
+                }
+            }, 'json');
+        });
+
+	$('#main-fields-form').submit(function(e) {
+		checkDirty = false;
+		$('input.table-field-name').each(function() {
+			if (!isValidName($(this), true)) {
+				e.preventDefault();
+				return false;
+			}
+		});
+	});
+
+	$('#dlg-modifier input.dlg-modifier-radio').click(function() {
+		$('#dlg-modifier .dlg-modifier-tabs').hide();
+		$('#' + $(this).val()).show();
+	});
+
+	$('#dlg-modifier-replacements-radio').click();
+
+	$('#dlg-mod-dict-dict').click(dictionaryChanged).change(dictionaryChanged);
+
+	dictionaryChanged();
+	saveOriginalState();
+	updateModifyButtonColors();
+	updateRowColors();
+
+<?php
+
+Helper_Tooltip::jscript();
+
+?>
+                
+    $('#pingTab').click(function() {
+        if ($(this).hasClass('current')) {
+            return false;
+        }
+
+        $('#main-fields-form').append('<input type="hidden" name="redir" value="ping">');
+        $('#main-fields-form').submit();
+    });
+
+    $('#postTab').click(function() {
+        if ($(this).hasClass('current')) {
+            return false;
+        }
+
+        $('#main-fields-form').append('<input type="hidden" name="redir" value="post">');
+        $('#main-fields-form').submit();
+    });
+});
+
+function getExistingField() {
+    var result = [];
+    $('.table-field-name').each(function(data) {
+        result.push($(this).val());
+    })
+    return result;
+}
+
+function updateRowColors() {
+	var odd = false;
+	$('#campaign-fields-table tbody tr').each(function() {
+		if ($(this).hasClass('top')) {
+			return;
+		};
+		odd = !odd;
+		$(this).removeClass('grey');
+		$(this).removeClass('white');
+		$(this).addClass(odd ? 'white' : 'grey');
+	});
+};
+
+function addCampaignField(id, name, value, modifier, isNew) {
+	var p = (isNew ? '[new]' : '[old]') + '[' + id + ']';
+
+	$('#campaign-fields-table tbody').append("\n" + '<tr><td class="first"><input class="table-field-name" maxlength="40" name="name' + p +
+			'" type="text"></td><td class="second"><input name="val' + p +
+			'" type="text"></td><td class="third" nowrap="nowrap">' +
+			'<input type="hidden" name="modifier' + p + '"><button type="button" id="modifier' + p +
+			'" class="modifier">modify</button></td><td class="last"><img src="/img/icons/cross.png" ' +
+			'title="Delete this field" onclick="deleteRow($(this));"></td></tr>' + "\n");
+
+
+	$('#campaign-fields-table input[name="name' + p + '"]:last').val($.trim(name + ''));
+	$('#campaign-fields-table input[name="val' + p + '"]:last').val($.trim(value + ''));
+	$('#campaign-fields-table input[name="val' + p + '"]:last').droppable(droppableObj);
+	$('button.modifier:last').click(function() {modifierButtonClicked($(this));});
+	$('button.modifier:last').val(modifier);
+	$('input[name="modifier' + p + '"]').val(modifier);
+	return true;
+}
+
+function deleteRow(field) {
+	if (confirm('Delete this field?')) {
+		field.parent().parent().remove();
+		updateRowColors();
+	}
+}
+
+function deleteRow2(field) {
+	if (confirm('Delete this condition?')) {
+		field.parent().parent().remove();
+		alternateModifyDialogTRColors();
+	}
+}
+
+function isValidName(field, checkUnique) {
+	var name = field.val();
+	var n = $.trim(name).toLowerCase();
+	if (checkUnique) {
+    	var counter = 0;
+    	$('input.table-field-name').each(function() {
+    		if ($(this).val().toLowerCase() == n) {
+    	    	if (++counter > 1) {
+    				$(this).focus();
+    	    	}
+    		}
+    	});
+    	if (counter > 1) {
+    		alert('Field "' + name + '" already exists');
+    		return false;
+    	}
+	}
+	if (n.search(/^[\w]{1,}(\[[\w]{0,}\]){0,}$/) == -1) {
+		field.focus();
+		alert("Name must consist of letters, numbers, underscores and square brackets.\nSquare brackets cannot be nested and must be paired");
+		return false;
+	}
+	return true;
+}
+
+function saveOriginalState() {
+	$('#campaign-fields-table tbody tr').each(function() {
+		if ($(this).hasClass('top')) {
+			return;
+		};
+		var name = $(this).find('input[name^="name"]').val();
+		var val  = $(this).find('input[name^="val"]').val();
+		var mod  = $(this).find('input[name^="modifier"]').val();
+		originalState.push([name.toLowerCase(), val, mod]);
+	});
+}
+
+function pageStateChanged() {
+	if ($('#campaign-fields-table tbody tr').size() != (originalState.length + 1)) {
+		return true;
+	}
+	var i = 0;
+	var changed = false;
+	$('#campaign-fields-table tbody tr').each(function() {
+		if ($(this).hasClass('top')) {
+			return;
+		};
+		var arr = originalState[i++];
+		if (arr[0] != $(this).find('input[name^="name"]').val().toLowerCase()) {
+			changed = true;
+		}
+		if (arr[1] != $(this).find('input[name^="val"]').val()) {
+			changed = true;
+		}
+		if (arr[2] != $(this).find('input[name^="modifier"]').val()) {
+			changed = true;
+		}
+	});
+	return changed;
+}
+
+function getSelectOptions(options, id) {
+	var ret = "\n";
+	for (var i = 0; i < options.length; i++) {
+		var arr = options[i];
+		ret += '<option value="' + arr + '"' + ((arr == id) ? ' selected="selected"' : '') + '>' + arr + "</option>\n";
+	}
+	return ret;
+}
+
+function getSelectOptionsWithId(options, id) {
+	var ret = "\n";
+	for (var i = 0; i < options.length; i++) {
+		var arr = options[i];
+		ret += '<option value="' + arr[0] + '"' + ((arr[0] == id) ? ' selected="selected"' : '') + '>' + arr[1] + "</option>\n";
+	}
+	return ret;
+}
+
+function modifierButtonClicked(button) {
+	$('#dlg-modifier-replacements-radio').click();
+	colorizeFTOptions($('#dlg-mod-ftype'), button);
+	colorizeFTOptions($('#dlg-mod-ftype-dict'), button);
+	colorizeFTOptions($('#dlg-mod-ftype-external'), button);
+
+	loadValueFromButton(button);
+	$('#dlg-modifier').dialog({
+		modal: true,
+		title: 'Modify Value',
+		width: '900px',
+		buttons: {
+			'OK'     : function() {if (saveValues(button)) $('#dlg-modifier').dialog('destroy');},
+			'Cancel' : function() {$('#dlg-modifier').dialog('destroy');}
+		}
+	});
+}
+
+function saveValues(button) {
+	var t = '';
+	$('input.dlg-modifier-radio').each(function() {
+		if ($(this).attr('checked')) {
+			t = $(this).val();
+		}
+	});
+
+	var result = false;
+	switch(t) {
+	case 'dlg-modifier-replacements':
+		result = saveReplacements(button);
+		break;
+	case 'dlg-modifier-dictionary':
+		result = saveDictionary(button);
+		break;
+	case 'dlg-modifier-external':
+		break;
+	default:
+    	button.val('');
+		$('input[name="' + button.attr('id') + '"]').val('');
+		result = true;
+	}
+	updateModifyButtonColors();
+	return result;
+}
+
+function saveReplacements(button) {
+	var s = $('#dlg-mod-ftype').val();
+	if (!s) {
+		alert('Please pick a field type or choose "No change" option');
+		return false;
+	}
+	if (s && !$('#dlg-modify-table tbody tr').size()) {
+		alert('Please add conditions');
+		$('#dlg-mod-ftype').focus();
+		return false;
+	}
+	var strLenOk = true;
+	$('#dlg-modify-table tbody tr').each(function() {
+		if (!strLenOk) {
+			return;
+		}
+		var matchType = parseInt($(this).find('select[name="match"]').val());
+		if ((matchType == <?php echo Model_PartnerFilter::FILTER_MATCH_STRLEN; ?>) || (matchType == -<?php echo Model_PartnerFilter::FILTER_MATCH_STRLEN; ?>)) {
+		    var val = $(this).find('input[name="value"]').val();
+		    if (!val.match(/^[0-9]{1,}$/)) {
+			    alert('Please enter a number');
+			    $(this).find('input[name="value"]').focus();
+			    strLenOk = false;
+		    }
+		}
+	});
+	if (!strLenOk) {
+		return false;
+	}
+	//
+	if (s && $('#dlg-modify-table tbody tr').size()) {
+		s = "dlg-modifier-replacements\n" + s;
+    	$('#dlg-modify-table tbody tr').each(function() {
+    		s += "\n" + $(this).find('select[name="match"]').val();
+    		s += "\n" + myUrlEncode($(this).find('input[name="value"]').val());
+    		s += "\n" + myUrlEncode($(this).find('input[name="replacement"]').val());
+    	});
+    	button.val(s);
+    	$('input[name="' + button.attr('id') + '"]').val(s);
+	} else {
+		button.val('');
+    	$('input[name="' + button.attr('id') + '"]').val('');
+	}
+	return true;
+}
+
+function saveDictionary(button) {
+	button.val('dlg-modifier-dictionary');
+	var ftId = $('#dlg-mod-ftype-dict').val();
+	if (!ftId) {
+		alert('Please pick a field type or choose "No change" option');
+		return false;
+	}
+	var s = "dlg-modifier-dictionary\n";
+	s += $('#dlg-mod-ftype-dict').val() + "\n";
+	s += $('#dlg-mod-dict-dict').val() + "\n";
+	s += $('#dlg-mod-dict-column').val();
+	$('input[name="' + button.attr('id') + '"]').val(s);
+	button.val(s);
+	return true;
+}
+
+function loadValueFromButton(button) {
+	$('#dlg-modify-table tbody tr').remove();
+	$('#dlg-mod-ftype').val('');
+	$('#dlg-mod-ftype-dict').val('');
+
+	var s = button.val();
+	if (s) {
+		var lines = s.split("\n");
+		var group = lines[0];
+		var name = '#' + group + '-radio';
+		if ($(name).size() == 0) {
+			name  = '#dlg-modifier-none-radio';
+			group = 'dlg-modifier-none';
+		}
+		var arr = [];
+		for(var i = 1; i < lines.length; i++) {
+			arr.push(lines[i]);
+		}
+		$(name).click();
+		$(name).focus();
+
+		switch (group) {
+		case 'dlg-modifier-dictionary':
+			loadDictionaryGroup(arr);
+			break;
+		case 'dlg-modifier-external':
+			break;
+		case 'dlg-modifier-replacements':
+			loadReplacementGroup(arr, button);
+			break;
+		default:
+			//
+		}
+	} else {
+		$('#dlg-modifier-none-radio').click();
+	}
+}
+
+function loadReplacementGroup(arr, button) {
+	if (arr.length >= 4) {
+		$('#dlg-mod-ftype').val(arr[0]);
+		for(var i = 1; i < arr.length - 2; i += 3) {
+			addModifyDialogOption(arr[i], unescape(arr[i + 1]), unescape(arr[i + 2]));
+		}
+	}
+}
+
+function colorizeFTOptions(dropdown, button) {
+	dropdown.find('option.ftype-option').remove();
+	var valueField = button.parents('tr:first').find('input[name^="val"]');
+	var matches = valueField.val().match(/\[\w{1,}\]|\[:\w{1,}:\]/g);
+	var options = [<?php
+
+    $comma = false;
+	foreach ($allFtypes as $id => $ftype) {
+	    if ($comma) {
+	        echo ",";
+	    } else {
+	        $comma = true;
+	    }
+	    echo "'" . escapeAttrVal($ftype) . "'";
+	}
+	foreach ($systemFieldsEx as $id => $name) {
+	    if ($comma) {
+	        echo ",";
+	    } else {
+	        $comma = true;
+	    }
+	    echo "'" . escapeAttrVal($name) . "'";
+	}
+	echo "\n\n";
+	foreach ($extTokens as $id => $name) {
+	    if ($comma) {
+	        echo ",";
+	    } else {
+	        $comma = true;
+	    }
+	    echo "'" . escapeAttrVal($name) . "'";
+	}
+
+	?>];
+
+	if (matches == null) {
+		return;
+	}
+	for (var i = 0; i < matches.length; i++) {
+	  	var val = matches[i].substr(1);
+	  	val = val.substr(0, val.length - 1);
+	  	for (var j = 0; j < options.length; j++) {
+		  	var arr = options[j];
+		  	if (arr == val) {
+			  	dropdown.append('<option class="ftype-option" value="' + arr + '">' + arr + '</option>');
+			  	break;
+		  	}
+	  	}
+	}
+}
+
+function loadDictionaryGroup(arr) {
+	$('#dlg-mod-ftype-dict').val(arr[0]);
+	$('#dlg-mod-dict-dict').val(arr[1]);
+	dictionaryChanged();
+	$('#dlg-mod-dict-column').val(arr[2]);
+}
+
+function updateModifyButtonColors() {
+
+	$('button.modifier').each(function() {
+		var tf = $(this).parents('tr:first').find('input[name^="val"]');
+		if ($(this).attr('value')) {
+			$(this).addClass('has-modifier');
+			tf.addClass('disabled_text');
+			tf.attr('readonly', 'readonly');
+		} else {
+			$(this).removeClass('has-modifier');
+			tf.removeClass('disabled_text');
+			tf.removeAttr('readonly');
+		}
+	});
+}
+
+function addBlankModifyDialogOption(e) {
+	e.preventDefault();
+	addModifyDialogOption('', '', '');
+}
+
+function addModifyDialogOption(match, testValue, replacement) {
+	var html = '<tr>';
+	html += '<td>&nbsp;</td>';
+	html += '<td><select style="width: 160px;" name="match">' + getSelectOptionsWithId(filterMatches, match) + '</select></td>';
+	html += '<td><input style="width: 160px;" name="value"></td>';
+	html += '<td><input style="width: 420px;" name="replacement"></td>';
+	html += '<td style="text-align: center; vertical-align: middle;"><img src="/img/icons/cross.png" title="Delete this field" onclick="deleteRow2($(this));"></td>';
+	html += '</tr>';
+	$('#dlg-modify-table tbody').append(html);
+
+	// Avoid escaping problems by setting via jquery
+	$('#dlg-modify-table input[name="value"]:last').val(testValue);
+	$('#dlg-modify-table input[name="replacement"]:last').val(replacement);
+	alternateModifyDialogTRColors();
+};
+
+function alternateModifyDialogTRColors() {
+	var odd = true;
+	var i = 0;
+	var count = $('#dlg-modify-table tbody tr').size();
+	$('#dlg-modify-table tbody tr').each(function() {
+		// alert($(this).html());
+		$(this).find('td').css('background-color', odd ? '#fff' : '#f0f0f0');
+		$(this).find('td input').css('background-color', '#fff');
+		odd = !odd;
+
+		if (count > 1) {
+			if (i == 0) {
+			    $(this).find('td:first').html('<img class="button-down" src="/img/icons/arrow_down.png" style="margin-left: 16px;">');
+			} else if (i == (count - 1)) {
+			    $(this).find('td:first').html('<img class="button-up" src="/img/icons/arrow_up.png">');
+			} else {
+			    $(this).find('td:first').html('<img class="button-up" src="/img/icons/arrow_up.png"><img class="button-down" src="/img/icons/arrow_down.png">');
+			}
+		} else {
+			$(this).find('td:first').html('&nbsp;');
+		}
+		i++;
+	});
+
+	$('#dlg-modify-table tbody tr td img.button-up').click(function() {
+		switchUpwards($(this).parent().parent());
+	});
+	$('#dlg-modify-table tbody tr td img.button-down').click(function() {
+		switchDownards($(this).parent().parent());
+	});
+};
+
+function switchUpwards(tr) {
+	exchangeTRs(tr, tr.prev());
+};
+
+function switchDownards(tr) {
+	exchangeTRs(tr, tr.next());
+};
+
+function exchangeTRs(tr, target) {
+	exchangeField(tr, target, 'select[name="match"]');
+	exchangeField(tr, target, 'input[name="value"]');
+	exchangeField(tr, target, 'input[name="replacement"]');
+};
+
+function exchangeField(tr, target, field) {
+	var s = target.find(field).val();
+	target.find(field).val(tr.find(field).val());
+	tr.find(field).val(s);
+};
+
+function dictionaryChanged() {
+	var selectedDict = parseInt($('#dlg-mod-dict-dict').val());
+	if (selectedDict == loadedColumns) {
+		return;
+	}
+	$('#dlg-mod-dict-column option').remove();
+	for (var i = 0; i < dictCols.length; i++) {
+		var dictId = dictCols[i][0];
+		if (dictId != selectedDict) {
+			continue;
+		}
+		var arr = dictCols[i][1];
+		for(var j = 0; j < arr.length; j++) {
+			$('#dlg-mod-dict-column').append('<option value="' + arr[j][0] + '"></option>');
+			$('#dlg-mod-dict-column option:last').text(arr[j][1]);
+		}
+		loadedColumns = selectedDict;
+	}
+};
+
+function myUrlEncode(s) {
+	s = escape(s);
+	while (s.indexOf('+') >= 0) {
+		s = s.replace('+', '%2B');
+	}
+	while (s.indexOf('*') >= 0) {
+		s = s.replace('*', '%2A');
+	}
+	while (s.indexOf('/') >= 0) {
+		s = s.replace('/', '%2F');
+	}
+	while (s.indexOf('@') >= 0) {
+		s = s.replace('@', '%40');
+	}
+	return s;
+};
+
+</script>
+
+
+<div id="dlg-modifier" style="display: none;">
+<form style="margin: 10px;">
+<label><input type="radio" class="cbox dlg-modifier-radio" name="dlg-modifier-radio" value="dlg-modifier-none"         id="dlg-modifier-none-radio" checked="checked" />No change</label>
+<label><input type="radio" class="cbox dlg-modifier-radio" name="dlg-modifier-radio" value="dlg-modifier-replacements" id="dlg-modifier-replacements-radio"           />Replacement</label>
+<label><input type="radio" class="cbox dlg-modifier-radio" name="dlg-modifier-radio" value="dlg-modifier-dictionary"   id="dlg-modifier-dictionary-radio"             />Table lookup</label>
+<!-- <label><input type="radio" class="dlg-modifier-radio" name="dlg-modifier-radio" value="dlg-modifier-external"     id="dlg-modifier-external-radio"               />External lookup</label> -->
+</form>
+<div class="dlg-modifier-tabs" id="dlg-modifier-replacements">
+    If <select id="dlg-mod-ftype">
+    <option value=""></option></select><br>
+    <table id="dlg-modify-table">
+    	<thead>
+    		<tr>
+    			<th style="width: 30px;">&nbsp;</th>
+    			<th style="width: 150px;">Condition</th>
+    			<th style="width: 150px;">Match Value</th>
+    			<th>Then Set Field Value To</th>
+    			<th style="width: 20px;">&nbsp;</th>
+    		</tr>
+    	</thead>
+
+    	<tbody>
+    	</tbody>
+    </table>
+    <div style=" padding: 12px 0; margin-top: 6px;">
+    <a href="#" id="dlg-modify-add-option" style="text-decoration: none; border: 1px solid #ccc; padding: 9px 5px;"><img src="/img/icons/add.png" style="margin-bottom: -2px;" /> <span style="text-decoration: underline; font-size: 14px; font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Add Condition...</span></a>
+    </div>
+</div>
+
+<div class="dlg-modifier-tabs" id="dlg-modifier-dictionary">
+Lookup <select id="dlg-mod-ftype-dict">
+    <option value=""></option></select> in
+<select id="dlg-mod-dict-dict">
+<?php
+
+foreach ($dicts as $id => $name) {
+    echo "<option value=\"$id\">" . escapeHtml($name) . "</option>\n";
+}
+
+?>
+</select> and set this field value to
+<select id="dlg-mod-dict-column">
+<?php
+
+foreach ($dicts as $id => $name) {
+    echo "<option value=\"$id\">" . escapeHtml($name) . "</option>\n";
+}
+
+?>
+</select>
+
+</div>
+
+</div>
+

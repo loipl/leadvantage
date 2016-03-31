@@ -1,0 +1,84 @@
+<style type="text/css">
+
+table.td-top {
+    width: 1100px;
+    max-width: 1100px;
+    margin: 10px auto;
+}
+
+table.td-top th {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 2px 4px;
+    text-align: center;
+}
+
+table.td-top td {
+    vertical-align: top;
+    padding: 1px 2px;
+    font-size: 12px;
+}
+
+table.td-top tr td {
+    border-top: 2px solid blue;
+}
+
+table.td-top tr.first td {
+    border-top: 3px solid #000;
+}
+
+table.td-top tr.odd td {
+    background-color: yellow;
+}
+
+table.td-top tr td.alter, table.td-top tr.odd td.alter, table.td-top tr.first td.alter {
+    background-color: #ddd;
+}
+
+</style>
+
+<table class="td-top">
+    <thead>
+        <tr>
+            <th style="width: 100px;">Parameters</th>
+            <th style="width: 100px;">Validator Used</th>
+            <th style="width: 100px;">Result</th>
+            <th style="width: 600px;">API Response</th>
+            <th style="width: 200px;">Our Error Message</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+
+$odd = true;
+if (is_array($results)) {
+    foreach ($results as $resultRowSet) {
+        $odd = !$odd;
+        $first = true;
+        $fields = implode("<br>\n", $resultRowSet['row']);
+        foreach ($resultRowSet['reportRows'] as $resultRow) {
+            $css = $first ? 'first' : '';
+            $css .= $odd ? ' odd' : '';
+            echo "
+            <tr class=\"$css\">";
+            if ($first) {
+                $rowSpan = sizeof($resultRowSet['reportRows']);
+                echo "
+                <td style=\"width: 100px;\" rowspan=\"$rowSpan\">$fields</td>";
+                $first = false;
+            };
+            echo "
+                <td style=\"width: 100px;\">$resultRow[name]</td>
+                <td style=\"width: 100px;\" class=\"alter\">$resultRow[result]</td>
+                <td style=\"width: 600px;\"><div style=\"width: 600px; overflow: auto;\">$resultRow[apiRes]</div></td>
+                <td style=\"width: 200px;\" class=\"alter\">$resultRow[errMsg]</td>
+            </tr>
+    ";
+        }
+    }
+}
+?>
+
+    </tbody>
+</table>

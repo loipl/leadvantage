@@ -1,0 +1,454 @@
+<style>
+    #partner-timezone {
+        width: 305px !important;
+    }
+</style>
+<div class="settings">
+
+    <h3>Partner Settings</h3>
+
+    <div class="setup">
+
+        <div class="leftinfo">
+
+            <p class="top"><span>Partner name <?php Helper_Tooltip::toolTipFromWP('what-is-partner-name'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('name'); ?></p>
+
+            <p class="top"><span>Posting type <?php Helper_Tooltip::toolTipFromWP('what-is-posting-type'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('posting_type', array('id' => 'posting-type')); ?></p>
+
+            <p class="top"><span>Delivery URL <?php Helper_Tooltip::toolTipFromWP('what-is-delivery-url'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('delivery_addr', array('id' => 'delivery-addr')); ?></p>
+
+            <p class="top"><span>Success keyword <?php Helper_Tooltip::toolTipFromWP('what-is-success-keyword'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('success_keyword'); ?></p>
+
+            <p class="top" id="aff-partner-settings"><span>Adult FriendFinder API Key <?php Helper_Tooltip::toolTipFromWP('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'); ?></span><br>
+
+                <input type="text" style="width: 677px;" name="partner_settings[<?php echo Model_PartnerSettings::SETTING_AFF_API_KEY; ?>]" value="<?php
+                echo isset($this->partnerSettings[Model_PartnerSettings::SETTING_AFF_API_KEY]) ? escapeAttrVal($this->partnerSettings[Model_PartnerSettings::SETTING_AFF_API_KEY]) : ''
+                ?>"></p>
+
+        </div><!--leftinfo-->
+
+        <div class="rightinfo">
+            <?php if (isset($_GET['ping_post_type']) && $_GET['ping_post_type'] === 'ping'
+                     || !empty($data['ping_post_type'])) : ?>
+                     <p><span>Bid price (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-bid-price'); ?></span><br>
+            <?php else : ?>
+            <p><span>Price per lead (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-price-per-lead'); ?></span><br>
+            <?php endif;?>
+                <span class="curency">$</span><?php echo $pf->getHtmlForNamedElementFull('price_per_lead', array('class' => 'first')); ?></p>
+            
+            <p><span>Partner Type <?php Helper_Tooltip::toolTipFromWP('what-is-partner-type'); ?><br>
+                <?php echo $pf->getHtmlForNamedElementFull('partner_type'); ?></span></p>
+            
+            <p style="clear: both;" id="success-url-wrapper"><span>Success URL (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-success-url'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('success_url', array('id' => 'success-url')); ?></p>
+            
+            <div id="success-url-wrapper-replacement"></div>
+            
+            <p style="clear: both;"><span>Failure keyword (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-failure-keyword'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('failure_keyword'); ?></p>
+
+        </div><!--rightinfo-->
+
+        <div class="clear"></div>
+    </div><!--setup-->
+
+</div><!--settings-->
+
+<?php
+echo '<div class="settings">';
+?>
+
+
+
+<h3><span id="toggle-advanced-h3" style="cursor: pointer;"> Advanced Settings </span><span class="opened"><a href="#" id="advanced-settings-toggle-link"><img src="/images/closed.png"/></a></span></h3>
+
+<div class="options" id="advanced-settings-div" style="display: none;">
+
+    <p class="last"><label><?php echo $pf->getHtmlForNamedElementFull('should_retry', array('id' => 'should-retry-checkbox', 'class' => 'check'));
+?> <span>Retry on failure <?php Helper_Tooltip::toolTipFromWP('what-is-retry-on-failure'); ?></span></label></p>
+
+    <span id="username-failed-keyword-info">
+        <p class="top"><span>Username Failure Keyword <?php Helper_Tooltip::toolTipFromWP('what-is-username-failure-keyword'); ?></span><br>
+            <?php echo $pf->getHtmlForNamedElementFull('username_failed_keyword', array('id' => 'username-failed-keyword')); ?></p>
+    </span>
+    
+    <div class="bottom">
+            <?php if (isset($_GET['post_partner_id'])): ?>
+            <input type="hidden" name="post_partner_id" value="<?php echo $_GET['post_partner_id'];?>">
+            <?php endif;?>
+            <?php if (isset($_GET['ping_post_type']) && $_GET['ping_post_type'] === 'ping'
+                     || !empty($data['ping_post_type'])): ?>
+            <p style="width:200px;"><span>Transaction ID (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-auction-transaction-id'); ?><br>
+                <?php echo $pf->getHtmlForNamedElementFull('auction_transaction_id'); ?></span></p>
+            <?php endif; ?>
+            
+            <div id="xml-field-name">
+                <p><span>XML field name <?php Helper_Tooltip::toolTipFromWP('what-is-xml-field-name'); ?><br>
+                <?php echo $pf->getHtmlForNamedElementFull('xml_field_name'); ?></span></p>
+            </div>
+            
+            <?php if (empty($data['ping_post_type']) && empty($_GET['ping_post_type'])) : ?>
+                <div id="transaction-id-field-name">
+                    <p><span><span style="white-space:nowrap;">Transaction ID field name <?php Helper_Tooltip::toolTipFromWP('what-is-transaction-id-field-name'); ?></span><br>
+                    <?php echo $pf->getHtmlForNamedElementFull('transaction_id_field_name'); ?></span></p>
+                </div>
+            <?php endif;?>
+    </div>      
+    <div class="clear"></div>
+    
+    <div class="bottom">
+
+        <p><span>Parse Response <?php Helper_Tooltip::toolTipFromWP('what-is-parse-response'); ?><br>
+                <?php echo $pf->getHtmlForNamedElementFull('parse_response'); ?></span></p>
+
+        <span id="parse-resposne-info">
+            <p><span>Response Type <?php Helper_Tooltip::toolTipFromWP('what-is-partner-response-type'); ?><br>
+                    <?php echo $pf->getHtmlForNamedElementFull('response_type'); ?></span></p>
+
+            <p class="top"><span>Delimiter <?php Helper_Tooltip::toolTipFromWP('what-is-parse-response-delimiter'); ?></span><br>
+                <?php echo $pf->getHtmlForNamedElementFull('delimiter', array('title' => 'Enter \\n for newline, \\t for Tab character')); ?></p>
+        </span>
+    </div><!--bottom-->
+    <div class="clear"></div>
+    <div class="bottom">
+        <p>
+            <span>Partner Timeout <?php Helper_Tooltip::toolTipFromWP('what-is-partner-timeout'); ?></span><br>
+            <?php echo $pf->getHtmlForNamedElementFull('curl_timeout'); ?>
+        </p>
+
+        <p class="partner-timezone">
+            <span>Partner Timezone <?php Helper_Tooltip::toolTipFromWP('what-is-partner-timezone'); ?></span><br>
+            <?php echo $pf->getHtmlForNamedElementFull('partner_timezone'); ?>
+        </p>
+    </div>
+    <div class="clear"></div>
+</div><!--options-->
+
+<?php if (0) { ?>
+    <style>
+
+        .full-width {
+            width: 270px;
+        }
+
+        .disabledDiv {
+            color: #999;
+        }
+
+        .pingtree-form table td {
+            padding-right: 10px;
+        }
+
+        .pingtree-form table {
+            margin: 0;
+        }
+
+        #aff-partner-settings {
+            display: none;
+        }
+
+        #advanced-settings-div {
+            padding-top: 10px;
+            display: none;
+        }
+
+    </style>
+
+    <?php
+    /* @var $form Form_Data */
+    /* @var $pf PageFragment_FormAuto */
+    ?>
+    <div class="pingtree-form">
+
+        <div style="float: left; width: 280px;">
+            Partner name <?php Helper_Tooltip::toolTipFromWP('what-is-partner-name'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('name', array('class' => 'full-width')); ?>
+            <br>
+
+            Posting type <?php Helper_Tooltip::toolTipFromWP('what-is-posting-type'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('posting_type', array('class' => 'full-width', 'style' => 'width: 280px;', 'id' => 'posting-type')); ?>
+            <br>
+
+            Delivery URL <?php Helper_Tooltip::toolTipFromWP('what-is-delivery-url'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('delivery_addr', array('class' => 'full-width', 'id' => 'delivery-addr')); ?>
+            <br>
+
+            Success keyword <?php Helper_Tooltip::toolTipFromWP('what-is-success-keyword'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('success_keyword', array('class' => 'full-width')); ?>
+            <br>
+
+            Failure keyword (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-failure-keyword'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('failure_keyword', array('class' => 'full-width')); ?>
+        </div>
+
+        <div style="float: left; width: 280px; padding-left: 80px;">
+            Price per lead (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-price-per-lead'); ?><br>
+            <b style="font-size: 120%; color: green;">$</b> <?php echo $pf->getHtmlForNamedElementFull('price_per_lead', array('style' => 'width: 80px;')); ?>
+            <br>
+
+            <table>
+                <tr>
+                    <td nowrap="nowrap">Delivery cap <?php Helper_Tooltip::toolTipFromWP('what-is-delivery-cap'); ?><br>(0 = no limit)</td>
+                    <td nowrap="nowrap">Delivery cap type <?php Helper_Tooltip::toolTipFromWP('what-is-delivery-cap-type'); ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo $pf->getHtmlForNamedElementFull('delivery_cap', array('style' => 'width: 70px;')); ?></td>
+                    <td><?php echo $pf->getHtmlForNamedElementFull('delivery_ctype'); ?></td>
+                </tr>
+            </table>
+
+            Success URL (optional) <?php Helper_Tooltip::toolTipFromWP('what-is-success-url'); ?><br>
+    <?php echo $pf->getHtmlForNamedElementFull('success_url', array('class' => 'full-width', 'id' => 'success-url')); ?>
+            <br>
+
+        </div>
+        <div class="clear"></div>
+        <div id="aff-partner-settings">
+            Adult FriendFinder API Key <?php Helper_Tooltip::toolTipFromWP('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'); ?><br>
+            <input type="text" style="width: 632px;" name="partner_settings[<?php echo Model_PartnerSettings::SETTING_AFF_API_KEY; ?>]" value="<?php
+    echo isset($this->partnerSettings[Model_PartnerSettings::SETTING_AFF_API_KEY]) ? escapeAttrVal($this->partnerSettings[Model_PartnerSettings::SETTING_AFF_API_KEY]) : ''
+    ?>">
+        </div>
+
+        <div class="clear"></div>
+        <a href="#" id="advanced-settings-toggle-link">Advanced Settings...</a>
+        <div id="advanced-settings-div">
+            <label><?php echo $pf->getHtmlForNamedElementFull('should_retry', array('id' => 'should-retry-checkbox', 'class' => 'no-border')); ?>Retry on failure <?php Helper_Tooltip::toolTipFromWP('what-is-retry-on-failure'); ?></label><br>
+            <label>Username failure keyword <?php Helper_Tooltip::toolTipFromWP('what-is-username-failure-keyword'); ?><br><?php echo $pf->getHtmlForNamedElementFull('username_failed_keyword', array('id' => 'username-failed-keyword', 'style' => 'width: 278px;')); ?></label>
+            <table>
+                <tr>
+                    <td>Parse Response <?php Helper_Tooltip::toolTipFromWP('what-is-parse-response'); ?></td>
+                    <td id="response-delimiter-td">Delimiter <?php Helper_Tooltip::toolTipFromWP('what-is-parse-response-delimiter'); ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo $pf->getHtmlForNamedElementFull('parse_response', array('style' => 'width: 90px;')); ?></td>
+                    <td><?php echo $pf->getHtmlForNamedElementFull('delimiter', array('style' => 'width: 70px;', 'title' => 'Enter \\n for newline, \\t for Tab character')); ?></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+<?php } ?>
+<script type="text/javascript">
+
+    var affPostType = <?php echo Model_Partner::POST_TYPE_AFF; ?>;
+    var xmlPostType = <?php echo Model_Partner::POST_TYPE_XML; ?>;
+    var xmlFieldPostType = <?php echo Model_Partner::POST_TYPE_XML_FIELD; ?>;
+    var emailPostType = <?php echo Model_Partner::POST_TYPE_EMAIL; ?>;
+    var jsonPostType = <?php echo Model_Partner::POST_TYPE_JSON; ?>;
+
+    var RESPONSE_TYPE_TEXT = '0';
+    var RESPONSE_TYPE_JSON = '1';
+    var RESPONSE_TYPE_XML  = '2';
+    
+    var PARTNER_TYPE_POST      = '0';
+    var PARTNER_TYPE_PING_POST = '1';
+
+    $(document).ready(function() {
+        $('#parse-response').click(function() {
+            parseResponseChanged();
+        });
+        $('#parse-response').change(function() {
+            parseResponseChanged();
+        });
+        $('#response-type').change(function() {
+            responseTypeChanged();
+        });
+        
+        $('#partner-type').change(function() {
+            showHidePingPostBox();
+        });
+
+        $('#delivery-cap').keyup(deliveryCapChanged);
+        $('#delivery-cap').change(deliveryCapChanged);
+
+        $('#advanced-settings-toggle-link').click(toggleAdvanced);
+        $('#toggle-advanced-h3').click(toggleAdvanced);
+
+        $('#success-url').blur(function() {
+            var v = $.trim($(this).val());
+            if (v && (v.indexOf('://') == -1) && (v.indexOf('$') != 0) && $('#response-type').val() == RESPONSE_TYPE_TEXT) {
+                $(this).val('http://' + v);
+            }
+        });
+
+        $('#delivery-addr').blur(function() {
+            var v = $.trim($(this).val());
+            if (v && (v.indexOf('://') == -1)) {
+                $(this).val('http://' + v);
+            }
+        });
+
+        if ($('#should-retry-checkbox').attr('checked')) {
+            $('#advanced-settings-div').show();
+        }
+        ;
+
+        if ($('#should-parse-dropdown').attr('checked')) {
+            $('#advanced-settings-div').show();
+        }
+        ;
+
+        if (
+                $('#curl-timeout').val() != 0 
+                || $('#partner-timezone').val() != 0 
+                || $('input[name=post_partner_id]').length > 0
+        ) {
+            $('#advanced-settings-div').show();
+        }
+        ;
+
+        $('#delivery-addr').keyup(deliveryAddrChanged).change(deliveryAddrChanged);
+        $('#posting-type').change(postingTypeChanged).click(postingTypeChanged).keyup(postingTypeChanged);
+
+        $('#should-retry-checkbox').click(shouldRetryChanged);
+        
+        $("#partner-timezone option[value='disabled']").attr('disabled', true ); 
+        
+        deliveryAddrChanged();
+        parseResponseChanged();
+        responseTypeChanged();
+        deliveryCapChanged();
+        postingTypeChanged();
+        shouldRetryChanged();
+        showHidePingPostBox();
+
+<?php
+Helper_Tooltip::jscript();
+?>
+    });
+    
+    function showHidePingPostBox() {
+        if ($('#partner-type').val() === PARTNER_TYPE_PING_POST) {
+            $('#ping-post-tab').show();
+            if ($('#posting-type').val() == xmlFieldPostType) {
+                $('#transaction-id-field-name').show();
+            } else {
+                $('#transaction-id-field-name').hide();
+            }
+        } else {
+            $('#ping-post-tab').hide();
+            $('#transaction-id-field-name').hide();
+        }
+    }
+
+    function toggleAdvanced(e) {
+        e.preventDefault();
+        var v = $('#advanced-settings-div');
+        v.toggle();
+        if (v.is(':visible')) {
+            $('#advanced-settings-toggle-link').html('<img src="/images/opened.png"/>');
+        } else {
+            $('#advanced-settings-toggle-link').html('<img src="/images/closed.png"/>');
+        }
+    }
+
+    function isCoregUrl() {
+        var url = $.trim($('#delivery-addr').val());
+        if (url == '') {
+            return false;
+        }
+        ;
+        if (url.substr(0, 7) != 'http://') {
+            return false;
+        }
+        var pos = url.indexOf('/', 7);
+        var pcr = url.indexOf('/COREG/', 7);
+        // alert(pos + " " + pcr);
+        return ((pos != -1) && (pcr == pos));
+    }
+    ;
+
+    function parseResponseChanged() {
+        var v = parseInt($('#parse-response').val());
+        if (v == 0) {
+            $('#response-delimiter-td').addClass('disabledDiv');
+            $('#delimter').attr('disabled', 'disabled');
+            $('#parse-resposne-info').hide();
+        } else {
+            $('#response-delimiter-td').removeClass('disabledDiv');
+            $('#delimter').removeAttr('disabled');
+            $('#parse-resposne-info').show();
+        }
+
+    }
+    ;
+
+    function responseTypeChanged() {
+        var v = $('#response-type').val();
+        if (v === RESPONSE_TYPE_TEXT) {
+            $('#delimter').closest('p.top').show();
+        } else {
+            $('#delimter').closest('p.top').hide();
+        }
+    }
+
+    function deliveryCapChanged() {
+        var v = $('#delivery-cap').val();
+        if (v == '0') {
+            $('#delivery-ctype').attr('disabled', 'disabled');
+        } else {
+            $('#delivery-ctype').removeAttr('disabled');
+        }
+    }
+    ;
+
+    function deliveryAddrChanged() {
+
+        if (isCoregUrl()) {
+            if ($('#posting-type option[value="' + affPostType + '"]').size() == 0) {
+                $('#posting-type').append('<option value="' + affPostType + '">Adult FriendFinder</option>');
+            }
+        } else {
+            var val = parseInt($('#posting-type').val());
+            if (val == affPostType) {
+                $('#posting-type').val(1);
+            }
+            $('#posting-type option[value="' + affPostType + '"]').remove();
+        }
+        postingTypeChanged();
+    }
+    ;
+
+    function postingTypeChanged() {
+        if (parseInt($('#posting-type').val()) == affPostType) {
+            $('#aff-partner-settings').show();
+        } else {
+            $('#aff-partner-settings').hide();
+        }
+        if ((parseInt($('#posting-type').val()) == xmlPostType) || (parseInt($('#posting-type').val()) == xmlFieldPostType) 
+                ||(parseInt($('#posting-type').val()) == emailPostType) || (parseInt($('#posting-type').val()) == jsonPostType)) {
+            $('#editTemplate').show();
+        } else {
+            $('#editTemplate').hide();
+        }
+        
+        if (parseInt($('#posting-type').val()) == xmlFieldPostType) {
+            $('#xml-field-name').show();
+            // show for ping-post, hide for post-only
+            if ($('#partner-type').val() === PARTNER_TYPE_PING_POST) {
+                $('#transaction-id-field-name').show();
+            } else {
+                $('#transaction-id-field-name').hide();
+            }   
+        } else {
+            $('#xml-field-name').hide();
+            $('#transaction-id-field-name').hide();
+        }
+    }
+    ;
+
+    function shouldRetryChanged() {
+        if ($('#should-retry-checkbox').attr('checked')) {
+            $('#username-failed-keyword-info').show();
+        } else {
+            $('#username-failed-keyword-info').hide();
+        }
+    }
+    ;
+
+</script>

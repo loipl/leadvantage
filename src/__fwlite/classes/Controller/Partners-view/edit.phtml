@@ -1,0 +1,282 @@
+<style>
+    <!--
+
+    #postback-options {
+        margin-bottom: 20px;
+    }
+
+    #postback-options td {
+        vertical-align: middle;
+        height: 25px;
+    }
+
+    #postback-options td.rbl {
+        vertical-align: middle;
+        padding-right: 10px;
+    }
+
+    #postback-options td.rb {
+        vertical-align: middle;
+    }
+
+    #postback td label.disabled {
+        color: #777;
+    }
+
+    -->
+</style>
+
+<div class="head">
+    <h2>Partners</h2>
+
+    <div class="breadcrumb">
+
+        <div style="float:left">
+            <p><a href="/partners/">Partners &gt;</a><a href="/partners/edit.html?id=<?php echo $data['id']; ?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Partner Settings</p>
+        </div>
+        <div id="ping-post-tab" class="pingtree-form">
+            <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+                <ul>
+                    <li id="pingTab" class="current">PING</li>
+                    <li id="postTab">POST</li>
+                </ul>
+            <?php else: ?>
+                <ul>
+                    <li id="pingTab">PING</li>
+                    <li id="postTab" class="current">POST</li>
+                </ul>
+            <?php endif; ?>
+        <div class="clear"></div>
+        </div>
+    </div><!--breadcrumb-->
+</div><!--head-->
+
+<a href="#" id="show-postback-url">Show Postback URL</a><br><br>
+
+<form id="edit-partner-form" style="margin: 0;" method="POST">
+    <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+    <?php if (!empty($data['post_partner_id'])): ?>
+    <input type="hidden" name="post_partner_id" value="<?php echo $data['post_partner_id']; ?>" />
+    <?php endif; ?>
+    <?php
+    require_once dirname(__FILE__) . '/_form.phtml';
+    ?>
+    <div class="pingtree-form" style="margin-top: 30px;">
+        <button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/disk.png" />Save</button>
+        <button type="submit" name="redir" value="fields"  id="editFields"   style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/table_edit.png" />Edit Fields</button>
+        <button type="submit" name="redir" value="filters" id="editFilters"  style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/arrow_branch.png" />Edit Rules</button>
+        <?php if ($data['ping_post_type'] != Model_Partner::PING_POST_TYPE_PING): ?>
+        <button type="submit" name="redir" value="caps" id="editCaps"  style="margin-left: 15px;"><img style="margin-top: -2px; width: 11px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/cap.gif" />Edit Caps</button>
+        <?php endif; ?>
+        <button type="submit" name="redir" value="template" id="editTemplate"  style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/page_edit.png" />Edit Template</button>
+        <button type="button" id="cancelButton" style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/cross.png" />Cancel</button>
+    </div>
+<?php echo '</div><!-- settings -->'; ?>
+</form>
+
+<script type="text/javascript">
+
+    var checkDirty = true;
+
+    var originalState = [
+<?php
+$ac = false;
+foreach ($data as $k => $v) {
+    if (is_int($k)) {
+        continue;
+    }
+    if ($ac) {
+        echo ",\n";
+    } else {
+        $ac = true;
+    }
+    echo "['" . escapeJSVal($k) . "', '" . escapeJSVal($v) . "']";
+}
+?>
+    ];
+
+    $(document).ready(function() {
+        $('#cancelButton').click(function() {
+            checkDirty = false;
+            document.location.href =<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;
+        });
+
+        if ($('#should-retry-checkbox').attr('checked') || ($('#parse-response').val() == '1')) {
+            $('#advanced-settings-div').show();
+            $('#advanced-settings-toggle-link').html('<img src="/images/opened.png"/>');
+        }
+        ;
+        $('#show-postback-url').click(showPostbackUrlDialog);
+
+        $('#postback-options input[type="checkbox"]').click(changePostbackUrl);
+        changePostbackUrl();
+        
+        $('#pingTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+            
+            $('#edit-partner-form').append('<input type="hidden" name="redir" value="ping">');
+            $('#edit-partner-form').submit();
+        });
+        
+        $('#postTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+            
+            $('#edit-partner-form').append('<input type="hidden" name="redir" value="post">');
+            $('#edit-partner-form').submit();
+        });
+        
+        <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+            $('#partner-type').val(PARTNER_TYPE_PING_POST);
+            $('#ping-post-tab').show();
+            $('#partner-type').attr('disabled', 'disabled');
+
+            $('#success-url-wrapper').hide();
+            $('#success-url-wrapper-replacement').show();
+        <?php endif; ?>
+        
+    });
+
+    $('#edit-partner-form').submit(function() {
+        checkDirty = false;
+    });
+
+    $(window).bind('beforeunload', function() {
+        if (checkDirty && pageStateChanged()) {
+            return 'Your changes are not saved - are you sure you wish to leave this page?';
+        }
+    });
+
+    function pageStateChanged() {
+        var changed = false;
+        $('#edit-partner-form').find('input,select').each(function() {
+            if (changed || ($(this).attr('type') == 'hidden')) {
+                return;
+            }
+            var name = $(this).attr('name');
+            for (var i = 0; i < originalState.length; i++) {
+                if (name == originalState[i][0]) {
+                    var v = $(this).val();
+                    if ($(this).attr('type') == 'checkbox') {
+                        v = $(this).attr('checked') ? '1' : '0';
+                    }
+                    if (v != originalState[i][1]) {
+                        changed = true;
+                    }
+                    return;
+                }
+            }
+        });
+        return changed;
+    }
+    ;
+
+    function showPostbackUrlDialog(e) {
+        e.preventDefault();
+        $('#postback-url-dialog-div').dialog({
+            'title': "Postback URL",
+            'width': "700px",
+            'modal': true,
+            'buttons': {
+                'OK': function() {
+                    $('#postback-url-dialog-div').dialog('destroy');
+                }
+            },
+            'open': function() {
+                $('#conversion-url').select();
+            }
+        });
+    }
+    ;
+
+    function changePostbackUrl() {
+        var id = '';
+        $('input[name="postback-url-option"]').each(function() {
+            if ($(this).attr('checked')) {
+                id = $(this).attr('id');
+            }
+        });
+        var url = '';
+        if ($('#postback-url-option-stop').attr('checked')) {
+            url += '&action[]=<?php echo Helper_Postback::ACTION_STOP_DELIVERY; ?>';
+        }
+        if ($('#postback-url-option-conversion').attr('checked')) {
+            enableAdditionalControls();
+            url += '&action[]=<?php echo Helper_Postback::ACTION_CONVERSION; ?>';
+            if ($('#show-value').attr('checked')) {
+                url += '&value=CONVERSION-VALUE';
+            }
+            if ($('#show-type').attr('checked')) {
+                url += '&type=CONVERSION-TYPE';
+            }
+        } else {
+            disableAdditionalControls();
+        }
+
+        if (url) {
+            url = '<?php echo escapeJSVal('http://' . $_SERVER['HTTP_HOST'] . '/postback/' .
+        Auth::userIdToPostbackHash($data['user_id']));
+?>/?lead_id=LEAD-ID&partner_id=' + <?php echo $id; ?> + url;
+        }
+        $('#conversion-url').val(url);
+        $('#conversion-url').select();
+    }
+    ;
+
+    function appendCheckboxUrls(append) {
+        var v = '';
+        if ($('#show-value' + append).attr('checked')) {
+            v += '&value=[optional - value of conversion]';
+        }
+        if ($('#show-type' + append).attr('checked')) {
+            v += '&type=[optional - conversion kind]';
+        }
+        return v;
+    }
+    ;
+
+    function disableAdditionalControls() {
+        $('#postback-options td.conv label').css('color', '#777');
+        $('#postback-options td.conv input').attr('disabled', 'disabled');
+    }
+    ;
+
+    function enableAdditionalControls() {
+        $('#postback-options td.conv label').css('color', '');
+        $('#postback-options td.conv input').removeAttr('disabled');
+    }
+    ;
+
+</script>
+<div id="postback-url-dialog-div" style="display: none;">
+    <div>
+        <table id="postback-options">
+            <tr>
+                <td class="rb"><input type="checkbox"  id="postback-url-option-conversion" checked="checked" /></td>
+                <td class="rbl"><label for="postback-url-option-conversion">Conversion</label></td>
+                <td class="conv"><input type="checkbox" id="show-type"></td>
+                <td class="conv"><label for="show-type">Track Conversion Type</label></td>
+                <td class="conv">&nbsp; <input type="checkbox" id="show-value"></td>
+                <td class="conv"><label for="show-value">Track Conversion Value</label></td>
+            </tr>
+
+            <tr>
+                <td class="rb"><input type="checkbox" id="postback-url-option-stop" /></td>
+                <td class="rbl"><label for="postback-url-option-stop">Stop Further Delivery</label></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+    </div>
+    <textarea id="conversion-url" type="text" style="width: 100%;" rows="4"> <?php
+echo escapeHtml('http://' . $_SERVER['HTTP_HOST'] . '/postback/' .
+        Auth::userIdToPostbackHash($data['user_id']) . '/?action=' . Helper_Postback::ACTION_CONVERSION .
+        '&partner_id=' . $id . '&lead_id=[your_lead_id]&value=[optional - value of conversion]&type=[optional - conversion kind]');
+?></textarea>
+</div>

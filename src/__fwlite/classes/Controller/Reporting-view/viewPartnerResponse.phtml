@@ -1,0 +1,51 @@
+<div class="head">
+	<h2>Reports</h2>
+	<div class="breadcrumb">
+		<p><?php
+		$arr = array('iid' => $incId);
+		if (!empty($_GET['hide_repost'])) {
+		    $arr['hide_repost'] = 1;
+		}
+		if (isset($_GET['o']['muid'])) {
+		    $arr['uid'] = $_GET['o']['muid'];
+		}
+		echo App::linkFor($this, 'Associated Transactions', array('action' => 'index'), $arr); ?>&gt; Partner Response</p>
+	</div><!--breadcrumb-->
+	<div class="breadcrumb"><?php
+	echo $this->getDidPrevNext(str_replace('.phtml', '.html', basename(__FILE__)), !empty($_GET['iar']), isset($_GET['delivery_id']) ? $_GET['delivery_id'] : '', !empty($_GET['hide_repost']),
+	            (isset($_GET['o']) && is_array($_GET['o'])) ? $_GET['o'] : array(),
+                (isset($_GET['dids'])) ? explode('-', $_GET['dids']) : array());
+
+	?></div>
+</div><!--head-->
+
+<?php
+
+if (strlen($response)) {
+    $s = escapeHtml($response);
+    $s = nl2br($s);
+    $s = str_replace('  ', ' &nbsp;', $s);
+
+    $fullText = explode('||HEADER||',$s);
+
+    echo '<strong>Body:</strong>';
+    echo '<div style="border: 1px solid #ccc; padding: 8px 16px;">';
+    if(isset($fullText[0])) {
+        echo $fullText[0];
+    }
+    else {
+        echo $response;
+    }
+    echo '</div>';
+    if(isset($fullText[1])) {
+        echo '<br /><br />';
+        echo '<strong>Header:</strong>';
+        echo '<div style="border: 1px solid #ccc; padding: 8px 16px;">';
+        echo $fullText[1];
+        echo '</div>';
+    }
+} else {
+    echo '<div style="border: 1px solid #ccc; padding: 8px 16px;">';
+    echo '<i>Empty Response</i>';
+    echo '</div>';
+}

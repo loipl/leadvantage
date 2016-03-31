@@ -1,0 +1,496 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: utility classes.
+*/
+/*
+External links.
+*/
+a[rel ~= "external"]
+	{
+		padding-right: 18px;
+		background: url('<?php echo $i; ?>/xlink-icon.png') no-repeat center right;
+	}
+li.recentcomments > a[rel ~= "external"]
+	{
+		padding-right: 18px !important;
+	}
+/*
+Text styles & special coloration.
+*/
+.with-hilite
+	{
+		color: #000000;
+		background-color: #FFFFCC;
+	}
+.with-fancy-type,
+.with-fancy-type *
+	{
+		font-family: 'Mistral', 'Brush Script MT', 'Monotype Corsiva', 'Zapfino', 'Lucida Handwriting', 'Apple Chancery', 'URW Chancery L', cursive;
+	}
+.with-title-type,
+.with-title-type *
+	{
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+.with-sans-type,
+.with-sans-type *
+	{
+		font-family: 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+.with-comic-type,
+.with-comic-type *
+	{
+		font-family: 'Comic Sans MS', cursive;
+	}
+.with-mono-type,
+.with-mono-type *
+	{
+		font-family: 'Courier New', monospace;
+	}
+.with-serif-type,
+.with-serif-type *
+	{
+		font-family: 'Georgia', serif;
+	}
+.with-text-shadow
+	{
+		text-shadow: 0 2px 2px #DDDDDD;
+	}
+/*
+Backgrounds.
+*/
+.with-bg,
+.with-round-bg
+	{
+		background: #EEEEEE;
+	}
+.with-round-bg
+	{
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+/*
+Border styles.
+*/
+.with-borders,
+.with-round-borders
+	{
+		border: 1px solid #666666;
+	}
+.with-round-borders
+	{
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+img.with-borders,
+img.with-round-borders
+	{
+		padding: 5px;
+		background: #EEEEEE;
+	}
+img.with-borders.alignleft,
+img.with-borders.alignright,
+img.with-round-borders.alignleft,
+img.with-round-borders.alignright
+	{
+		margin-bottom: 15px;
+	}
+/*
+Shadow styles.
+*/
+.with-box-shadow
+	{
+		-moz-box-shadow: 1px 1px 1px #999999;
+		-webkit-box-shadow: 1px 1px 1px #999999;
+		box-shadow: 1px 1px 1px #999999;
+	}
+.with-box-shadows
+	{
+		-moz-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		-webkit-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		box-shadow: 1px 1px 0 #999999, -1px -1px 1px #999999;
+	}
+/*
+Margins & padding.
+*/
+.with-margins,
+ol.with-margins li,
+ul.with-margins li,
+dl.with-margins li,
+dir.with-margins li,
+menu.with-margins li
+	{
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+.with-padding,
+table.with-padding th,
+table.with-padding td
+	{
+		padding: 10px;
+	}
+.with-extra-padding,
+table.with-extra-padding th,
+table.with-extra-padding td
+	{
+		padding: 20px;
+	}
+table.with-padding,
+table.with-extra-padding
+	{
+		padding: 0;
+	}
+/*
+Indentations.
+*/
+.with-indentation
+	{
+		margin-left: 15px;
+	}
+.with-line-indentation
+	{
+		margin-left: 15px;
+		padding-left: 15px;
+		border-style: dashed;
+		border-width: 0 0 0 1px;
+	}
+.with-paragraph-indentation
+	{
+		text-indent: 15px;
+	}
+.with-paragraph-reverse-indentation
+	{
+		text-indent: -15px;
+		padding-left: 15px;
+	}
+.with-large-first-line
+	{
+		text-align: left;
+	}
+.with-large-first-line:first-line
+	{
+		font-size: 200%;
+		line-height: 1.0;
+	}
+.with-large-first-letter:first-letter
+	{
+		float: left;
+		display: block;
+		font-size: 300%;
+		line-height: 0.7;
+		margin: 0 5px 0 0;
+		vertical-align: top;
+		text-transform: uppercase;
+	}
+.with-paragraph-indentation.with-large-first-letter,
+.with-paragraph-reverse-indentation.with-large-first-letter
+	{
+		text-indent: 0;
+	}
+.with-paragraph-reverse-indentation.with-large-first-letter:first-letter
+	{
+		margin-left: -15px;
+	}
+.with-paragraph-indentation.with-large-first-letter:first-letter
+	{
+		margin-left: 15px;
+	}
+/*
+Easy 1-3rd column widths/margins/padding.
+The margin must always be a multiple of 3.
+Padding can be any pixel width, does not matter.
+The parent container width must be divisible by 2,3,4.
+The split widths are calculated by: jquery.easycols.js.
+If margins change, set $.easyCols({margin3rds}).
+*/
+div.with-1-3rd-column-width
+	{
+		width: 0;
+		float: left;
+		display: block;
+		margin-left: 0;
+		margin-right: 15px;
+		border: 0 !important;
+	}
+div.with-1-3rd-column-width.alignright
+	{
+		float: right;
+		margin-right: 0;
+		margin-left: 15px;
+	}
+div.with-1-3rd-column-width.with-bg,
+div.with-1-3rd-column-width.with-round-bg,
+div.with-1-3rd-column-width.with-padding,
+div.with-1-3rd-column-width.with-extra-padding
+	{
+		padding: 10px;
+	}
+div.with-1-3rd-column-width.last
+	{
+		margin-left: 0;
+		margin-right: 0;
+	}
+div.with-1-3rd-column-width > *:first-child,
+div.with-1-3rd-column-width > *.alignleft:first-child + *,
+div.with-1-3rd-column-width > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+/*
+Easy 2-3rds column widths/margins/padding.
+The margin must always be a multiple of 3.
+Padding can be any pixel width, does not matter.
+The parent container width must be divisible by 2,3,4.
+The split widths are calculated by: jquery.easycols.js.
+If margins change, set $.easyCols({margin3rds}).
+*/
+div.with-2-3rds-column-width
+	{
+		width: 0;
+		float: left;
+		display: block;
+		margin-left: 0;
+		margin-right: 15px;
+		border: 0 !important;
+	}
+div.with-2-3rds-column-width.alignright
+	{
+		float: right;
+		margin-right: 0;
+		margin-left: 15px;
+	}
+div.with-2-3rds-column-width.with-bg,
+div.with-2-3rds-column-width.with-round-bg,
+div.with-2-3rds-column-width.with-padding,
+div.with-2-3rds-column-width.with-extra-padding
+	{
+		padding: 10px;
+	}
+div.with-2-3rds-column-width.last
+	{
+		margin-left: 0;
+		margin-right: 0;
+	}
+div.with-2-3rds-column-width > *:first-child,
+div.with-2-3rds-column-width > *.alignleft:first-child + *,
+div.with-2-3rds-column-width > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+/*
+Easy 1-4th column widths/margins/padding.
+The margin must always be a multiple of 4.
+Padding can be any pixel width, does not matter.
+The parent container width must be divisible by 2,3,4.
+The split widths are calculated by: jquery.easycols.js.
+If margins change, set $.easyCols({margin4ths}).
+*/
+div.with-1-4th-column-width
+	{
+		width: 0;
+		float: left;
+		display: block;
+		margin-left: 0;
+		margin-right: 16px;
+		border: 0 !important;
+	}
+div.with-1-4th-column-width.alignright
+	{
+		float: right;
+		margin-right: 0;
+		margin-left: 16px;
+	}
+div.with-1-4th-column-width.with-bg,
+div.with-1-4th-column-width.with-round-bg,
+div.with-1-4th-column-width.with-padding,
+div.with-1-4th-column-width.with-extra-padding
+	{
+		padding: 10px;
+	}
+div.with-1-4th-column-width.last
+	{
+		margin-left: 0;
+		margin-right: 0;
+	}
+div.with-1-4th-column-width > *:first-child,
+div.with-1-4th-column-width > *.alignleft:first-child + *,
+div.with-1-4th-column-width > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+/*
+Easy 2-4ths column widths/margins/padding.
+The margin must always be a multiple of 4.
+Padding can be any pixel width, does not matter.
+The parent container width must be divisible by 2,3,4.
+The split widths are calculated by: jquery.easycols.js.
+If margins change, set $.easyCols({margin4ths}).
+*/
+div.with-2-4ths-column-width
+	{
+		width: 0;
+		float: left;
+		display: block;
+		margin-left: 0;
+		margin-right: 16px;
+		border: 0 !important;
+	}
+div.with-2-4ths-column-width.alignright
+	{
+		float: right;
+		margin-right: 0;
+		margin-left: 16px;
+	}
+div.with-2-4ths-column-width.with-bg,
+div.with-2-4ths-column-width.with-round-bg,
+div.with-2-4ths-column-width.with-padding,
+div.with-2-4ths-column-width.with-extra-padding
+	{
+		padding: 10px;
+	}
+div.with-2-4ths-column-width.last
+	{
+		margin-left: 0;
+		margin-right: 0;
+	}
+div.with-2-4ths-column-width > *:first-child,
+div.with-2-4ths-column-width > *.alignleft:first-child + *,
+div.with-2-4ths-column-width > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+/*
+Easy 3-4ths column widths/margins/padding.
+The margin must always be a multiple of 4.
+Padding can be any pixel width, does not matter.
+The parent container width must be divisible by 2,3,4.
+The split widths are calculated by: jquery.easycols.js.
+If margins change, set $.easyCols({margin4ths}).
+*/
+div.with-3-4ths-column-width
+	{
+		width: 0;
+		float: left;
+		display: block;
+		margin-left: 0;
+		margin-right: 16px;
+		border: 0 !important;
+	}
+div.with-3-4ths-column-width.alignright
+	{
+		float: right;
+		margin-right: 0;
+		margin-left: 16px;
+	}
+div.with-3-4ths-column-width.with-bg,
+div.with-3-4ths-column-width.with-round-bg,
+div.with-3-4ths-column-width.with-padding,
+div.with-3-4ths-column-width.with-extra-padding
+	{
+		padding: 10px;
+	}
+div.with-3-4ths-column-width.last
+	{
+		margin-left: 0;
+		margin-right: 0;
+	}
+div.with-3-4ths-column-width > *:first-child,
+div.with-3-4ths-column-width > *.alignleft:first-child + *,
+div.with-3-4ths-column-width > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+/*
+List styles/icons.
+*/
+ol.with-bullet-icons,
+ul.with-bullet-icons
+	{
+		list-style: none;
+		padding-left: 7px;
+	}
+ol.with-bullet-icons li,
+ul.with-bullet-icons li
+	{
+		padding-left: 25px;
+		background: url('<?php echo $i; ?>/bullet-16.png') no-repeat 0 2px;
+	}
+ol.with-folder-icons,
+ul.with-folder-icons
+	{
+		list-style: none;
+		padding-left: 7px;
+	}
+ol.with-folder-icons li,
+ul.with-folder-icons li
+	{
+		padding-left: 25px;
+		background: url('<?php echo $i; ?>/folder-16.png') no-repeat 0 2px;
+	}
+ol.with-text-file-icons,
+ul.with-text-file-icons
+	{
+		list-style: none;
+		padding-left: 7px;
+	}
+ol.with-text-file-icons li,
+ul.with-text-file-icons li
+	{
+		padding-left: 25px;
+		background: url('<?php echo $i; ?>/text-file-16.png') no-repeat 0 2px;
+	}
+ol.with-img-file-icons,
+ul.with-img-file-icons
+	{
+		list-style: none;
+		padding-left: 7px;
+	}
+ol.with-img-file-icons li,
+ul.with-img-file-icons li
+	{
+		padding-left: 25px;
+		background: url('<?php echo $i; ?>/img-file-16.png') no-repeat 0 2px;
+	}
+ol.with-check-mark-icons,
+ul.with-check-mark-icons
+	{
+		list-style: none;
+		padding-left: 7px;
+	}
+ol.with-check-mark-icons li,
+ul.with-check-mark-icons li
+	{
+		padding-left: 25px;
+		background: url('<?php echo $i; ?>/check-mark-16.png') no-repeat 0 2px;
+	}
+/*
+Table styling.
+*/
+table.with-tabulation-colors
+	{
+		background-color: #CCCCCC;
+	}
+table.with-tabulation-colors tr,
+table.with-tabulation-colors tr.odd
+	{
+		background-color: #EEEEEE;
+	}
+table.with-tabulation-colors tr.even
+	{
+		background-color: #FFFFFF;
+	}
+table.with-tabulation-colors th
+	{
+		color: #000000;
+		background-color: #CCCCCC;
+	}

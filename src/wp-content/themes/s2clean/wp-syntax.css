@@ -1,0 +1,100 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS styles are for: The WP-Syntax plugin ( if installed ).
+WP-Syntax is a WordPress® plugin that allows you to display raw code
+on your site for tutorials, tech support, etc. These CSS rules
+are established in case WP-Syntax is installed. WP-Syntax will
+look for this file ( wp-syntax.css ) in your template dir.
+http://wordpress.org/extend/plugins/wp-syntax/
+*/
+/*
+WP-Syntax outer container.
+*/
+div.wp_syntax
+	{
+		color: #000000;
+		overflow: auto;
+		background: #FFFFFF;
+		border: 1px solid #CCCCCC;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		-moz-box-shadow: inset 1px 1px 1px #333333, inset -1px -1px 1px #333333;
+		-webkit-box-shadow: inset 1px 1px 1px #333333, inset -1px -1px 1px #333333;
+		box-shadow: inset 1px 1px 1px #333333, inset -1px -1px 1px #333333;
+	}
+/*
+Forces scrollbars & height.
+*/
+div.wp-syntax-scroll > div.wp_syntax
+	{
+		overflow: scroll;
+	}
+div.wp-syntax-scroll.height-100 > div.wp_syntax
+	{
+		height: 100px;
+	}
+div.wp-syntax-scroll.height-200 > div.wp_syntax
+	{
+		height: 200px;
+	}
+div.wp-syntax-scroll.height-300 > div.wp_syntax
+	{
+		height: 300px;
+	}
+div.wp-syntax-scroll.height-400 > div.wp_syntax
+	{
+		height: 400px;
+	}
+/*
+WP-Syntax table.
+*/
+div.wp_syntax table
+	{
+		margin: 0;
+	}
+/*
+WP-Syntax div padding.
+*/
+div.wp_syntax div
+	{
+		padding: 5px;
+	}
+/*
+Pre-formatted block styling.
+*/
+div.wp_syntax pre
+	{
+		width: auto;
+		float: none;
+		clear: none;
+		margin: 5px;
+		white-space: pre;
+		overflow: visible;
+		line-height: 1.333;
+	}
+div.wp_syntax pre,
+div.wp_syntax pre *
+	{
+		font-size: 90%;
+		background: transparent;
+		font-family: 'Consolas', 'Courier New', monospace !important;
+	}
+/*
+WP-Syntax line numbers.
+*/
+div.wp_syntax td.line_numbers
+	{
+		color: #EEEEEE;
+		overflow: visible;
+		text-align: right;
+		background: #9FBFDF;
+	}

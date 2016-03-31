@@ -1,0 +1,878 @@
+<style>
+<!--
+#catch-up-dialog input, #catch-up-dialog select {
+    margin-bottom: 5px;
+}
+
+#catch-up-dialog input.disabled {
+    background-color: #c7c7c7;
+}
+
+#content .activity tr:hover {
+    background-color: #eee7c7;
+}
+
+#content .activity tr.top:hover {
+    background-color: #344a53;
+}
+
+#submit-data-from-csv-div div.label {
+    float: left;
+    width: 30%;
+}
+
+#submit-data-from-csv-div button { 
+    height: 32px; 
+    background-color: #f6a828; 
+    color: white; 
+    font-weight: bold; 
+    cursor: pointer; 
+    font-family: inherit; 
+} 
+#submit-data-from-csv-div button:disabled { 
+    background-color: #969FA3; 
+} 
+#add-field-from-url-dialog button:hover { 
+    background-color: #1D353F; 
+} 
+-->
+</style>
+<div class="head"><h2>Campaigns</h2></div>
+
+<div class="activity">
+<table cellpadding="0" cellspacing="0">
+
+	<tbody>
+		<tr class="top">
+			<td class="first">Status <img src="/images/question-bcg.png"/></td>
+			<td class="second">Name <img src="/images/question-bcg.png"/></td>
+			<td class="last">Controls <img src="/images/question-bcg.png"/></td>
+		</tr>
+<?php
+
+$odd = false;
+if (!empty($list) && is_array($list)) {
+    foreach ($list as $campaign) {
+        $odd = !$odd;
+        echo "\t\t<tr class=\"" . ($odd ? 'white' : 'grey') . "\">\n\t\t\t<td class=\"first\">";
+        if ($campaign['is_active']) {
+            echo '<span class="active">Active</span>';
+        } else {
+            echo '<span class="inactive">Inactive</span>';
+        }
+        echo "</td>\n\t\t\t<td class=\"second\">";
+        if ($campaign['shadow_of']) {
+            echo App::linkFor($this, '<img src="/img/icons/ghost.png"/>', array('action' => 'shadowSettings'), array('id' => $campaign['id']));
+        }
+        echo escapeHtml($campaign['name']);
+        echo " &nbsp; ";
+        echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/computer_link.png" />', array('action' => 'apiDetails'), array('id' => $campaign['id']), ' title="API Specs"') . '';
+        echo "</td>\n\t\t\t";
+        echo "<td class=\"last\">"
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" /> Edit',   array('action' => $campaign['shadow_of'] ? 'shadowSettings' : 'edit'),     array('id' => $campaign['id']), ' class="sheet tt-edit-settings"')
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table_edit.png" /> Fields',     array('action' => 'fields'),   array('id' => $campaign['id']), ' class="sheet tt-edit-fields"')
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/package.png" /> Delivery',   array('action' => 'delivery'), array('id' => $campaign['id']), ' class="sheet tt-edit-delivery"')
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/arrow_branch.png" /> Rules',   array('action' => 'filters'), array('id' => $campaign['id']), ' class="sheet tt-edit-filters"');
+        if (!isset($revokeCampaignControl) || (isset($revokeCampaignControl) && (!$revokeCampaignControl))) {
+            echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" /> Delete', array('action' => 'delete'), array('id' => $campaign['id']), ' class="sheet tt-delete-campaign delete-campaign-link" id="delete-' . $campaign['id'] . '"');
+        }
+        
+        echo '<a class="sheet tt-copy-campaign" href="javascript:copyCampaignDialog(' . $campaign['id'] . ');"><img src="' . Config::$urlBase . 'img/icons/page_copy.png" /> Copy</a>';
+
+        if (Auth::getInstance()->isAdminLoggedIn()) {
+                echo '<a class="tt-catch-up" href="javascript:catchUpDialog(' . $campaign['id'] . ');" ><img src="' . Config::$urlBase . 'img/icons/table_refresh.png" /></a>';
+        }
+
+        if ($isAdmin && !$campaign['shadow_of']) {
+            $isTemplate = isset($templatesAssoc[$campaign['id']]);
+            echo '<a class="sheet" href="javascript:' . ($isTemplate ? 'removeCampaignTemplate' : 'addCampaignTemplate') . '(' . $campaign['id'] . ');">';
+
+            if ($isTemplate) {
+                echo '<img id="remove-template-' . $campaign['id'] . '" src="' . Config::$urlBase . 'img/icons/page_delete.png"></a>';
+                Helper_Tooltip::assignTooltipToId('remove-template-' . $campaign['id'], 'Remove Template "' . escapeHtml($templatesAssoc[$campaign['id']]) . '"');
+
+                echo '<a class="sheet" href="javascript:editTemplate(' . $campaign['id'] . ', \'' . escapeJSVal($templatesAssoc[$campaign['id']]) .
+                '\');"><img src="' . Config::$urlBase . 'img/icons/page_edit.png"/ id="edit-template-' . $campaign['id'] . '"';
+                $text = 'Edit template &quot;' . escapeAttrVal($templatesAssoc[$campaign['id']]) . '&quot;';
+                if (!empty($templateIndustriesAssoc[$campaign['id']])) {
+                    $ac = false;
+                    foreach ($templateIndustriesAssoc[$campaign['id']] as $iid) {
+                        if (isset($industries[$iid])) {
+                            if ($ac) {
+                                $text .= ", ";
+                            } else {
+                                $text .= '<br><br> Industries: ';
+                                $ac = true;
+                            }
+                            $text .= escapeAttrVal($industries[$iid]);
+                        }
+                    }
+                }
+                Helper_Tooltip::assignTooltipToId('edit-template-' . $campaign['id'], $text);
+                echo '></a>';
+            } else {
+                echo '<img src="' . Config::$urlBase . 'img/icons/page_add.png"/ class="tt-set-template"></a>';
+            }
+        }
+        echo "</td>\n\t\t</tr>\n";
+    }
+    Helper_Tooltip::assignTooltipToClass('tt-edit-settings',   'Edit settings for this campaign');
+    Helper_Tooltip::assignTooltipToClass('tt-edit-fields',     'Edit campaign fields');
+    Helper_Tooltip::assignTooltipToClass('tt-edit-delivery',   'Edit campaign delivery settings');
+    Helper_Tooltip::assignTooltipToClass('tt-edit-filters',    'Edit campaign rules');
+    Helper_Tooltip::assignTooltipToClass('tt-delete-campaign', 'Delete campaign');
+    Helper_Tooltip::assignTooltipToClass('tt-copy-campaign',   'Copy campaign');
+    if (Auth::getInstance()->isAdminLoggedIn()) {
+        Helper_Tooltip::assignTooltipToClass('tt-catch-up',     'Repost old data to a new partner');
+        Helper_Tooltip::assignTooltipToClass('tt-set-template', 'Set As Template');
+    }
+} else {
+    echo "\t\t<tr><td colspan=\"2\" style=\"text-align: center;\">No Campaigns</td></tr>\n";
+}
+
+?>
+	</tbody>
+</table>
+</div><!-- activity -->
+
+<?php
+if (isset($count, $perPage) && ($count > $perPage)) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo ' <a href="?all">Show All</a></div>';
+}
+
+?>
+<div class="clear" ></div>
+
+
+<?php if (!isset($revokeCampaignControl) || (isset($revokeCampaignControl) && (!$revokeCampaignControl))) {?>
+				<div class="addcampaign">
+
+					<div class="leftbutton">
+						<a href="<?php echo App::getFrontController()->urlFor($this, array('action' => 'add')); ?>"><span><img src="/img/icons/add.png" style="margin-bottom: -2px;" alt=""/></span> Add New Campaign </a>
+					</div><!--leftbutton-->
+
+<?php if (!empty($templatesAssocInd)) { ?>
+					<div class="template" style="width: 445px;">
+
+						<div class="leftpart">
+							<span style="font-weight: bold; font-size: 14px;"><img src="/img/icons/add.png" style="margin-bottom: -2px;" alt=""/> Add New From Template</span>
+						</div><!--leftpart-->
+						<div class="rightpart" style="width: 240px;">
+							<p><select id="add-new-from-template">
+								<option value="0">-- Select Template --</option>
+<?php
+
+foreach ($templatesAssocInd as $campaignId => $templateName) {
+    echo '<option value="' . $campaignId . '">' . escapeHtml($templateName) . "</option>\n";
+}
+
+?>
+
+								</select></p>
+						</div><!--rightpart-->
+						<div class="clear"></div>
+					</div><!--template-->
+<?php } ?>
+                                         	
+                                                    <div class="leftbutton" style="margin-left: 15px; background-color: #f0f0f0;"> 
+                                                        <a id="submit-data-from-csv-button" href="javascript:void(0);" style="font-weight: bold; font-size: 14px;"> 
+                                                            Batch Upload Leads
+                                                        </a> 
+                                                    </div> 
+                                                    <div class="clear"></div> 
+                                                
+
+					<div class="clear"></div>
+				</div><!--addcampaign-->
+<?php } ?>
+
+<?php
+
+// #############################################################################
+// #############################################################################
+//   SHADOW CAMPAIGNS
+
+if (Auth::getInstance()->isAdmin()) { ?>                              
+<div class="clear"></div>
+    <div class="addcampaign">
+        <div class="leftbutton" style="width: 665px; padding: 2px 10px 0px; margin-top: 10px; background-color: #f0f0f0;">
+<?php
+    echo ' &nbsp; <label for="shadow-campaign-id" style="font-weight: bold; font-size: 14px; padding-top: 4px;">Attach Shadow Campaign To </label>';
+    echo "<select id=\"shadow-campaign-id\">\n<option value=\"0\"></option>\n";
+    foreach ($usernames as $uid => $userName) {
+        if (empty($campaignsPerUser[$uid])) {
+            continue;
+        }
+        $options = array();
+        foreach ($campaignsPerUser[$uid] as $cr) {
+            if (!$cr['shadow_of']) {
+                if (!empty($campaignsWithShadows[$cr['id']])) {
+                    $s = ' style="color: red;" title="This campaign already has a shadow campaign"';
+                    $a = ' ***';
+                } else {
+                    $s = '';
+                    $a = '';
+                }
+                $options[]= "<option$s value=\"$cr[id]\">" . escapeHtml($cr['name']) . "$a</option>\n";
+            }
+        }
+        if ($options) {
+            echo "<optgroup label=\"" . escapeAttrVal($userName) . "\">";
+            echo implode("\n", $options);
+            echo "</optgroup>\n";
+        }
+    }
+
+    echo "</select></label>";
+?>
+</div>
+
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    var el = $('#shadow-campaign-id');
+    el.click(addShadowCampaign).change(addShadowCampaign);
+});
+
+function addShadowCampaign() {
+	var cid = $('#shadow-campaign-id').val();
+	if (cid == '0') {
+		return;
+	};
+	var opt = $('#shadow-campaign-id').find('option[value="' + cid + '"]');
+	var pgr = opt.parent();
+	var cname = opt.text();
+	$('#shadow-campaign-id').find('option[value="0"]').attr('selected', 'selected');
+	$('#add-shadow-campaign-dlg').dialog({
+		'title' : 'Add Shadow Campaign to "' + cname + '"',
+		'modal' : true,
+		'open'  : function() {
+			$('#shadow-campaign-dlg-name').val(pgr.attr('label') + ': ' + cname);
+			attachShadowButtons(cid);
+		}
+	});
+
+};
+
+function attachShadowButtons(cid) {
+	$('#add-shadow-campaign-dlg').dialog('option', 'buttons', {
+		'Save'   : function() {createShadowCampaign(cid);},
+		'Cancel' : function() {$('#add-shadow-campaign-dlg').dialog('destroy');}
+	});
+};
+
+function createShadowCampaign(cid) {
+	$('#add-shadow-campaign-dlg').dialog('option', 'buttons', {});
+	var cname = $('#shadow-campaign-dlg-name').val();
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxCreateShadowCampaign')) . "?id='";
+	?> + cid, {'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'" ?>, 'name' : cname}, function(response) {
+		if (response == 'OK') {
+			$('#add-shadow-campaign-dlg').dialog('destroy');
+			window.location.reload(true);
+		} else {
+			attachShadowButtons(cid);
+			alert(response);
+		}
+	});
+};
+
+</script>
+<?php
+}
+
+// #############################################################################
+?>
+<script type="text/javascript">
+
+var titles = [<?php
+
+$comma = false;
+foreach ($list as $campaign) {
+    if ($comma) {
+        echo ',';
+    } else {
+        $comma = true;
+    }
+    echo '[' . $campaign['id'] . ', \'' . escapeJSVal($campaign['name']) . '\']';
+}?>];
+    
+<?php 
+$pingPostList = array();
+foreach ($list as $campaign) {
+    if ($campaign['is_pingpost'] || $campaign['is_ping_and_post']) {
+        $pingPostList[] = intval($campaign['id']);
+    }
+}
+?>
+    
+var pingPostList = <?php echo json_encode($pingPostList); ?>;
+
+var industriesPerCampaign = {<?php
+
+$ac = false;
+foreach ($templateIndustriesAssoc as $cid => $arr) {
+    if ($ac) {
+        echo ', ';
+    } else {
+        $ac = true;
+    }
+    echo "'$cid'" . ': [' . implode(', ', $arr) . "]";
+}
+?>};
+
+var lastClickedTemplate = 0;
+
+$(document).ready(function() {
+    $('a.delete-campaign-link').click(function(e) {
+        e.preventDefault();
+        var arr = $(this).attr('id').split('-');
+        if (arr.length != 2) {
+            return;
+        }
+        var id = parseInt(arr[1]);
+        if (confirm("Warning: all of your statistics related to this campaign will be deleted as well.\n\nAre you sure you wish to delete this campaign?")) {
+        	deleteCampaign(id);
+        };
+	});
+
+	$('#add-new-from-template').click(addNewFromTemplate).change(addNewFromTemplate);
+	$('#catch-up-dialog-rate-limit-type').click(updateCatchUpialogRLValEnabledState).change(updateCatchUpialogRLValEnabledState);
+	updateCatchUpialogRLValEnabledState();
+    <?php Helper_Tooltip::jscript(); ?>
+            
+        $('#submit-data-from-csv-div').dialog({
+            modal : true,
+            title : 'Submit leads to campaign from CSV/TSV file',
+            minWidth:400, 
+            autoOpen:false
+        });
+        
+        $('#submit-data-from-csv-button').click(function(){
+            $('#submit-data-from-csv-div').dialog('open');
+        });
+        
+        $('#submit-data-from-csv-cancel-button').click(function(e){
+            $('#submit-data-from-csv-div').dialog('close');
+            e.preventDefault();
+        });
+        
+        $('#submit-data-from-csv-submit-button').click(function(){
+            $(this).attr('disabled', true);
+            $('#submit-data-from-csv-form').submit();
+        });
+        
+        $('#submit-data-from-csv-form').ajaxForm(function(data) {    
+            try {
+                var decodedData = JSON.parse(data);
+                if (decodedData.status === '1') {
+                    $('#submit-data-from-csv-success').html(decodedData.message).show();
+                    if (typeof decodedData.errors === 'object' && decodedData.errors.length != 0) {
+                        $('#submit-data-from-csv-error').html('');
+                        for (var i = 0; i < 3; i++) {
+                            if (typeof decodedData.errors[i] !== 'undefined') {
+                                $('#submit-data-from-csv-error').append('<div>' + decodedData.errors[i] + '</div>');
+                            }
+                        }
+                        $('#submit-data-from-csv-error').show();
+                    } else {
+                        $('#submit-data-from-csv-error').hide();
+                    }
+                } else {
+                    $('#submit-data-from-csv-error').html(decodedData.message).show();
+                    $('#submit-data-from-csv-success').hide();
+                }
+                $('#submit-data-from-csv-submit-button').removeAttr('disabled');
+            } catch (e) {
+                $('#submit-data-from-csv-submit-button').removeAttr('disabled');
+                console.log(data);
+            }
+            
+        }); 
+        
+        <?php if (!Auth::getInstance()->isAdminLoggedIn()): ?> 
+            $('#content .activity tr td.last').css('width', '410px');
+        <?php endif; ?>
+});
+
+function addNewFromTemplate() {
+	var id = parseInt($('#add-new-from-template').val());
+	if (id == lastClickedTemplate) {
+		return;
+	} else {
+		lastClickedTemplate = id;
+	}
+	if (!id) {
+		return;
+	}
+
+	var templateName = $('#add-new-from-template').find('option[value="' + id + '"]').text();
+	$('#tcopy-campaign-fields').attr('checked', 'checked');
+    $('#tcopy-campaign-rules').attr('checked', 'checked');
+	$('#tcopy-campaign-new-name').val('');
+
+	$('#new-from-template-dialog').dialog({
+		'modal' : true,
+		'title' : 'New campaign from template "' + templateName + '"',
+		'open'  : function() {attachTemplateButtons(id); $('#tcopy-campaign-new-name').focus();},
+		'close' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0;}
+	});
+}
+
+function deleteCampaign(id) {
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxDelete')) . "?id='"; ?> + id,
+		{'id': id, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			// $('#dlg-delete').dialog('destroy');
+			window.location.reload();
+		}
+	});
+};
+
+function addCampaignTemplate(id) {
+	$('#campaign-template-name').val('');
+	$('#campaign-template-name').focus();
+	$('#campaign-template-dialog').find('input[type="checkbox"]').removeAttr('checked');
+	$('#campaign-template-dialog').dialog({
+		'modal' : true,
+		'title' : 'Add Campaign Template',
+		'open'  : function() {attachTemplateDlgButtons(id, true); $('#campaign-template-dialog').focus();}
+	});
+};
+
+function editTemplate(id, name) {
+	$('#campaign-template-name').val(name);
+	$('#campaign-template-name').focus();
+	$('#campaign-template-dialog').find('input[type="checkbox"]').removeAttr('checked');
+	var arr = industriesPerCampaign['' + id];
+	if (typeof(arr) != 'undefined') {
+		for (var i = 0; i < arr.length; i++) {
+			$('#cbx_industry-' + arr[i]).attr('checked', 'checked');
+		};
+	};
+	$('#campaign-template-dialog').dialog({
+		'modal' : true,
+		'title' : 'Edit Campaign Template',
+		'open'  : function() {attachTemplateDlgButtons(id, false); $('#campaign-template-dialog').focus();}
+	});
+};
+
+function removeCampaignTemplate(id) {
+	if (confirm('Remove template?')) {
+		$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxDeleteCampaignTemplate')) . "'"; ?>,
+			{'id': id, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+			if (response != 'OK') {
+				alert(response);
+			} else {
+				window.location.reload();
+			}
+		});
+	};
+};
+
+function saveTemplate(id) {
+	var templateName = $('#campaign-template-name').val();
+	var arr = [];
+	$('#campaign-template-dialog input[type="checkbox"]').each(function() {
+		if ($(this).attr('checked')) {
+			var parts = $(this).attr('id').split('-');
+			if (parts.length == 2) {
+				arr.push(parseInt(parts[1]));
+			};
+		};
+	});
+
+	var data = {'id' : id, 'name' : templateName, 'industries' : arr,
+			'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxMarkCampaignAsTemplate')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			$('#campaign-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function updateTemplate(id) {
+	var templateName = $('#campaign-template-name').val();
+	var arr = [];
+	$('#campaign-template-dialog input[type="checkbox"]').each(function() {
+		if ($(this).attr('checked')) {
+			var parts = $(this).attr('id').split('-');
+			if (parts.length == 2) {
+				arr.push(parseInt(parts[1]));
+			};
+		};
+	});
+	var data = {'id' : id, 'name' : templateName, 'industries' : arr,
+			'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxUpdateCampaignTemplate')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			$('#campaign-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function attachTemplateDlgButtons(id, save) {
+	$('#campaign-template-dialog').dialog('option', 'buttons', {
+		'Save'   : save ? function() {saveTemplate(id);} : function() {updateTemplate(id);},
+		'Cancel' : function() {$('#campaign-template-dialog').dialog('destroy');}
+	});
+}
+
+function copyCampaignDialog(id) {
+	var campaignTitle = '';
+	for (var i = 0; i < titles.length; i++) {
+		var arr = titles[i];
+		if (arr[0] == id) {
+			campaignTitle = arr[1];
+		};
+	}
+	$('#copy-campaign-fields').attr('checked', 'checked');
+	$('#copy-campaign-delivery').attr('checked', 'checked');
+    $('#copy-campaign-rules').attr('checked', 'checked');
+    
+	$('#copy-campaign-dialog').dialog({
+		'modal' : true,
+		'title': 'Copy campaign "' + campaignTitle + '"',
+		'open' : function() {attachButtons(id); $('#copy-campaign-new-name').focus();}
+	});
+}
+
+function attachButtons(id) {
+	$('#copy-campaign-dialog').dialog('option', 'buttons', {
+		'Copy'   : function() {copyCampaign(id);},
+		'Cancel' : function() {$('#copy-campaign-dialog').dialog('destroy');}
+	});
+}
+
+function attachTemplateButtons(id) {
+	$('#new-from-template-dialog').dialog('option', 'buttons', {
+		'Create' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0; newCampaignFromTemplate(id);},
+		'Cancel' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0; $('#new-from-template-dialog').dialog('destroy');}
+	});
+}
+
+function copyCampaign(id) {
+	var copyFields   = $('#copy-campaign-fields').attr('checked')   ? '1' : '';
+	var copyDelivery = $('#copy-campaign-delivery').attr('checked') ? '1' : '';
+    var copyRules    = $('#copy-campaign-rules').attr('checked')   ? '1' : '';
+    
+	var newName      = $.trim($('#copy-campaign-new-name').val());
+
+	var data         = {'id' : id, 'new_name' : newName, 'fields' : copyFields, 'delivery' : copyDelivery, 'rules' : copyRules, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+
+	$('#copy-campaign-dialog').dialog('option', 'buttons', {});
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxCopyCampaign')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+			attachButtons(id);
+		} else {
+			$('#copy-campaign-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function newCampaignFromTemplate(id) {
+	var copyFields   = $('#tcopy-campaign-fields').attr('checked')   ? '1' : '';
+    var copyRules   = $('#tcopy-campaign-rules').attr('checked')   ? '1' : '';
+	var newName      = $.trim($('#tcopy-campaign-new-name').val());
+
+	var data         = {'id' : id, 'new_name' : newName, 'fields' : copyFields, 'rules' : copyRules, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+
+	$('#new-from-template-dialog').dialog('option', 'buttons', {});
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxNewFromTemplate')) . "'" ?>, data, function (response) {
+		if (response != 'OK') {
+			alert(response);
+			attachTemplateButtons(id);
+		} else {
+			$('#new-from-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function checkAllIndustries() {
+	$('#campaign-template-dialog input[type="checkbox"]').attr('checked', 'checked');
+};
+
+function unCheckAllIndustries() {
+	$('#campaign-template-dialog input[type="checkbox"]').removeAttr('checked');
+};
+
+<?php
+
+if (Auth::getInstance()->isAdminLoggedIn()) { ?>
+
+var catchupJobs = [<?php
+
+$addComa = false;
+foreach ($catchupJobs as $cj) {
+    if ($addComa) {
+        echo ", ";
+    } else {
+        $addComa = true;
+    }
+    echo "[$cj[0], $cj[1]]";
+}
+
+?>];
+
+var partnerNamesAssoc = [<?php
+if (isset($partnersAssoc) && is_array($partnersAssoc)) {
+    $addComa = false;
+    foreach ($partnersAssoc as $pid => $pname) {
+        if ($addComa) {
+            echo ",";
+        } else {
+            $addComa = true;
+        }
+        echo "\n\t[$pid, '" . escapeJSVal($pname) . "']" ;
+    }
+    if ($addComa) {
+        echo "\n";
+    }
+}
+?>];
+
+
+function catchUpDialog(campaignId) {
+	var campaignTitle = '';
+	for (var i = 0; i < titles.length; i++) {
+		var arr = titles[i];
+		if (arr[0] == campaignId) {
+			campaignTitle = arr[1];
+		};
+	}
+	for (var i = 0; i < partnerNamesAssoc.length; i++) {
+		var arr = partnerNamesAssoc[i];
+		var pid = arr[0];
+		var pName = arr[1];
+		var found = false;
+		for (var j = 0; j < catchupJobs.length; j++) {
+			var arr2 = catchupJobs[j];
+			if ((arr2[0] == campaignId) && (arr2[1] == pid)) {
+				found = true;
+				break;
+			};
+		}
+		var option = $('#catch-up-dialog-partner-id').find('option[value=' + pid + ']');
+		option.text((found ? '*** ' : '') + pName + (found ? ' ***' : ''));
+		option.attr('title', (found ? 'This partner already has an active catchup job' : ''));
+		if (found) {
+			option.css('color', 'red');
+		} else {
+			option.css('color', '');
+		};
+	}
+        
+        if (pingPostList.indexOf(campaignId) !== -1) {
+            $('#catch-up-dialog-partner-id option.ping-post').show();
+            $('#catch-up-dialog-partner-id option.post-only').hide();
+        } else {
+            $('#catch-up-dialog-partner-id option.ping-post').hide();
+            $('#catch-up-dialog-partner-id option.post-only').show();
+        }
+        
+	$('#catch-up-dialog').dialog({
+		'title' : 'Catch Up on "' + campaignTitle + '"',
+		'modal' : true,
+		'open'  : function() {
+			$('#catch-up-dialog-days').val('7');
+			$('#catch-up-dialog-hours').val('0');
+			$('#catch-up-dialog-limit').val('0');
+			$('#catch-up-dialog-rate-limit-type').val('0');
+			$('#catch-up-dialog-rate-limit').val('');
+			attachCatchUpButtons(campaignId);
+			$('#catch-up-dialog-partner-id').focus();
+		}
+	});
+};
+
+
+function attachCatchUpButtons(campaignId) {
+	$('#catch-up-dialog').dialog('option', 'buttons', {
+		'Add To Queue' : function() {addCatchUpToQueue(campaignId);},
+		'Cancel'       : function() {$('#catch-up-dialog').dialog('destroy');}
+	});
+};
+
+function addCatchUpToQueue(campaignId) {
+	var partnerId = $('#catch-up-dialog-partner-id').val();
+	if (partnerId == '0') {
+		alert('Please select a partner');
+		$('#catch-up-dialog-partner-id').focus();
+		return;
+	};
+	var option = $('#catch-up-dialog-partner-id').find('option[value="' + partnerId + '"]');
+	if (option.attr('title') == 'This partner already has an active catchup job') {
+		alert('This partner already has an active catchup job');
+		$('#catch-up-dialog-partner-id').focus();
+		return;
+	}
+	var data = {
+		'__nonce'    : <?php echo "'" . Session::getSession()->getNonce() . "'"?>,
+		' id'        : campaignId,
+		'partner_id' : partnerId,
+		'days'       : $('#catch-up-dialog-days').val(),
+		'hours'      : $('#catch-up-dialog-hours').val(),
+		'limit'      : $('#catch-up-dialog-limit').val(),
+		'rlt'        : $('#catch-up-dialog-rate-limit-type').val(),
+		'rl'         : $('#catch-up-dialog-rate-limit').val(),
+	};
+	$('#catch-up-dialog').dialog('option', 'buttons', {});
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxAddCatchUpToQueue')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+			attachCatchUpButtons(campaignId);
+		} else {
+			$('#catch-up-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+};
+
+<?php } ?>
+
+function updateCatchUpialogRLValEnabledState() {
+	var v = $('#catch-up-dialog-rate-limit-type').val();
+	if (v == '0') {
+		$('#catch-up-dialog-rate-limit').attr('disabled', 'disabled');
+		$('#catch-up-dialog-rate-limit').addClass('disabled');
+	} else {
+		$('#catch-up-dialog-rate-limit').removeAttr('disabled');
+		$('#catch-up-dialog-rate-limit').removeClass('disabled');
+	};
+};
+
+</script>
+<div id="copy-campaign-dialog" style="display: none;">
+<label>Campaign Name: <input type="text" id="copy-campaign-new-name" /></label><br />
+<label><input type="checkbox" id="copy-campaign-fields"> Copy Campaign Fields</label><br />
+<label><input type="checkbox" id="copy-campaign-delivery"> Copy Delivery Settings</label><br />
+<label><input type="checkbox" id="copy-campaign-rules"> Copy Campaign Rules</label><br />
+</div>
+
+
+<div id="new-from-template-dialog" style="display: none;">
+<label>Campaign Name: <input type="text" id="tcopy-campaign-new-name" /></label><br />
+<label><input type="checkbox" id="tcopy-campaign-fields"> Copy Campaign Fields</label><br />
+<label><input type="checkbox" id="tcopy-campaign-rules"> Copy Campaign Rules</label><br />
+</div>
+
+<div id="campaign-template-dialog" style="display: none;">
+<label>Template Name: <input type="text" id="campaign-template-name"></label><br />
+<?php
+
+if (!empty($industries)) {
+    echo "<br />Industries: (<a href=\"javascript:checkAllIndustries();\">Check All</a>) (<a href=\"javascript:unCheckAllIndustries();\">Clear</a>)<br />\n";
+}
+
+foreach ($industries as $id => $name) {
+    echo "<label><input type=\"checkbox\" id=\"cbx_industry-$id\"> " . escapeHtml($name) . "</label><br />\n";
+}
+
+?>
+</div>
+<?php
+if (Auth::getInstance()->isAdmin()) {
+?>
+<div id="add-shadow-campaign-dlg" style="display: none;">
+<label>Campaign Name <input type="text" id="shadow-campaign-dlg-name" /></label>
+</div>
+<?php
+}
+
+if (Auth::getInstance()->isAdminLoggedIn()) {
+?>
+
+<div id="catch-up-dialog" style="display: none;">
+
+<label>Partner:<br>
+<select id="catch-up-dialog-partner-id">
+<option value="0"></option>
+<?php
+
+if (isset($pingPartners) && is_array($pingPartners)) {
+    foreach ($pingPartners as $pid => $pname) {
+        echo "<option class=\"ping-post\" value=\"$pid\">" . escapeHtml($pname) . "</option>\n";
+    }
+}
+
+if (isset($postOnlyPartners) && is_array($postOnlyPartners)) {
+    foreach ($postOnlyPartners as $pid => $pname) {
+        echo "<option class=\"post-only\" value=\"$pid\">" . escapeHtml($pname) . "</option>\n";
+    }
+}
+
+?>
+</select></label><br>
+<label>Days<br>
+<input type="text" id="catch-up-dialog-days">
+</label><br>
+<label>Hours<br>
+<input type="text" id="catch-up-dialog-hours">
+</label><br>
+<label>Max deliveries (0 unlimited)<br>
+<input type="text" id="catch-up-dialog-limit">
+</label><br>
+<label>Rate Limit Type<br>
+<select id="catch-up-dialog-rate-limit-type">
+<option value="0">None</option>
+<?php
+
+$deliveryList = SingletonRegistry::getModelPartner()->listDeliveryCapTypesAssoc();
+foreach ($deliveryList as $k => $v) {
+    echo "<option value=\"$k\">" . escapeHtml($v) . "</option>\n";
+}
+
+?>
+</select></label><br>
+<label>Rate Limit<br>
+<input type="text" id="catch-up-dialog-rate-limit" value="">
+</label>
+</div>
+
+<?php } ?>
+
+<div id="submit-data-from-csv-div" style="display: none;">
+    <form action="ajaxSubmitDataFromCsv.html" id="submit-data-from-csv-form" method="POST" enctype="multipart/form-data">
+        <div class="message">
+            <div id="submit-data-from-csv-success" style="color:green;font-weight: bold;display:none;"></div>           
+            <div id="submit-data-from-csv-error" style="color:red;font-weight: bold;display:none;"></div>           
+        </div>
+        <div style="margin-top: 10px;">
+            <div class="label"><label>Campaign:</label></div>
+            <div><select name="campaign_id" style="max-width: 60%;">
+                <?php 
+                    foreach($list as $campaign) {
+                        echo '<option value="' . $campaign['id'] . '">' . $campaign['name'] . '</option>';
+                    }  
+                ?>
+            </select></div>      
+        </div>
+        <div style="margin-top: 10px;">
+             <div class="label"><label>CSV/TSV file:</label></div>    
+             <div><input style="border:none; height: auto;" type="file" name="file"></div>
+             <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>">       
+        </div>
+        <div style="margin-top: 10px;">
+            <button id="submit-data-from-csv-submit-button" type="submit">Submit</button> 
+            <button id="submit-data-from-csv-cancel-button">Close</button>
+        </div>
+    </form>
+       
+</div>
+

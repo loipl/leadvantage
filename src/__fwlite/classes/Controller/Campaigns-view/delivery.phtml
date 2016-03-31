@@ -1,0 +1,408 @@
+<style>
+<!--
+.drag-class {
+    background-color: #FFF8D8 !important;
+}
+#delivery-table-header {
+    margin-bottom: 0px !important;
+}
+.green-arrow {
+    cursor: pointer !important;
+}
+-->
+</style>
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> <a href="/campaigns/edit.html?id=<?php echo $data['id']?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Delivery
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+
+<form id="delivery-form" style="margin: 0;" id="delivery-form" method="POST">
+<?php if ($data['round_robin'] === '1'): ?>
+    <div style="font-size: 14px;font-weight: bold;color: #46893A; padding-bottom: 10px;">Distribution: <span style="color:black">Round-robin </span><?php Helper_Tooltip::toolTipFromWP('what-is-round-robin'); ?></div>
+<?php elseif ($data['auction'] === '1'): ?>
+    <div style="font-size: 14px;font-weight: bold;color: #46893A; padding-bottom: 10px;">Distribution: <span style="color:black">Auction </span><?php Helper_Tooltip::toolTipFromWP('what-is-auction'); ?></div>
+<?php endif; ?>
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+
+<table id="delivery-table-header" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr class="top">
+			<td class="first">Order <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-delivery-order'); ?></td>
+			<td class="second">Partner <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-delivery-partner'); ?></td>
+			<td class="third">Always <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-delivery-always-toggle'); ?></td>
+			<td class="last">&nbsp;</td>
+		</tr>
+
+	</tbody>
+</table>
+<table id="delivery-table" cellpadding="0" cellspacing="0">
+	<tbody>
+            <?php 
+            $noPartner = FrontController::checkIfUserHasNoPartner($getPingPostPartner);
+            if ($noPartner) {?>
+            <tr>
+                <td colspan="4" style="text-align: center; height:30px;">
+                    No Partners Available - <a href="/partners/add.html">Add a New Partner</a>
+                </td>
+            </tr>
+            <?php } ?>
+	</tbody>
+</table>
+
+
+
+<div class="addphartner" id="add-partner-div">
+	<div class="template" style="margin-left: 0; width: 610px; text-align: right;">
+        <div style="width: 20px; float: left; margin-top: 10px;">
+        <img src="/img/icons/add.png"></div><b style="font-size: 14px;"> Add Partner</b> &nbsp; <select id="add-partner-dropdown" style="margin: 6px 0; width: 470px;">
+        	<option value="0"></option>
+<?php
+
+        foreach ($partnerNames as $pid => $name) {
+            echo "\n\t\t\t\t<option class=\"partner-dropdown-option\" value=\"$pid\">" . escapeHtml($name) . "</option>";
+        }
+
+?>
+
+        </select>
+	</div><!--template-->
+<?php if ($data['is_master'] && !empty($wrapperNames)) { ?>
+</div><!--addphartner-->
+<br /><br />
+<div class="addchampaign" id="add-campaign-div">
+	<div class="template" style="margin-left: 0; width: 610px; text-align: right;">
+        <div style="width: 20px; float: left; margin-top: 10px;">
+        <img src="/img/icons/add.png"></div><b style="font-size: 14px;"> Add Campaign</b> &nbsp; <select id="add-campaign-dropdown" style="margin: 6px 0; width: 470px;">
+        	<option value="0"></option>
+<?php
+
+        foreach ($wrapperNames as $row) {
+            if ($row['is_active'] == '1') {
+                echo "\n\t\t\t\t<option class=\"partner-dropdown-option\" value=\"$row[id]\">" . escapeHtml($row['name']) . (($row['is_active'] == '1') ? '' : ' *** INACTIVE ***') . "</option>";
+            }  
+        }
+
+?>
+
+        </select>
+	</div><!--template-->
+<?php } ?>
+
+	<div class="clear"></div>
+</div><!--addphartner-->
+
+<div class="pingtree-form" style="margin-top: 30px;">
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />SAVE</button>
+<button type="submit" name="redir" value="edit"   id="editSettings" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png" />Edit Settings</button>
+<button type="submit" name="redir" value="fields" id="editFields"   ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<button type="submit" name="redir" value="filters" id="editRule" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+<button type="button" id="cancelButton" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+
+var partnerNames = [<?php
+
+$addComa = false;
+foreach ($partnerNames as $pid => $name) {
+    if ($addComa) {
+        echo ', ';
+    } else {
+        $addComa = true;
+    }
+    echo "\n\t[$pid, '" . escapeJSVal(escapeHtml($name)) . "', 0,1]";
+}
+
+if ($data['is_master']) {
+    foreach ($wrapperNames as $row) {
+        if ($row['wrapped_id'] == $data['id']) {
+            continue;
+        }
+        if ($addComa) {
+            echo ', ';
+        } else {
+            $addComa = true;
+        }
+        echo "\n\t[$row[id], '" . escapeJSVal(escapeHtml($row['name']) . (($row['is_active'] == '1') ? '' : ' *** INACTIVE ***')) . "', $row[wrapped_id], $row[is_active]]";
+    }
+}
+
+
+?>
+
+];
+
+var checkDirty = true;
+
+var originalState = [];<?php
+
+foreach ($list as $row) {
+    echo "\noriginalState.push([{$row['partner_id']}, {$row['always_send']}]);";
+}
+
+?>
+
+var partnerMissingFields = {<?php
+
+$addComa = false;
+foreach ($partnerMissingFields as $pid => $text) {
+    if ($addComa) {
+        echo ', ';
+    } else {
+        $addComa = true;
+    }
+    echo "'i_$pid' : '" . escapeJSVal(escapeHtml($text)) . "'";
+}
+
+?>};
+
+function addPartnerClicked() {
+	var v = parseInt($('#add-partner-dropdown').val());
+	if (v == 0) {
+		return;
+	}
+
+	var error   = false;
+	var errText = '';
+	if (partnerMissingFields['i_' + v]) {
+		error   = true;
+		errText = partnerMissingFields['i_' + v];
+	}
+	addDelivery(v, 0, error, errText);
+	$(this).attr('selectedIndex', 0);
+        makeTableOrderingByDragAndDrop();
+};
+
+function addCampaignClicked() {
+	var v = parseInt($('#add-campaign-dropdown').val());
+	if (v == 0) {
+		return;
+	}
+
+	var error   = false;
+	var errText = '';
+	if (partnerMissingFields['i_' + v]) {
+		error   = true;
+		errText = partnerMissingFields['i_' + v];
+	}
+	addDelivery(v, 0, error, errText);
+	$(this).attr('selectedIndex', 0);
+        makeTableOrderingByDragAndDrop();
+};
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	$('#add-partner-dropdown').click(addPartnerClicked).change(addPartnerClicked);
+	$('#add-campaign-dropdown').click(addCampaignClicked).change(addCampaignClicked);
+<?php
+
+foreach ($list as $row) {
+    echo "\n\taddDelivery({$row['partner_id']}, {$row['always_send']}, " . (!empty($row['error']) ? 'true' : 'false') . ", '$row[offending_fields]');";
+}
+
+Helper_Tooltip::jscript();
+
+?>
+            
+makeTableOrderingByDragAndDrop();
+showHideAddPartnerDiv();
+
+});
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+	checkDirty = true;
+});
+
+$('#delivery-form').submit(function() {
+	checkDirty = false;
+});
+
+function makeTableOrderingByDragAndDrop () {
+    $("#delivery-table").tableDnD({
+        onDragClass: "drag-class",
+        onDrop: function() {
+            updateOrderNumbers();
+        }
+    });
+}
+
+function addDelivery(partnerId, alwaysSend, error, appendMessage) {
+	var name = '';
+	var wrappedId = 0;
+	for(var i = 0; i < partnerNames.length; i++) {
+		var partner = partnerNames[i];
+		if (partner[0] == partnerId) {
+			name = partner[1];
+			wrappedId = partner[2];
+			break;
+		};
+	};
+	if (name == '') {
+		return;
+	};
+	var found = false;
+	$('#delivery-table input[type="hidden"]').each(function() {
+		if (parseInt($(this).val()) == partnerId) {
+			found = true;
+		}
+	});
+	if (found) {
+		return;
+	};
+
+	var html = "<tr><td class=\"first delivery-order-nr\" style=\"text-align: right;\"></td>";
+	html += "<td class=\"second\"><input type=\"hidden\" name=\"partner_id[]\" value=\"" + partnerId + "\"><span>";
+
+	if (wrappedId) {
+		html += '<b>(campaign)</b> ';
+	}
+	html += "<a";
+
+	if (wrappedId) {
+        html +=
+        (error ? ' title="Campaign references missing master campaign field types: ' + appendMessage + '"' : '');
+	    html += ' href="/campaigns/' + (error ? 'fields' : 'edit') + '.html?id=' + wrappedId + '">';
+    	html +=
+    	(error ? '<img src ="/img/icons/exclamation.png"> ' : '');
+	} else {
+        html +=
+        (error ? ' title="Partner references missing campaign field types: ' + appendMessage + '"' : '');
+	    html += ' href="/partners/' + (error ? 'fields' : 'edit') + '.html?id=' + partnerId + '">';
+    	html +=
+    	(error ? '<img src ="/img/icons/exclamation.png"> ' : '');
+	}
+    html += name + '</a></span>';
+
+
+	html += '</td>' +
+	'<td class="third"><select name="always_send[]"><option value="1"';
+
+	if (alwaysSend) {
+		html += ' selected="selected"';
+	}
+	html += '>Yes</option><option value="0"';
+	if (!alwaysSend) {
+		html += ' selected="selected"';
+	}
+	html += '>No</option></select></td>';
+	html += '<td class="last"><a href="#" onclick="deleteRow($(this), ' + wrappedId + '); return false;"><img src="/img/icons/cross.png" title="Delete this ' + (wrappedId ? 'campaign' : 'partner') + '"></a></td>';
+	html += '</tr>';
+	$('#delivery-table').append(html);
+	updateOrderNumbers();
+};
+
+function updateOrderNumbers() {
+	var count = 1;
+	var odd = false;
+	var size = $('#delivery-table td.delivery-order-nr').size();
+	$('#delivery-table td.delivery-order-nr').each(function() {
+		odd = !odd;
+		var html = count + '. ';
+		if (count > 1) {
+			html += '<img src="/img/icons/arrow_up.png" class="green-arrow" title="Move up" onclick="moveUp($(this));"';
+			if (count == size) {
+				html += ' style="margin-right: 16px;"';
+			}
+			html += '>';
+		}
+		if (count < size) {
+			html += '<img src="/img/icons/arrow_down.png" class="green-arrow" title="Move down" onclick="moveDown($(this));"';
+			if (count == 1) {
+				html += ' style="margin-left: 16px;"';
+			}
+			html += '>';
+		}
+		html += '&nbsp;&nbsp;&nbsp;';
+		$(this).html(html);
+		$(this).parents('tr:last').removeClass('grey');
+		$(this).parents('tr:last').removeClass('white');
+		if (odd) {
+		    $(this).parents('tr:last').addClass('white');
+		} else {
+		    $(this).parents('tr:last').addClass('grey');
+		}
+		count++;
+	});
+
+	$('#add-partner-dropdown option.partner-dropdown-option').remove();
+	$('#add-campaign-dropdown option.partner-dropdown-option').remove();
+
+    for (var i = 0; i < partnerNames.length; i++) {
+        var k = partnerNames[i];
+        var size  = $('input[name="partner_id[]"][value="' + k[0] + '"]').size();
+        if (!size) {
+            if (k[2]) {
+                if (k[3]) {
+                    $('#add-campaign-dropdown').append('<option class="partner-dropdown-option" value="' + k[0] + '"></option>');
+                    $('#add-campaign-dropdown option:last').text(k[1]);
+                }
+            } else {
+            	$('#add-partner-dropdown').append('<option class="partner-dropdown-option" value="' + k[0] + '"></option>');
+            	$('#add-partner-dropdown option:last').text(k[1]);
+            }
+        };
+    };
+
+    showHideAddPartnerDiv();
+};
+
+function showHideAddPartnerDiv() {
+    if ($('#add-partner-dropdown option.partner-dropdown-option').size() == 0) {
+            $('#add-partner-div').hide();
+    } else {
+            $('#add-partner-div').show();
+    };
+};
+
+function deleteRow(field, wrappedId) {
+	if (confirm('Remove this ' + (wrappedId ? 'campaign' : 'partner') + ' from delivery list?')) {
+		field.parent().parent().remove();
+	};
+	updateOrderNumbers();
+};
+
+function moveUp(image) {
+	var tr = image.parents("tr:first");
+	tr.insertBefore(tr.prev());
+	updateOrderNumbers();
+};
+
+function moveDown(image) {
+	var tr = image.parents("tr:first");
+	tr.insertAfter(tr.next());
+	updateOrderNumbers();
+};
+
+function pageStateChanged() {
+	if ($('#delivery-table tbody tr').size() != (originalState.length)) {
+		return true;
+	}
+	var changed = false;
+	var i = 0;
+	$('#delivery-table tbody tr').each(function() {
+		if ($(this).hasClass("top")) {
+			return;
+		}
+		var partnerId = parseInt($(this).find('input[name="partner_id[]"]').val());
+		var auto      = parseInt($(this).find('select[name="always_send[]"]').val());
+		var arr = originalState[i];
+		if ((arr[0] != partnerId) || (arr[1] != auto)) {
+			changed = true;
+		};
+		i++;
+	});
+	return changed;
+};
+
+</script>

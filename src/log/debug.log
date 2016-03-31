@@ -1,0 +1,83 @@
+:ip_address: (builtInValue) = 74.178.32.62
+:submit_time: (builtInValue) = 18:11:23
+:operating_system: (builtInValue) = Apple
+:web_browser: (builtInValue) = Safari 6.0.5
+:lead_id: (builtInValue) = 71195023
+:submit_date: (builtInValue) = 2013-08-08
+:submit_day: (builtInValue) = 08
+:submit_month: (builtInValue) = 08
+:submit_year: (builtInValue) = 2013
+:country: (geoipValue) = United States
+:country_code: (geoipValue) = US
+:city: (geoipValue) = Brooksville
+:area_code: (found nothing)
+:postal_code: (geoipValue) = 34613
+:state_or_region: (geoipValue) = Florida
+:state_or_region_code: (geoipValue) = FL
+:age: (tryToOverrideField) = 23
+[ACCESS] for annual_income: s2member_level4 (5), user has 3
+:annual_income: (found nothing)
+:area_code: (found nothing)
+:birth_year: (derivedTokens) = 1990
+[ACCESS] for children: s2member_level4 (5), user has 3
+:children: (found nothing)
+:city: (geoipValue) = Brooksville
+:country_code: (geoipValue) = US
+:country: (geoipValue) = United States
+:county: (found nothing)
+[ACCESS] for education: s2member_level4 (5), user has 3
+:education: (found nothing)
+[ACCESS] for gender: s2member_level3 (4), user has 3
+:gender: (found nothing)
+[ACCESS] for high_net_worth: s2member_level4 (5), user has 3
+:high_net_worth: (found nothing)
+[ACCESS] for home_owner: s2member_level4 (5), user has 3
+:home_owner: (found nothing)
+[ACCESS] for home_value: s2member_level4 (5), user has 3
+:home_value: (found nothing)
+[ACCESS] for interests: s2member_level4 (5), user has 3
+:interests: (found nothing)
+:ip_address: (builtInValue) = 74.178.32.62
+:latitude: (found nothing)
+:lead_id: (builtInValue) = 71195023
+:longitude: (found nothing)
+[ACCESS] for married: s2member_level4 (5), user has 3
+:married: (found nothing)
+[ACCESS] for monthly_income: s2member_level4 (5), user has 3
+:monthly_income: (found nothing)
+[ACCESS] for months_at_address: s2member_level4 (5), user has 3
+:months_at_address: (found nothing)
+[ACCESS] for occupation: s2member_level4 (5), user has 3
+:occupation: (found nothing)
+:operating_system: (builtInValue) = Apple
+:age: (tryToOverrideField) = 23
+[ACCESS] for gender: s2member_level3 (4), user has 3
+:gender: (found nothing)
+[ACCESS] for education: s2member_level4 (5), user has 3
+:education: (found nothing)
+[ACCESS] for home_owner: s2member_level4 (5), user has 3
+:home_owner: (found nothing)
+[ACCESS] for years_at_address: s2member_level4 (5), user has 3
+:years_at_address: (found nothing)
+[ACCESS] for months_at_address: s2member_level4 (5), user has 3
+:months_at_address: (found nothing)
+[ACCESS] for married: s2member_level4 (5), user has 3
+:married: (found nothing)
+[ACCESS] for occupation: s2member_level4 (5), user has 3
+:occupation: (found nothing)
+[ACCESS] for children: s2member_level4 (5), user has 3
+:children: (found nothing)
+[ACCESS] for home_value: s2member_level4 (5), user has 3
+:home_value: (found nothing)
+[ACCESS] for high_net_worth: s2member_level4 (5), user has 3
+:high_net_worth: (found nothing)
+[ACCESS] for annual_income: s2member_level4 (5), user has 3
+:annual_income: (found nothing)
+[ACCESS] for monthly_income: s2member_level4 (5), user has 3
+:monthly_income: (found nothing)
+:postal_code: (geoipValue) = 34613
+:city: (geoipValue) = Brooksville
+:state_or_region: (geoipValue) = Florida
+:state_or_region_code: (geoipValue) = FL
+[ACCESS] for interests: s2member_level4 (5), user has 3
+:interests: (found nothing)

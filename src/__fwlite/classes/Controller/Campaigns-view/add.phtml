@@ -1,0 +1,100 @@
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> Create New Campaign
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<form id="add-campaign-form" style="margin: 0;" method="POST">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<?php
+
+require_once dirname(__FILE__) . '/_form.phtml';
+
+?>
+<div class="pingtree-form" style="margin-top: 30px;">
+<button type="submit" id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />Save</button>
+<button type="submit" name="redir" value="fields" id="editFields"  ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<button type="submit" name="redir" value="delivery" id="editDelivery" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/package.png" />Edit Delivery</button>
+<button type="submit" name="redir" value="filters" id="editRule" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+<button type="button" id="cancelButton" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+<?php echo "</div><!-- settings -->\n"; ?>
+</form>
+
+<script type="text/javascript">
+
+var checkDirty = true;
+
+var originalState = [
+['is_active',       '1'],
+['should_repost',   '0'],
+['leads_per',       '1'],
+['repost_hours',    '0'],
+['repost_max',      '0'],
+['round_robin',     '0'],
+['delivery_type',   '1'],
+['response_type',   '1'],
+['throttle_value',  '0'],
+['throttle_type',   '0'],
+['is_oob_capped',   '0'],
+['oob_cap_value',   '0'],
+['oob_cap_type',    '0'],
+['capalp',          '0'],
+['append_succ_url', '0'],
+['partner_retries', '2']<?php if ($showIndustryId) {
+    echo ",\n['industry_id',     '$defaultIndustryId']\n";
+}
+?>
+];
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+        
+        $('#campaign-type').change(function(){
+            if ($('#campaign-type').val() == 3) {
+                //assign "Auction" in Distribution if campaign type = "Ping + Post"
+                $("#campaign-distribution").val('2');
+            }
+        });
+});
+
+$('#add-campaign-form').submit(function() {checkDirty = false;});
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+});
+
+function pageStateChanged() {
+	var changed = false;
+	$('#add-campaign-form').find('input,select,textarea').each(function() {
+		if (changed || $(this).attr('disabled') || ($(this).attr('type') == 'hidden')) {
+			return;
+		}
+		var name = $(this).attr('name');
+		for(var i = 0; i < originalState.length; i++) {
+			if (name == originalState[i][0]) {
+				var v = $(this).val();
+				if ($(this).attr('type') == 'checkbox') {
+					v = $(this).attr('checked') ? '1' : '0';
+				}
+				if (v != originalState[i][1]) {
+					changed = true;
+				}
+				return;
+			};
+		}
+		if (($(this).attr('type') != 'hidden') && $(this).val()) {
+			changed = true;
+		};
+	});
+	return changed;
+};
+
+</script>
+

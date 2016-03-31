@@ -1,0 +1,220 @@
+body{
+	/*background-color: #DDD;*/
+	font-smooth:always;
+	-webkit-font-smoothing: antialiased;
+}
+#bodyWrapper{
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 100%;
+}
+
+#mainWrapper{
+	width: 948px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#topHeader{
+	min-height: 60px;
+	margin-bottom: 30px;
+}
+
+#logoArea{
+	float: left;
+	background-repeat: no-repeat;
+	background-position: left center;
+	min-height: 55px;
+	min-width: 300px;
+}
+
+#callArea{
+	float: right;
+	padding-top: 17px;
+}
+
+.precall{
+	color: #b4b4b4;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: normal;
+	margin-right: 15px;
+}
+
+.call{
+	color: #FFF;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+#mainBanner{
+	width: 948px;
+	height: 338px;
+	background-repeat: no-repeat;
+}
+
+#bannerCopy{
+	width: 460px;
+	padding-left: 40px;
+	padding-top: 30px;
+}
+
+#bannerCopy h1{
+	line-height: 47px;
+	color: #FFF;
+	font-size: 36px;
+}
+
+#bannerCopy h3{
+	margin-top: -5px;
+	color: #dcdcdc;
+	font-size: 24px;
+	font-weight: normal;
+	line-height: 32px;
+}
+
+#leftSide{
+	float: left;
+	width: 560px;
+	margin-left: 4px;
+}
+
+#rightSide{
+	float: left;
+	background-image: url(../images/optinarrow.png);
+	background-repeat: no-repeat;
+	background-position: center top;
+	width: 380px;
+	min-height: 300px;
+}
+
+#videoHeader{
+	background-repeat: no-repeat;
+	width: 560px;
+	height: 54px;
+	padding-top: 33px;
+}
+
+#videoHeader span{
+	font-size: 20px;
+	color: #FFF;
+	margin-left: 40px;
+	font-weight: bold;
+}
+
+#videoBox{
+	background-image: url(../images/videobottom.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+#videoBox p{
+	font-size: 14px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	text-align: center;
+	color: #646464;
+}
+
+#content{
+	background-image: url(../images/content-repeater.png);
+	background-repeat: repeat-y;
+}
+
+#salesCopy{
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-top: 5px;
+}
+
+#optinBox{
+	width: 352px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 20px;
+	position: relative;
+}
+
+.fixed {
+     position:fixed !important;
+     margin-left: 14px !important;
+}
+
+#optinHeader{
+	background-repeat: no-repeat;
+	height: 75px;
+}
+
+#optinHeader h3{
+	font-size: 18px;
+	color: #FFF;
+	text-align: center;
+	padding-top: 17px;
+}
+
+#optinContent{
+	padding: 20px;
+	background-image: url(../images/optin-repeater.png);
+	background-repeat: repeat-y;
+}
+
+.optform2{
+	width: 305px;
+	margin-top: 15px;
+	padding-left: 25px !important;
+	padding-right: 25px !important;
+	padding-top: 15px !important;
+	padding-bottom: 15px !important;
+	height: 50px !important;
+}
+
+.opt_name{
+	background: url(../images/opt_name.png) no-repeat 270px center;
+}
+
+.opt_email{
+	background: url(../images/opt_email.png) no-repeat 270px center;
+}
+
+.opt_phone{
+	background: url(../images/opt_phone.png) no-repeat 270px center;
+}
+
+.opt_url{
+	background: url(../images/opt_url.png) no-repeat 270px center;
+}
+
+.optinBTN{
+	width: 275px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 15px;
+	padding: 15px !important;
+}
+
+#footerArea{
+	margin-right: 5px;
+	margin-left: 5px;
+	background-color: #2a2a2a;
+	border-top: 3px solid #1e1e1e;
+	padding: 10px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+<?php
+
+if (empty($backlogInfo)) {
+    echo "<h1>No backlog!</h1>";
+    return;
+}
+?>
+<style type="text/css">
+
+#backlog-table th {
+    text-align: center;
+    background-color: #eee;
+}
+
+#backlog-table td, #backlog-table th {
+    padding:1px 5px;
+}
+
+#backlog-table tbody tr:hover, #backlog-table tbody tr.odd:hover {
+    background-color: yellow;
+}
+
+#backlog-table tr.odd {
+    background-color: beige;
+}
+
+#backlog-table td.r {
+    text-align: right;
+}
+
+#backlog-table td.t {
+    color: blue;
+}
+
+#backlog-table td.inactive {
+    text-decoration: line-through;
+}
+
+</style>
+
+Average reposts processed <?php echo "$repostCount per minute, last $lastMinutes minutes"; ?><br><br>
+
+<table id="backlog-table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Campaign</th>
+            <th>Catchup Job #</th>
+            <th>Count</th>
+            <th>Delay</th>
+            <th>Full Count</th>
+            <th>Full Delay</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php
+
+$odd = false;
+foreach ($backlogInfo as $arr) {
+    if($arr['user_id'] == '0') {
+        $username = '* Admin';
+    }
+    else if (isset($usernames[$arr['user_id']])) {
+        $username = escapeHtml($usernames[$arr['user_id']]);
+    } else {
+        $username = 'Unknown';
+    }
+    $campaign = escapeHtml($arr['campaign_name']);
+    $trc = $odd ? ' class="odd"' : '';
+    $odd = !$odd;
+    $tdc = '';
+    $tdc .= $arr['limited']   ? ' t' : '';
+    $tdc .= $arr['is_active'] ? '' : ' inactive';
+    $tdc = $tdc ? " class=\"$tdc\"" : '';
+
+echo "
+
+        <tr$trc>
+            <td>$username #$arr[user_id]</td>
+            <td$tdc>$campaign</td>
+            <td>$arr[catchup_id]</td>
+            <td class=\"r\">$arr[size]</td>
+            <td>$arr[delay]</td>
+            <td class=\"r t\">$arr[full_size]</td>
+            <td class=\"t\">$arr[full_delay]</td>
+        </tr>
+";
+}
+
+?>
+    </tbody>
+</table>

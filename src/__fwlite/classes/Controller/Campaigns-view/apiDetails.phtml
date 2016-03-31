@@ -1,0 +1,284 @@
+<!DOCTYPE unspecified PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>API Specs</title>
+        <style type="text/css">
+* {
+    font-family: Tahoma, Arial, Helvetica, Sans Serif;
+    font-size: 13px;
+}
+
+#content {
+    margin: 10px auto;
+    width: 800px;
+}
+
+#content table {
+    width: 100%;
+}
+
+#content table td {
+    padding: 2px 5px;
+}
+
+td.inverse {
+    background-color: black;
+    font-weight: bold;
+    color: white;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.response-element {
+    display: block;
+    margin-left: 20px;
+}
+
+        </style>
+    </head>
+
+    <body>
+    <div id="content">
+    <h1 style="font-size: 20px;"><?php echo escapeHtml($data['name']); ?></h1>
+<?php if (intval($data['response_type']) === Model_Campaign::RESPONSE_TYPE_REDIRECT_KEY) {?>
+    <h2>HTML Form Post Specification</h2>
+    <p>
+    A standard HTML Form can be used to submit information from a "live" user into the system.  This form code is no different then the HTML specification of such as published by the W3C.
+    </p>
+<?php } else { ?>
+    <h2 style="font-size: 20px;">API Specification</h2>
+    <p>
+    The system can accept standard HTTP POST and HTTP GET transactions. There is a limitation on the rate at which data can be sent into the system to prevent abuse.
+    </p>
+<?php }  ?>
+    <table>
+        <tbody>
+            <tr>
+                <td class="inverse" colspan="5">
+<?php
+if (intval($data['response_type']) === Model_Campaign::RESPONSE_TYPE_REDIRECT_KEY) {
+    echo 'Use this HTML form tag:<br>';
+    echo '&lt;form method="post" action="' . $submitUrl . '"&gt;<br>';
+} else {
+    echo 'Submit the API post to ';
+    if (isset($isPingAndPost)) echo '(For both Ping and Post)';
+    echo ':<br/>' . $submitUrl;
+}
+?>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="inverse">Field Name</td>
+                <td class="inverse">Description</td>
+                <?php if (isset($isPingAndPost)) {?>
+                    <td class="inverse">Ping</td>
+                    <td class="inverse">Post</td>
+                <?php } ?>
+                <td class="inverse">Requirements</td>
+            </tr>
+
+<?php
+
+foreach ($fields as $field) {
+    echo "
+            <tr>
+                <td>" . escapeHtml($field['name']) . "</td>
+                <td>" . escapeHtml($field['description']) . "</td>
+                <td>";
+    if (isset($isPingAndPost)) {
+        if ((int)$field['field_type'] === Model_CampaignField::FIELD_TYPE_LEAD_ID) {
+            echo 'NULL';
+        } else if ($field['is_mandatory'] == Model_CampaignField::MANDATORY_BOTH || $field['is_mandatory'] == Model_CampaignField::MANDATORY_PING) {
+            echo 'Required';
+        } else {
+            echo '';
+        }
+        echo '</td><td>';
+        if ($field['is_mandatory'] == Model_CampaignField::MANDATORY_BOTH || $field['is_mandatory'] == Model_CampaignField::MANDATORY_POST) {
+            echo 'Required';
+        } else {
+            echo '';
+        }
+        echo '</td><td>';
+        if ($field['field_type'] == Model_CampaignField::FIELD_TYPE_EMAIL) {
+            echo 'Valid Email';
+        } elseif (!empty($fieldTypes[$field['field_type']]['description'])) {
+            echo $fieldTypes[$field['field_type']]['description'];
+        }
+        
+        if (!empty($field['campaign_rule'])) {
+            echo ', '.$field['campaign_rule'];
+        }
+    } else {
+        $conditions = array();
+        if ($field['is_mandatory']) {
+            if ((int)$field['field_type'] === Model_CampaignField::FIELD_TYPE_LEAD_ID) {
+                $conditions[]= 'Required for Post stage only';
+            } else {
+                $conditions[]= 'Required';
+            }
+        } else {
+            $conditions[] = 'Optional';
+        }
+
+        if ($field['field_type'] == Model_CampaignField::FIELD_TYPE_EMAIL) {
+            $conditions[] = 'Valid Email';
+        } elseif (!empty($fieldTypes[$field['field_type']]['description'])) {
+            $conditions[] = $fieldTypes[$field['field_type']]['description'];
+        }
+        
+        if (!empty($field['campaign_rule'])) {
+            $conditions[] = $field['campaign_rule'];
+        }
+        
+        if ($conditions) {
+            echo implode(', ', $conditions);
+        } else {
+            echo '&nbsp;';
+        }
+    }
+    
+                echo "</td>
+            </tr>
+";
+}
+
+?>
+        </tbody>
+    </table>
+<br/>
+
+<?php if (isset($isPingAndPost)) {?>
+    <h1 style="font-size: 20px;">PING stage</h1>
+    <h2>Example Code</h2>
+<pre>
+&lt;?php
+$pingToSend = array(
+<?php
+foreach ($fields as $field) {
+    if ($field['is_mandatory'] == Model_CampaignField::MANDATORY_BOTH || $field['is_mandatory'] == Model_CampaignField::MANDATORY_PING) {
+        echo "\t'" . escapeHtml($field['name']) . "' => 'FIELD VALUE'," . "\n";
+    } 
+}
+?>
+);
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_POST,1);
+curl_setopt($ch, CURLOPT_URL, '<?php echo $submitUrl; ?>');
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($pingToSend));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_MAXREDIRS, 4);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+$result = curl_exec($ch);
+curl_close($ch);
+echo $result;
+?&gt;
+</pre>
+    <h2>Responses</h2>
+    Success: 
+    <span class="bold">SUCCESS|1000|0.08</span> <br/>
+    <span class="response-element">
+        <span class="bold">SUCCESS</span> - Result of Ping stage <br/>
+        <span class="bold">1000</span> - Ping's Lead_Id, which will be used in Post stage <br/>
+        <span class="bold">0.08</span> - Bid price <br/>
+    </span>
+    <br/>Fail: 
+    <span class="bold">FAIL|No partner accepted</span> <br/>
+    <span class="response-element">
+        <span class="bold">FAIL</span> - Result of Ping stage <br/>
+        <span class="bold">No partner accepted</span> - Reason of the fail result<br/>
+    </span>
+    <br/>
+    
+    <h1 style="font-size: 20px;">POST stage</h1>
+<?php } ?>
+<?php
+echo "<h2>Example Code</h2>";
+echo "<pre>";
+if (intval($data['response_type']) === Model_Campaign::RESPONSE_TYPE_REDIRECT_KEY) {
+    echo '&lt;form method="post" action="' . $submitUrl . '"&gt;' . "\n";
+    foreach ($fields as $field) {
+        echo escapeHtml($field['description']). ': &lt;input type=';
+        if(stristr($field['description'], '(hidden)')) {
+            echo '"hidden"';
+        } else {
+            echo '"text"';
+        }
+        echo ' name="' . escapeHtml($field['name']) . '"&gt;' . "\n";
+    }
+    echo '&lt;input type="submit" value="Submit"&gt;' . "\n";
+    echo '&lt;/form&gt;' . "\n";
+} else { 
+?>
+&lt;?php
+$postToSend = array(
+<?php
+foreach ($fields as $field) {
+   echo "\t'" . escapeHtml($field['name']) . "' => 'FIELD VALUE'," . "\n";
+}
+?>
+);
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_POST,1);
+curl_setopt($ch, CURLOPT_URL, '<?php echo $submitUrl; ?>');
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postToSend));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_MAXREDIRS, 4);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+$result = curl_exec($ch);
+curl_close($ch);
+echo $result;
+?&gt;
+<?php }
+echo "</pre>";
+?>
+
+<?php if (intval($data['response_type']) === Model_Campaign::RESPONSE_TYPE_REDIRECT_KEY) {?>
+    <h2>Pre-populate Field Data</h2>
+    <p>If you wish to pre-populate any of the form fields with data passed to the page in the URL, change the appropriate HTML form field code to mimic this example:</p>
+    <h3>PHP</h3>
+    <pre>&lt;input type="hidden" name="transaction_id" value="&lt;?php echo $_GET['transaction_id']; ?&gt;"&gt;</pre>
+<?php }  ?>
+
+    <h2>Responses</h2>
+<?php if (intval($data['response_type']) === Model_Campaign::RESPONSE_TYPE_REDIRECT_KEY) {?>
+    <p>
+    A "live" user will be automatically redirected to the next page in the process upon processing of the field data. If the information posted does not validate, or otherwise fails verification, an unbranded, human-readable error message will be shown to the user with instructions on how to rectify the situation. It is best to use this in conjunction with normal Javascript form validation on the form page itself.
+    </p>
+<?php } else { ?>
+    
+    <p>
+    The system will respond with 'SUCCESS' or 'FAIL' upon processing of the field data sent to the URL above.  A 'SUCCESS' response indicates the information was accepted.  A 'FAIL' response will be accompanied with a brief error description for the information not being accepted.
+    </p>
+    <?php if (isset($isPingAndPost)) { ?>
+    Success: 
+    <span class="bold">SUCCESS</span> <br/>
+    <span class="response-element">
+        <span class="bold">SUCCESS</span> - Result of Post stage <br/>
+    </span>
+    <br/>Fail: 
+    <span class="bold">FAIL|Cannot find lead with this Lead ID</span> <br/>
+    <span class="response-element">
+        <span class="bold">FAIL</span> - Result of Post stage <br/>
+        <span class="bold">Cannot find lead with this Lead ID</span> - Reason of the fail result. 
+        Possible fail reasons are: Invalid lead_id, invalid fields, post-mandatory fields missing, lead is skipped due to partner's rule, no partner accept the lead.<br/>
+    </span>
+    <?php } ?>
+<?php }  ?>
+    </div>
+    </body>
+</html>

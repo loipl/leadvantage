@@ -1,0 +1,168 @@
+<div class="head"><h2>Sub-Account Setting</h2>
+
+    <div class="breadcrumb">
+        <p>
+            <a href="/subaccount/">Sub-Account &gt;</a> <a href="/subaccount/edit.html?sub_account_id=<?php echo $subAccountData['sub_account_id']?>"><?php echo escapeHtml($subAccountData['sub_account_username']); ?> &gt;</a> Edit Settings
+        </p>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="activity">
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_reporting_access" name="revoke_reporting_acecss" <?php if ($subAccountData['revoke_reporting_access'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke reporting access</span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_campaign_control" name="revoke_campaign_control" <?php if ($subAccountData['revoke_campaign_control'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke campaign control (Add/Delete)</span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_partner_control" name="revoke_partner_control" <?php if ($subAccountData['revoke_partner_control'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke partner control (Add/Delete)</span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_success_leads" name="revoke_success_leads" <?php if ($subAccountData['revoke_success_leads'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke success leads</span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_failed_leads" name="revoke_failed_leads" <?php if ($subAccountData['revoke_failed_leads'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke failed leads</span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <label>
+            <input type="checkbox" id="revoke_skipped_leads" name="revoke_skipped_leads" <?php if ($subAccountData['revoke_skipped_leads'] == '1') { echo "checked";}?>>
+        </label>
+        <span>Revoke skipped leads</span>
+    </div>
+    <table cellpadding="0" cellspacing="0" style="width:100%;" id="objects_table">
+        <tbody>
+            <tr class="top">
+                <td class="first">Viewable Campaigns</td>
+                <td class="second">Viewable Partners</td>
+            </tr>
+            <tr class="grey">
+                <td class="first">
+                    <div>
+                        <input id="all_campaign" type="checkbox"> <b>All Campaigns</b>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <input id="all_partner" type="checkbox"> <b>All Partners</b>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="first">
+                    <?php foreach ($campaigns as $campaign): ?>
+                    <div>
+                        <?php 
+                            if (in_array($campaign['id'], $checkedCampaignIds)) {
+                                $checked = 'checked';
+                            } else {
+                                $checked = '';
+                            }
+                        ?>
+                        <input type="checkbox" name="campaign" abbr="<?php echo $campaign['id']; ?>" <?php echo $checked; ?>>
+                        <?php echo $campaign['name']; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </td>
+                <td>
+                    <?php foreach ($partners as $partner): ?>
+                    <div>
+                        <?php 
+                        if($partner['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING) {
+                            $id = $partner['id'] . ',' . $partner['post_partner_id'];
+                        } else {
+                            $id = $partner['id'];
+                        }
+                        if (in_array($partner['id'], $checkedPartnerIds)) {
+                                $checked = 'checked';
+                            } else {
+                                $checked = '';
+                            }
+                        ?>
+                        <input type="checkbox" name="partner" abbr="<?php echo $id; ?>" <?php echo $checked; ?>>
+                        <?php echo $partner['name']; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="/img/icons/disk.png">Save</button>
+    <button id="cancelButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="/img/icons/cross.png">Cancel</button>
+    
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#submitButton').click(function(){
+            var campaigns = [];
+            $('input[name=campaign]:checked').each(function(){
+                campaigns.push($(this).attr('abbr'));
+            });
+            var campaignIds = campaigns.join(',');
+            
+            var partners = [];
+            $('input[name=partner]:checked').each(function(){
+                partners.push($(this).attr('abbr'));
+            });
+            var partnerIds = partners.join(',');
+            
+            var data = {
+                campaignIds: campaignIds,
+                partnerIds : partnerIds,
+                __nonce    : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>,
+                id         : <?php echo "'" . $subAccountData['sub_account_id'] . "'"; ?>,
+                name       : <?php echo "'" . $subAccountData['sub_account_username'] . "'"; ?>,
+                revoke_reporting_access: ($('#revoke_reporting_access').is(":checked")) ? '1' : '0',
+                revoke_campaign_control: ($('#revoke_campaign_control').is(":checked")) ? '1' : '0',
+                revoke_partner_control: ($('#revoke_partner_control').is(":checked")) ? '1' : '0',
+                revoke_success_leads: ($('#revoke_success_leads').is(":checked")) ? '1' : '0',
+                revoke_failed_leads: ($('#revoke_failed_leads').is(":checked")) ? '1' : '0',
+                revoke_skipped_leads: ($('#revoke_skipped_leads').is(":checked")) ? '1' : '0'
+            }
+
+            $.post('ajaxEdit.html', data, function(response){
+                if (response === 'SUCCESS') {
+                    window.location.href = 'index.html';
+                } else {
+                    console.log(response);
+                }
+            })
+        });
+        
+        $('#cancelButton').click(function(){
+            window.location.href = 'index.html';
+        });
+        
+        $('#all_campaign').click(function(){
+            if ($(this).is(':checked')) {
+                $('input[name=campaign]').attr('checked', true);
+            } else {
+                $('input[name=campaign]').attr('checked', false);
+            }
+        });
+        $('#all_partner').click(function(){
+            if ($(this).is(':checked')) {
+                $('input[name=partner]').attr('checked', true);
+            } else {
+                $('input[name=partner]').attr('checked', false);
+            }
+        });
+    });
+</script>

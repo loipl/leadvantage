@@ -1,0 +1,46 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for:
+page.php, single.php, fullpage.x.php, fullsingle.x.php.
+These styles are common to all of three of these templates.
+*/
+div#page-lower-section > div#page-lower-parts,
+div#single-lower-section > div#single-lower-parts,
+div#fullpage-lower-section > div#fullpage-lower-parts,
+div#fullsingle-lower-section > div#fullsingle-lower-parts
+	{
+		padding: 5px;
+		font-size: 110%;
+		font-weight: bold;
+		text-align: right;
+		margin: 15px 0 0 0;
+	}
+div#page-lower-section > div#page-lower-parts > a,
+div#single-lower-section > div#single-lower-parts > a,
+div#fullpage-lower-section > div#fullpage-lower-parts > a,
+div#fullsingle-lower-section > div#fullsingle-lower-parts > a
+	{
+		color: #FFFFFF;
+		font-weight: normal;
+		background: #333333;
+		padding: 0 5px 0 5px;
+		text-decoration: none;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+div#page-lower-section > div#page-lower-parts > a:hover,
+div#single-lower-section > div#single-lower-parts > a:hover,
+div#fullpage-lower-section > div#fullpage-lower-parts > a:hover,
+div#fullsingle-lower-section > div#fullsingle-lower-parts > a:hover
+	{
+		background: #000000;
+	}

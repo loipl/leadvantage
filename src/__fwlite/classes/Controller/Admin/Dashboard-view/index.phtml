@@ -1,0 +1,104 @@
+<style>
+
+#report-table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+#report-table td.first {
+    width: 200px;
+    font-weight: bold;
+}
+</style>
+
+<div class="head">
+	<h2>Admin Dashboard</h2>
+</div>
+
+<table id="report-table">
+	<tr>
+		<td class="first">Campaigns with no shadow campaigns:</td>
+		<td><?php echo App::linkFor($this, $noShadowCount, array('action' => 'noShadowReport')); ?></td>
+	</tr>
+
+	<tr style="background-color: #eee;">
+	    <td class="first">Top <?php echo Controller_Admin_Dashboard::TOP_USERS_COUNT ?> users by incoming success:</td>
+	    <td><?php
+	    $c = false;
+	    foreach ($stats['inc_succ'] as $uid) {
+	        if ($c) {
+	            echo ' &bull; ';
+	        } else {
+	            $c = true;
+	        }
+	        echo escapeHtml(isset($usernames[$uid]) ? $usernames[$uid] : '');
+	    } ?></td>
+	</tr>
+
+	<tr>
+	    <td class="first">Top <?php echo Controller_Admin_Dashboard::TOP_USERS_COUNT ?> users by incoming failure:</td>
+	    <td><?php
+	    $c = false;
+	    foreach ($stats['inc_fail'] as $uid) {
+	        if ($c) {
+	            echo ' &bull; ';
+	        } else {
+	            $c = true;
+	        }
+	        echo escapeHtml(isset($usernames[$uid]) ? $usernames[$uid] : '');
+	    } ?></td>
+	</tr>
+
+	<tr style="background-color: #eee;">
+	    <td class="first">Top <?php echo Controller_Admin_Dashboard::TOP_USERS_COUNT ?> users by delivery (success only):</td>
+	    <td><?php
+	    $c = false;
+	    foreach ($stats['del'] as $uid) {
+	        if ($c) {
+	            echo ' &bull; ';
+	        } else {
+	            $c = true;
+	        }
+	        echo escapeHtml(isset($usernames[$uid]) ? $usernames[$uid] : '');
+	    } ?></td>
+	</tr>
+
+	<tr>
+	    <td class="first">Inactive users for last <?php echo Controller_Admin_Dashboard::DEFAULT_INACTIVE_PERIOD ?> days:</td>
+	    <td><?php
+	    $c = false;
+	    foreach ($stats['inactive'] as $uid) {
+	        if ($c) {
+	            echo ' &bull; ';
+	        } else {
+	            $c = true;
+	        }
+	        echo escapeHtml(isset($usernames[$uid]) ? $usernames[$uid] : '');
+	    } ?></td>
+	</tr>
+
+	<tr style="background-color: #eee;">
+	    <td class="first">Users at <?php echo Controller_Admin_Dashboard::QUOTA_PERCENTAGE ?>% of their monthly lead quota:</td>
+	    <td><?php
+	    $c = false;
+	    foreach ($stats['quotas'] as $row) {
+	        $uid = $row['user_id'];
+	        if ($c) {
+	            echo '<br>';
+	        } else {
+	            $c = true;
+	        }
+	        echo escapeHtml(isset($usernames[$uid]) ? $usernames[$uid] : '') . " is at $row[count] of his $row[quota] monthly lead quota";
+        }?></td>
+	</tr>
+
+	<tr>
+	    <td></td>
+	    <td></td>
+	</tr>
+
+	<tr>
+	    <td></td>
+	    <td></td>
+	</tr>
+</table>

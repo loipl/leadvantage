@@ -1,0 +1,392 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: the elements in general.
+*/
+/*
+Clearing classes.
+*/
+.clear
+	{
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		visibility: hidden;
+		display: block;
+	}
+html.msie-lt-8 .clear
+	{
+		height: auto;
+	}
+.clearfix:after
+	{
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		content: '.';
+		visibility: hidden;
+		display: block;
+	}
+html.msie-lt-8 .clearfix
+	{
+		zoom: 1;
+	}
+.clear-margins
+	{
+		height: 1px;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		visibility: hidden;
+		display: block;
+	}
+/*
+Force the scroll bar.
+*/
+html
+	{
+		overflow-x: auto;
+		overflow-y: scroll;
+	}
+/*
+Set the background.
+*/
+html
+	{
+		background: #263851;
+	}
+/*
+Resets margins & padding.
+*/
+html,
+html *
+	{
+		margin: 0;
+		padding: 0;
+	}
+/*
+Default text color, size and font family.
+*/
+body
+	{
+		color: #000000;
+		font-size: 14px;
+	}
+body *
+	{
+		font-family: 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+/*
+Default link colors.
+*/
+a
+	{
+		color: #333333;
+	}
+a:hover
+	{
+		color: #000000;
+	}
+/*
+Block element margins.
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+div.hr,
+p,
+dl,
+ol,
+ul,
+dir,
+pre,
+menu,
+table,
+address,
+fieldset,
+blockquote
+	{
+		margin: 15px 0 15px 0;
+	}
+/*
+Special header styles/margins.
+*/
+h1
+	{
+		font-size: 210%;
+		margin-top: 0;
+	}
+h1,
+h1 *
+	{
+		color: #000000;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+h2
+	{
+		font-size: 190%;
+		margin-top: 30px;
+	}
+h2,
+h2 *
+	{
+		color: #000000;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+h3
+	{
+		font-size: 170%;
+		margin-top: 30px;
+	}
+h3,
+h3 *
+	{
+		color: #000000;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+h4
+	{
+		font-size: 150%;
+	}
+h4,
+h4 *
+	{
+		color: #000000;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+h5
+	{
+		font-size: 120%;
+		margin-bottom: 0;
+	}
+h5,
+h5 *
+	{
+		color: #000000;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+h5 + *
+	{
+		margin-top: 0;
+	}
+h6
+	{
+		font-size: 110%;
+		font-weight: bold;
+		margin-bottom: 0;
+	}
+h6 + *
+	{
+		margin-top: 0;
+	}
+/*
+Horizontal rules.
+*/
+hr /* Not friendly in IE7. */
+	{
+		border: 0;
+		height: 1px;
+		color: #CCCCCC;
+		background: #CCCCCC;
+	}
+hr.lite
+	{
+		color: #EEEEEE;
+		background: #EEEEEE;
+	}
+div.hr /* Recommended. */
+	{
+		height: 1px;
+		line-height: 1px;
+		border: 0 solid #CCCCCC;
+		border-width: 1px 0 0 0;
+	}
+div.hr.lite /* Lite. */
+	{
+		border-color: #EEEEEE;
+	}
+/*
+Various types of lists.
+*/
+ul,
+ol,
+dl,
+dir,
+menu
+	{
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+ul li,
+ol li,
+dl dt,
+dir li,
+menu li
+	{
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+/*
+Blockquotes.
+*/
+blockquote
+	{
+		position: relative;
+		font-style: italic;
+		padding-left: 60px;
+		padding-right: 60px;
+	}
+blockquote:before
+	{
+		height: 0;
+		left: 0;
+		top: -15px;
+		opacity: 0.5;
+		font-size: 75px;
+		position: absolute;
+		content: '“';
+	}
+blockquote:after
+	{
+		height: 0;
+		right: 10px;
+		bottom: 30px;
+		opacity: 0.5;
+		font-size: 75px;
+		position: absolute;
+		content: '”';
+	}
+html.msie-lt-8 blockquote
+	{
+		position: static;
+		margin-left: 15px;
+		padding-left: 15px;
+		padding-right: 15px;
+		border-style: dashed;
+		border-width: 0 0 0 1px;
+	}
+/*
+Text styling.
+*/
+p,
+li
+	{
+		text-align: justify;
+	}
+big
+	{
+		font-size: 110%;
+	}
+small
+	{
+		font-size: 90%;
+	}
+i,
+em
+	{
+		font-style: italic;
+	}
+b,
+strong
+	{
+		font-weight: bold;
+	}
+ins
+	{
+		text-decoration: underline;
+	}
+del
+	{
+		text-decoration: line-through;
+	}
+pre,
+pre *,
+code,
+code *
+	{
+		font-family: 'Courier New', monospace;
+	}
+/*
+Images.
+*/
+img
+	{
+		border: 0;
+	}
+/*
+Tables.
+*/
+table th
+	{
+		font-weight: bold;
+	}
+/*
+Form elements.
+*/
+input,
+textarea,
+select
+	{
+		padding: 5px;
+		font-size: 14px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+input[type = "text"],
+input[type = "password"],
+textarea,
+select
+	{
+		color: #333333;
+		border: 1px solid #999999;
+		background-color: #EEEEEE !important;
+		-moz-box-shadow: inset 1px 1px 1px #CCCCCC;
+		-webkit-box-shadow: inset 1px 1px 1px #CCCCCC;
+		box-shadow: inset 1px 1px 1px #CCCCCC;
+	}
+input[type = "text"]:focus,
+input[type = "text"]:active,
+input[type = "password"]:focus,
+input[type = "password"]:active,
+textarea:focus,
+textarea:active,
+select:focus,
+select:active
+	{
+		color: #000000;
+		border: 1px solid #333333;
+		background-color: #FFFFFF !important;
+		-moz-box-shadow: inset 1px 1px 3px #999999;
+		-webkit-box-shadow: inset 1px 1px 3px #999999;
+		box-shadow: inset 1px 1px 3px #999999;
+	}
+input[type = "checkbox"],
+input[type = "radio"]
+	{
+		margin-right: 3px;
+		vertical-align: middle;
+	}
+input[type = "submit"],
+input[type = "button"]
+	{
+		font-weight: bold;
+	}
+input.watermarked,
+textarea.watermarked
+	{
+		color: #999999 !important;
+	}

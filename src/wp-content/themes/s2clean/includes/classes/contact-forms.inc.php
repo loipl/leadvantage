@@ -1,0 +1,144 @@
+<?php
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+if (realpath (__FILE__) === realpath ($_SERVER["SCRIPT_FILENAME"]))
+	exit ("Do not access this file directly.");
+/**/
+if (!class_exists ("c_ws_theme__contact_forms"))
+	{
+		class c_ws_theme__contact_forms
+			{
+				/*
+				Function that processes a contact form.
+				
+				Required fields:
+				
+				ws_theme__contact_form_name,
+				ws_theme__contact_form_email,
+				ws_theme__contact_form_subject,
+				ws_theme__contact_form_message.
+				
+				Also supports unlimited additional custom fields.
+					Always start your custom field names with:
+					ws_theme__contact_form_
+				
+				Recipient is get_option("admin_email").
+				This can be overwritten on a per-form basis, using the Custom Field: `contact_form_to`.
+				
+				Returns: <div class="success|failure">message</div>.
+				*/
+				public static function process_contact_form ($_p = FALSE)
+					{
+						eval ('foreach(array_keys(get_defined_vars())as$__v)$__refs[$__v]=&$$__v;');
+						do_action ("ws_theme__before_process_contact_form", get_defined_vars ());
+						unset ($__refs, $__v); /* Unset defined __refs, __v. */
+						/**/
+						if (is_array ($_p) && !empty ($_p)) /* Must have an array of post vars. */
+							{
+								if ($name = preg_replace ("/\"/", "", $_p["ws_theme__contact_form_name"]))
+									{
+										if (is_email ($email = $_p["ws_theme__contact_form_email"]))
+											{
+												if ($subject = $_p["ws_theme__contact_form_subject"])
+													{
+														if ($message = $_p["ws_theme__contact_form_message"])
+															{
+																if (is_email ($to = c_ws_theme__utils_encryption::decrypt ($_p["ws_theme__contact_form_to"]))
+																/* Else, default to the administrative email address. */ || is_email ($to = get_option ("admin_email")))
+																	{
+																		if (! ($errors = apply_filters ("ws_theme__process_contact_form_errors", array (), get_defined_vars ())))
+																			{
+																				$body = ""; /* Initialize. */
+																				$from = '"' . $name . '" <' . $email . '>';
+																				/**/
+																				foreach ($_p as $k => $v) /* Fields. */
+																					{
+																						if (is_string ($k) && strlen ($k) && !is_numeric ($k))
+																							{
+																								if (is_string ($v) && strlen ($v))
+																									/* Supports any field/value combination.
+																									Custom fields should start with `ws_theme__contact_form_`. */
+																									{
+																										if (!preg_match ("/^(ws_theme__contact_form|ws_theme__contact_form_to|ws_theme__contact_form_subject|ws_theme__contact_form_message)$/i", $k))
+																											{
+																												$k = preg_replace ("/^ws_theme__contact_form_/i", "", $k);
+																												$body .= ucwords (preg_replace ("/[_\-]+/", " ", $k)) . ": " . trim (stripslashes ($v)) . "\n";
+																											}
+																									}
+																							}
+																					}
+																				/**/
+																				$body .= "User-Agent: " . $_SERVER["HTTP_USER_AGENT"] . "\n";
+																				$body .= "Form-Origin: " . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] . "\n";
+																				$body .= "IP-Address: " . $_SERVER["REMOTE_ADDR"] . "\n";
+																				$body .= "\n----------------------------------------------------------------------\n\n" . $message;
+																				/**/
+																				eval ('foreach(array_keys(get_defined_vars())as$__v)$__refs[$__v]=&$$__v;');
+																				do_action ("ws_theme__during_process_contact_form", get_defined_vars ());
+																				unset ($__refs, $__v); /* Unset defined __refs, __v. */
+																				/**/
+																				if (wp_mail ($to, $subject, $body, "From: " . $from . "\r\nContent-Type: text/plain; charset=utf-8"))
+																					{
+																						do_action ("ws_theme__during_process_contact_form_success", get_defined_vars ());
+																						/**/
+																						return apply_filters ("ws_theme__process_contact_form_success", /* Give Filters a chance. */
+																						'<div class="success">Thank You. Your message has been emailed successfully.</div>', get_defined_vars ());
+																					}
+																				else
+																					{
+																						return '<div class="failure">Failed to communicate with mail server. Please try again.</div>';
+																					}
+																			}
+																		else /* Display first error generated by Filters on `ws_theme__process_contact_form_errors`. */
+																			{
+																				return '<div class="failure">' . $errors[0] . '</div>'; /* First array element. */
+																			}
+																	}
+																else if ($to)
+																	{
+																		return '<div class="failure">WordPress® -> General Settings -> Email is invalid.</div>';
+																	}
+																else
+																	{
+																		return '<div class="failure">WordPress® -> General Settings -> Email is missing.</div>';
+																	}
+															}
+														else
+															{
+																return '<div class="failure">Message is missing. Please try again.</div>';
+															}
+													}
+												else
+													{
+														return '<div class="failure">Subject is missing. Please try again.</div>';
+													}
+											}
+										else if ($email)
+											{
+												return '<div class="failure">Email is invalid. Please try again.</div>';
+											}
+										else
+											{
+												return '<div class="failure">Email is missing. Please try again.</div>';
+											}
+									}
+								else
+									{
+										return '<div class="failure">Name is missing. Please try again.</div>';
+									}
+							}
+						else
+							{
+								return '<div class="failure">Missing required data. Please try again.</div>';
+							}
+					}
+			}
+	}
+?>

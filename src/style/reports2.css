@@ -1,0 +1,141 @@
+/* ----- CSS ----- */
+#content .transaction {
+	width: 670px;
+	min-height: 500px;
+}
+
+#content .transaction table {
+	width: 668px;
+	border: 1px solid #BFC0C0;
+	margin-bottom: 10px;
+}
+
+#content .transaction table .second {
+	border-left: 1px solid #CBCED1;
+	width: 460px;
+}
+
+#content .transaction table .top td {
+	background-color: #344A53;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+#content .transaction table tr td {
+	width: 170px;
+	padding-left: 10px;
+	font-size: 14px;
+	color: #333333;
+}
+
+#content .top {
+	background-color: #344A53;
+	color: #FFFFFF;
+}
+
+#content .top td {
+	height: 36px;
+	line-height: 36px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+
+#content .white {
+	background-color: #FFFFFF;
+}
+
+#content .white td, #content .grey td {
+	border-top: 1px solid #ccc;
+    padding: 10px 0 10px 10px;
+}
+
+#content .grey {
+	background-color: #F0F0F0;
+}
+
+/* ----- Form Value Reports ----- */
+#content .value {
+	width: 300px;
+	min-height: 500px;
+}
+
+#content .value table {
+	width: 298px;
+	border: 1px solid #BFC0C0;
+	margin-bottom: 10px;
+}
+
+#content .value table td {
+	padding-left: 10px;
+	width: 138px;
+	border-left: 1px solid #BFC0C0;
+	font-size: 14px;
+	color: #333333;
+}
+
+#content .value table .first {
+	border: none;
+}
+
+#content .value table .top {
+	width: 298px;
+	height: 38px;
+	line-height: 38px;
+}
+
+#content .value table .grey {
+	width: 298px;
+}
+
+#content .value table .white {
+	width: 298px;
+}
+
+#content .value table .top td {
+	width: 138px;
+	font-size: 16px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+/* ----- Partners Response Report CSS ----- */
+#content .partnerresp {
+	width: 680px;
+	padding-bottom: 30px;
+	min-height: 500px;
+}
+
+#content .partnerresp table {
+	width: 678px;
+	border: 1px solid #BFC0C0;
+}
+
+#content .partnerresp table td {
+	padding-left: 10px;
+	width: 668px;
+	font-size: 14px;
+	color: #333333;
+}
+
+#content .partnerresp table td span {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#content .partnerresp table td a {
+	color: #333333;
+}
+
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}

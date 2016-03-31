@@ -1,0 +1,77 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: WordPress® generated classes.
+*/
+.alignleft
+	{
+		float: left;
+	}
+.alignright
+	{
+		float: right;
+	}
+img.alignleft,
+div.wp-caption.alignleft
+	{
+		margin-right: 25px;
+		margin-bottom: 15px;
+	}
+img.alignright,
+div.wp-caption.alignright
+	{
+		margin-left: 25px;
+		margin-bottom: 15px;
+	}
+.aligncenter
+	{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+div.gallery > dl.gallery-item
+	{
+		padding: 0 0 0 0;
+		margin: 15px 0 15px 0 !important;
+	}
+div.gallery > dl.gallery-item > dt
+	{
+		margin: 0;
+	}
+div.gallery > dl.gallery-item > dt img,
+div.gallery > dl.gallery-item > dt > a > img
+	{
+		padding: 1px;
+		border: 1px solid !important;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+div.wp-caption
+	{
+		text-align: center;
+		background: #EEEEEE;
+		padding: 7px 4px 2px 4px;
+		border: 1px solid #666666;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+p.wp-caption-text
+	{
+		padding: 0;
+		margin: 5px;
+		font-size: 90%;
+		text-align: center;
+	}
+.screen-reader-text
+	{
+		display: none !important;
+	}

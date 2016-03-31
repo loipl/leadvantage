@@ -1,0 +1,594 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: comments.php.
+Comments are used within many different containers, and those
+containers will apply sub classes when they're present. Listed here ￬
+*/
+div#comments-wrapper /* Parent: div#(fullpage|page|fullsingle|single)-container. */
+	{
+		z-index: 0;
+		margin: 15px 0 0 0;
+		position: relative;
+	}
+div#comments-wrapper > div#comments-inner-wrapper-a
+	{
+	}
+div#comments-wrapper > div#comments-inner-wrapper-a > div#comments-inner-wrapper-b
+	{
+	}
+div#comments-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#comments /* Parent: ^ container. */
+	{
+	}
+/*
+Style the comments title.
+*/
+div#comments > div#comments-title
+	{
+		padding: 5px;
+		font-size: 150%;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+		background: #EAE0D5 url('<?php echo $i; ?>/post-comments-icon.png') no-repeat 99% center;
+	}
+/*
+Style the upper/lower navigation.
+*/
+div#comments > div#comments-upper-nav,
+div#comments > div#comments-lower-nav
+	{
+		margin: 10px 0 10px 0;
+	}
+div#comments > div#comments-upper-nav > div#comments-upper-nav-next,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-next
+	{
+		float: right;
+	}
+div#comments > div#comments-upper-nav > div#comments-upper-nav-prev,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-prev
+	{
+		float: left;
+	}
+div#comments > div#comments-upper-nav > div#comments-upper-nav-next > a,
+div#comments > div#comments-upper-nav > div#comments-upper-nav-prev > a,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-next > a,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-prev > a
+	{
+	}
+div#comments > div#comments-upper-nav > div#comments-upper-nav-next > a:hover,
+div#comments > div#comments-upper-nav > div#comments-upper-nav-prev > a:hover,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-next > a:hover,
+div#comments > div#comments-lower-nav > div#comments-lower-nav-prev > a:hover
+	{
+	}
+/*
+Style the list of comments.
+*/
+div#comments > div#comments-list /* Parent: ^ div#comments-container. */
+	{
+		clear: both;
+	}
+div#comments-list > ol, /* Parent: ^ div#comments. */
+div#comments-list > ol > li ul.children
+	{
+		margin: 0;
+		padding: 0;
+		display: block;
+		list-style: none;
+	}
+div#comments-list > ol > li,
+div#comments-list > ol > li ul.children > li
+	{
+		padding: 10px;
+		display: block;
+		min-height: 60px;
+		position: relative;
+		margin: 10px 0 10px 0;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+div#comments-list > ol > li ul.children > li
+	{
+		margin: 10px 0 0 0;
+	}
+div#comments-list > ol > li.odd,
+div#comments-list > ol > li ul.children > li.odd
+	{
+		background: #F7F1EE;
+	}
+div#comments-list > ol > li.even,
+div#comments-list > ol > li ul.children > li.even
+	{
+		background: #EAE0D5;
+	}
+div#comments-list li a:hover
+	{
+	}
+/*
+Style the elements inside each comment list item.
+*/
+div#comments-list li > div.comment-wrapper
+	{
+		z-index: 0;
+		position: relative;
+	}
+div#comments-list li > div.comment-wrapper > div.comment-inner-wrapper-a
+	{
+	}
+div#comments-list li > div.comment-wrapper > div.comment-inner-wrapper-a > div.comment-inner-wrapper-b
+	{
+	}
+div#comments-list li div.comment-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#comments-list li div.comment /* Parent: ^ container. */
+	{
+	}
+div.comment > div.comment-avatar /* Parent: ^ list. */
+	{
+		z-index: 1;
+		float: left;
+		width: 48px;
+		height: 48px;
+		padding: 5px;
+		position: relative;
+		margin: 0 10px 0 0;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		background: #FFFFFF;
+		border: 1px solid #262626;
+		-moz-box-shadow: 1px 1px 2px #000000;
+		-webkit-box-shadow: 1px 1px 2px #000000;
+		box-shadow: 1px 1px 2px #000000;
+	}
+div.comment > div.comment-avatar.odd
+	{
+	}
+div.comment > div.comment-avatar.even
+	{
+	}
+div.comment > div.comment-avatar > img.avatar
+	{
+		width: 48px;
+		height: 48px;
+	}
+div.comment > div.comment-reply
+	{
+		float: right;
+	}
+div.comment > div.comment-reply > a
+	{
+		outline: none;
+		display: block;
+		font-weight: bold;
+		text-decoration: none;
+		background: #FFFFFF;
+		padding: 2px 5px 2px 5px;
+		border: 1px solid #333333;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		-moz-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		-webkit-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+	}
+div.comment > div.comment-reply.odd > a
+	{
+	}
+div.comment > div.comment-reply.even > a
+	{
+	}
+div.comment > div.comment-reply > a:hover
+	{
+	}
+div.comment > div.comment-reply.odd > a:hover
+	{
+	}
+div.comment > div.comment-reply.even > a:hover
+	{
+	}
+div.comment > div.comment-link
+	{
+		float: right;
+		font-size: 80%;
+		font-weight: bold;
+		margin: 0 5px 0 0;
+	}
+div.comment > div.comment-link > a
+	{
+	}
+div.comment > div.comment-link.odd > a
+	{
+	}
+div.comment > div.comment-link.even > a
+	{
+	}
+div.comment > div.comment-link > a:hover
+	{
+	}
+div.comment > div.comment-link.odd > a:hover
+	{
+	}
+div.comment > div.comment-link.even > a:hover
+	{
+	}
+div.comment > div.comment-edit
+	{
+		float: right;
+		font-size: 80%;
+		margin: 0 5px 0 0;
+	}
+div.comment > div.comment-edit.odd
+	{
+	}
+div.comment > div.comment-edit.even
+	{
+	}
+div.comment > div.comment-edit > a
+	{
+		font-family: 'Georgia', serif;
+	}
+div.comment > div.comment-edit.odd > a
+	{
+	}
+div.comment > div.comment-edit.even > a
+	{
+	}
+div.comment > div.comment-edit > a:hover
+	{
+	}
+div.comment > div.comment-edit.odd > a:hover
+	{
+	}
+div.comment > div.comment-edit.even > a:hover
+	{
+	}
+div.comment > div.comment-details
+	{
+		opacity: 0.5;
+		font-size: 80%;
+		margin: 0 120px 2px 0;
+	}
+html.msie div.comment > div.comment-details
+	{
+		filter: alpha(opacity = 50);
+	}
+div.comment > div.comment-details.comment-type
+	{
+		padding-top: 5px;
+	}
+div.comment > div.comment-details.odd
+	{
+	}
+div.comment > div.comment-details.even
+	{
+	}
+div.comment > div.comment-author
+	{
+		font-weight: bold;
+	}
+div.comment > div.comment-author.odd
+	{
+	}
+div.comment > div.comment-author.even
+	{
+	}
+div.comment > div.comment-author > a
+	{
+		text-decoration: underline;
+	}
+div.comment > div.comment-author.odd > a
+	{
+	}
+div.comment > div.comment-author.even > a
+	{
+	}
+div.comment > div.comment-author > a:hover
+	{
+	}
+div.comment > div.comment-author.odd > a:hover
+	{
+	}
+div.comment > div.comment-author.even > a:hover
+	{
+	}
+div.comment > div.comment-author > span.says
+	{
+		font-style: italic;
+	}
+div.comment > div.comment-author.odd > span.says
+	{
+	}
+div.comment > div.comment-author.even > span.says
+	{
+	}
+div.comment > div.comment-body-wrapper
+	{
+		z-index: 0;
+		position: relative;
+	}
+div.comment > div.comment-body-wrapper.comment-type
+	{
+		clear: both;
+		padding-top: 5px;
+	}
+div.comment > div.comment-body-wrapper > div.comment-body-inner-wrapper-a
+	{
+	}
+div.comment > div.comment-body-wrapper > div.comment-body-inner-wrapper-a > div.comment-body-inner-wrapper-b
+	{
+	}
+div.comment-body-container /* Parent: ^ inner-wrapper-b. */
+	{
+		overflow: hidden;
+	}
+div.comment-body /* Parent: ^ container. */
+	{
+	}
+div.comment-body.odd
+	{
+	}
+div.comment-body.even
+	{
+	}
+div.comment-body a
+	{
+	}
+div.comment-body.odd a
+	{
+	}
+div.comment-body.even a
+	{
+	}
+div.comment-body a:hover
+	{
+	}
+div.comment-body.odd a:hover
+	{
+	}
+div.comment-body.even a:hover
+	{
+	}
+div.comment-body p
+	{
+		margin: 5px 0 5px 0;
+	}
+/*
+Style the closed message.
+*/
+div#comments > div#comments-closed
+	{
+		font-size: 130%;
+	}
+/*
+Now style the response form.
+*/
+div#comments-container > div#respond /* Parent: ^ div#comments-container. */
+	{
+		clear: both;
+		margin: 15px 0 0 0;
+	}
+div.comment-container > div#respond /* When inside a comment container. */
+	{
+		clear: both;
+		margin: 15px 0 0 0;
+	}
+div#respond-cancel /* Parent: ^ div#respond. */
+	{
+		float: right;
+		margin: 12px 0 0 0;
+	}
+div#respond-cancel > a
+	{
+		font-size: 90%;
+		display: block;
+		background: #FFFFFF;
+		text-decoration: none;
+		padding: 2px 5px 2px 5px;
+		border: 1px solid #333333;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		-moz-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		-webkit-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+	}
+div#respond-cancel > a:hover
+	{
+	}
+div.comment-container.odd div#respond-cancel > a
+	{
+	}
+div.comment-container.even div#respond-cancel > a
+	{
+	}
+div.comment-container.odd div#respond-cancel > a:hover
+	{
+	}
+div.comment-container.even div#respond-cancel > a:hover
+	{
+	}
+div#respond-title
+	{
+		font-size: 170%;
+		margin: 0 0 20px 0;
+		padding: 10px 0 0 0;
+		border: 0 dashed;
+		border-width: 1px 0 0 0;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div.comment-container.odd div#respond-title
+	{
+	}
+div.comment-container.even div#respond-title
+	{
+	}
+div#respond-requires-login
+	{
+	}
+div#respond-requires-login > a
+	{
+		font-weight: bold;
+	}
+div#respond-requires-login > a:hover
+	{
+	}
+div#respond-form
+	{
+		width: 99%;
+	}
+div#respond-form > form /* Dropping this to shorten things.  */
+	{
+	}
+div#respond-form-gravatar /* Parent: ^ div#respond-form > form. */
+	{
+		width: 96px;
+		float: right;
+		height: 96px;
+		cursor: pointer;
+		border: 3px solid transparent;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		-moz-box-shadow: -1px -1px 2px #000000, 1px 1px 2px #000000;
+		-webkit-box-shadow: -1px -1px 2px #000000, 1px 1px 2px #000000;
+		box-shadow: -1px -1px 2px #000000, 1px 1px 2px #000000;
+	}
+div.comment-container.odd div#respond-form-gravatar
+	{
+	}
+div.comment-container.even div#respond-form-gravatar
+	{
+	}
+div#respond-form-gravatar > img
+	{
+		width: 96px;
+		height: 96px;
+	}
+div#respond-form-logged-in
+	{
+		margin: 10px 0 0 0;
+	}
+div.comment-container.odd div#respond-form-logged-in
+	{
+	}
+div.comment-container.even div#respond-form-logged-in
+	{
+	}
+div#respond-form-logged-in > a
+	{
+		font-weight: bold;
+	}
+div.comment-container.odd div#respond-form-logged-in > a
+	{
+	}
+div.comment-container.even div#respond-form-logged-in > a
+	{
+	}
+div#respond-form-logged-in > a:hover
+	{
+	}
+div.comment-container.odd div#respond-form-logged-in > a:hover
+	{
+	}
+div.comment-container.even div#respond-form-logged-in > a:hover
+	{
+	}
+div#respond-form-author-email-url
+	{
+		width: 70%;
+	}
+div#respond-form-author-email-url > div#respond-form-author
+	{
+	}
+div#respond-form-author-email-url > div#respond-form-author > input
+	{
+		width: 99.5%;
+	}
+div#respond-form-author-email-url > div#respond-form-email
+	{
+		margin: 10px 0 0 0;
+	}
+div#respond-form-author-email-url > div#respond-form-email > input
+	{
+		width: 99.5%;
+	}
+div#respond-form-author-email-url > div#respond-form-url
+	{
+		margin: 10px 0 0 0;
+	}
+div#respond-form-author-email-url > div#respond-form-url > input
+	{
+		width: 99.5%;
+	}
+div#respond-form-comment
+	{
+		margin: 10px 0 0 0;
+	}
+div#respond-form-comment > div:first-child
+	{
+		width: 70%;
+	}
+div.comment-container.odd div#respond-form-comment > div:first-child
+	{
+	}
+div.comment-container.even div#respond-form-comment > div:first-child
+	{
+	}
+div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link
+	{
+		font-weight: bold;
+	}
+div.comment-container.odd div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link
+	{
+	}
+div.comment-container.even div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link
+	{
+	}
+div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link :hover
+	{
+	}
+div.comment-container.odd div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link :hover
+	{
+	}
+div.comment-container.even div#respond-form-comment > div:first-child > a#respond-form-comment-allowed-tags-link :hover
+	{
+	}
+div#respond-form-comment > div#respond-form-comment-allowed-tags
+	{
+		width: 70%;
+		padding: 5px;
+		font-size: 80%;
+	}
+div.comment-container.odd div#respond-form-comment > div#respond-form-comment-allowed-tags
+	{
+	}
+div.comment-container.even div#respond-form-comment > div#respond-form-comment-allowed-tags
+	{
+	}
+div#respond-form-comment > textarea
+	{
+		width: 99.5%;
+		margin: 15px 0 0 0;
+	}
+div#respond-form-submit
+	{
+		margin: 10px 0 0 0;
+	}
+div#respond-form-submit > input
+	{
+	}

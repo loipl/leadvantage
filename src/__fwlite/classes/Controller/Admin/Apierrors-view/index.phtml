@@ -1,0 +1,47 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+</style>
+
+<div class="head"><h2>API Error Log</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Time</th>
+    <th>API Number</th>
+    <th>HTTP Code</th>
+    <th>URL</th>
+  </tr>
+  </thead>
+
+<?php
+
+foreach ($list as $row) {
+    echo "
+  <tr>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['request_time']) . "</td>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['api_nr']) . "</td>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['response_http_code']) . "</td>
+    <td>" . escapeHtml($row['url']) . "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?>

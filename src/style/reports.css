@@ -1,0 +1,342 @@
+/* ----- CSS ----- */
+#content .activity {
+	width: 640px;
+}
+
+#content .activity table {
+	width: 1150px;
+	border: 1px solid #BFC0C0;
+	border-right: 0;
+	border-top: 0;
+	margin-bottom: 10px;
+}
+
+#content .activity .top {
+	background-color: #344A53;
+	color: #FFFFFF;
+}
+
+#content .activity .top td {
+	height: 36px;
+	line-height: 20px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 5px;
+	letter-spacing: 1px;
+}
+
+#content .activity .white {
+	background-color: #FFFFFF;
+}
+
+#content .activity .white td {
+}
+
+#content .activity .grey {
+	background-color: #F0F0F0;
+}
+
+#content .activity .grey td {
+}
+
+#content .activity tr {
+	border-bottom: 1px solid #bcbdbd;
+}
+
+#content .activity td {
+	border-right: 1px solid #bfc0c0;
+	padding: 9px 5px;
+	font-size: 12px;
+	color: #333333;
+    border-top: 1px solid #bcbdbd;
+}
+
+#content .activity td.fourth .zero-revenue {
+	color: #bbb;
+}
+
+#content .activity td a {
+	margin-right: 4px;
+}
+
+#content .activity .fourth {
+	width: 60px;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+#content .activity .white .fourth, #content .activity .grey .fourth {
+	text-align: right;
+	padding-right: 5px;
+    white-space: nowrap;
+}
+
+
+#content .activity tr.top td {
+}
+
+#content .activity .last {
+	width: 92px;
+}
+
+#content .activity .last a {
+	padding: 0 3px;
+	margin: 0;
+}
+#content .activity .last a:hover {
+	background-color: #f6841f;
+	border-top: 8px #f6841f solid;
+}
+#content .activity .last li {
+	float: left;
+}
+
+#content .activity .last .response {
+	position: relative;
+}
+
+#content .activity .last .response a {
+	text-decoration: none;
+	color: #344A53;
+}
+
+#content .activity .last .cloud {
+	width: 124px;
+	height: 38px;
+	text-align: center;
+	line-height: 20px;
+	color: #344A53;
+	font-size: 12px;
+	font-weight: bold;
+	background-image: url(/images/span-cloud-bcg.png);
+	background-repeat: no-repeat;
+	position: absolute;
+	top: -25px;
+	left: -105px;
+	z-index: 9;
+	display: none;
+	padding-top: 2px;
+}
+
+#content .activity .last .response:hover .cloud {
+	display: block;
+}
+
+#content .activity .active {
+	padding-left: 18px;
+	background-image: url(/images/active-span-bcg.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content .activity .inactive {
+	padding-left: 18px;
+	background-image: url(/images/span-inactive.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content .activity .skiped {
+	padding-left: 18px;
+	background-image: url(/images/span-class-skiped-bcg.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content .activity .shadow {
+	padding-left: 18px;
+	background-image: url(/img/icons/game.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content .activity .skim {
+	padding-left: 18px;
+	background-image: url(/img/icons/ghost.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content .activity .toptable {
+	padding: 6px 5px 2px 5px;
+	height: 32px;
+	width: 1138px;
+	background-color: #F6841F;
+	border-left: 1px solid #BFC0C0;
+	border-right: 1px solid #BFC0C0;
+	border-top: 1px solid #BFC0C0;
+}
+
+#content .activity .toptable span {
+	/* font-family: arial; */
+}
+
+#content .activity .toptable .from {
+	width: 255px;
+	float: left;
+	margin: 0;
+}
+
+#content .activity .toptable .from input {
+	width: 81px;
+	font-size: 13px;
+	padding-left: 2px;
+}
+
+#content .activity .toptable .pick-user {
+	width: 120px;
+	float: left;
+}
+
+#content .activity .toptable .pick-user select {
+    padding-left: 5px;
+    width: 100px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    float: left;
+    font-size: 13px;
+}
+
+#content .activity .toptable .interval {
+	width: 170px;
+	float: left;
+	margin-left: 7px;
+	padding-left: 0;
+}
+
+#content .activity .toptable .interval span {
+	padding-left: 5px;
+}
+
+#content .activity .toptable span {
+	font-size: 16px;
+	color: #FFFFFF;
+	margin-right: 4px;
+	line-height: 30px;
+	float: left;
+}
+
+#content .activity .toptable select {
+	padding-left: 5px;
+	width: 100px;
+	border: 1px solid #ccc;
+	margin-right: 5px;
+	vertical-align: middle;
+    font-size: 13px;
+    background-color: #fff;
+}
+
+#content .activity .toptable input {
+    float: left;
+    height: 25px;
+}
+
+#content .activity .toptable .projects {
+	width: 699px;
+	float: right;
+	text-align: right;
+}
+
+#content .activity .toptable .projects select {
+	float: left;
+}
+
+#content .activity .toptable .projects select.prj-names {
+	width: 120px;
+}
+
+#content .activity .toptable .projects select.prj-status {
+	width: 90px;
+}
+
+#content .activity .toptable .projects #campaign-success-status {
+	margin-right: 23px;
+}
+
+#content .activity .toptable .projects span {
+	float: left;
+	line-height: 30px;
+}
+
+#content .activity .toptable .projects .button {
+	display: block;
+	width: 95px;
+	text-align: center;
+	background-color: #1D353F;
+	text-decoration: none;
+	padding-bottom: 3px;
+	height: 28px;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: bold;
+	float: left;
+	border: none;
+	cursor: pointer;
+}
+
+#content .activity .legend {
+	padding-bottom: 10px;
+	width: 800px;
+}
+
+#content .activity .legend span {
+	float: left;
+	margin-right: 20px;
+	padding-left: 20px;
+	font-size: 14px;
+	line-height: 18px;
+	color: #2E2D2E;
+}
+
+#content .pagenator {
+	padding-bottom: 30px;
+}
+
+#content .pagenator ul li {
+	float: left;
+	font-size: 14px;
+}
+
+#content .pagenator ul li a {
+	text-decoration: none;
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 7px;
+	color: #262826;
+	margin-right: 3px;
+	border: 1px solid #C0C1C1;
+}
+
+#content .pagenator ul li a:hover {
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: #1D353F;
+}
+
+#content .pagenator ul .pages a {
+	color: #FFFFFF;
+	font-weight: bold;
+	background-color: #1D353F;
+}
+
+#content .pagenator p {
+	font-size: 14px;
+	line-height: 25px;
+	color: #262826;
+	float: left;
+	padding-left: 30px;
+}
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}
+#content input, #content select {
+    border-radius: 4px;
+}

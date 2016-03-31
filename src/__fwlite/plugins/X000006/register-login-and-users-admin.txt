@@ -1,0 +1,30 @@
+This plugin contains login, users management and registration functionality 
+
+uses
+  X000004
+
+
+Expects user_emails_tokens table and users table:
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `username` varchar(32) NOT NULL,
+  `email` varchar(90) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `pass_sha1` char(40) character set ascii collate ascii_bin NOT NULL,
+  `is_admin` enum('0','1') NOT NULL default '0',
+  `created_at` datetime NOT NULL,
+  `email_verified` enum('0','1') NOT NULL default '0',
+  `enabled` enum('0','1') NOT NULL default '1',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `user_email_tokens` (
+  `user_id` int(10) unsigned NOT NULL,
+  `token` varchar(40) character set ascii collate ascii_bin NOT NULL,
+  `create_time` datetime NOT NULL,
+  `verify_time` datetime default NULL,
+  PRIMARY KEY  (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

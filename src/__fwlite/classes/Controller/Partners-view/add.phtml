@@ -1,0 +1,125 @@
+<div class="head">
+    <h2>Partners</h2>
+
+    <div class="breadcrumb">
+        <div style="float:left">
+        <p><a href="/partners/">Partners &gt;</a> Add New Partner</p>
+        </div>
+        <div id="ping-post-tab" class="pingtree-form">    
+            <?php if (isset($_GET['ping_post_type']) && $_GET['ping_post_type'] === 'ping'): ?>        
+                <ul>
+                    <li id="pingTab" class="current">PING</li>
+                    <li id="postTab">POST</li>
+                </ul>
+            <?php else: ?>
+                <ul>
+                    <li id="pingTab">PING</li>
+                    <li id="postTab" class="current">POST</li>
+                </ul>
+            <?php endif; ?>
+            <div class="clear"></div>
+        </div>
+    </div><!--breadcrumb-->
+</div><!--head-->
+
+<form id="add-partner-form" style="margin: 0;" method="POST">
+    <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+    <?php
+    require_once dirname(__FILE__) . '/_form.phtml';
+    ?>
+    <div class="pingtree-form">
+        <button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/disk.png" />SAVE</button>
+        <button type="submit" name="redir" value="fields"  id="editFields"  ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/table_edit.png" />Edit Fields</button>
+        <button type="submit" name="redir" value="filters" id="editFilters" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/arrow_branch.png" />Edit Rules</button>
+        <?php if (!isset($_GET['ping_post_type']) || $_GET['ping_post_type'] !== 'ping'): ?>
+        <button type="submit" name="redir" value="caps" id="editCaps" ><img style="margin-top: -2px; width: 11px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/cap.jpg" />Edit Caps</button>
+        <?php endif; ?>
+        <button type="submit" name="redir" value="template" id="editTemplate"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/page_edit.png" />Edit Template</button>
+        <button type="button" id="cancelButton"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase ?>img/icons/cross.png" />Cancel</button>
+    </div>
+<?php echo '</div><!-- settings -->'; ?>
+</form>
+
+<script type="text/javascript">
+
+    var checkDirty = true;
+
+    var originalState = [
+        ['posting_type', '1'],
+        ['should_retry', '0'],
+        ['parse_response', '0'],
+        ['price_per_lead', '0']
+    ];
+
+    $(document).ready(function() {
+        $('#cancelButton').click(function() {
+            checkDirty = false;
+            document.location.href =<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;
+        });
+        
+        $('#pingTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+            
+            $('#add-partner-form').append('<input type="hidden" name="redir" value="ping">');
+            $('#add-partner-form').submit();
+        });
+        
+        $('#postTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+            
+            $('#add-partner-form').append('<input type="hidden" name="redir" value="post">');
+            $('#add-partner-form').submit();
+        });
+        
+        <?php if (isset($_GET['ping_post_type']) && $_GET['ping_post_type'] === 'ping'): ?>
+        $('#partner-type').val(PARTNER_TYPE_PING_POST);
+        $('#ping-post-tab').show();
+        $('#partner-type').attr('disabled', 'disabled');
+        
+        $('#success-url-wrapper').hide();
+        $('#success-url-wrapper-replacement').show();
+        <?php endif; ?>
+
+    });
+
+    $('#add-partner-form').submit(function() {
+        checkDirty = false;
+    });
+
+    $(window).bind('beforeunload', function() {
+        if (checkDirty && pageStateChanged()) {
+            return 'Your changes are not saved - are you sure you wish to leave this page?';
+        }
+    });
+
+    function pageStateChanged() {
+        var changed = false;
+        $('#add-partner-form').find('input,select').each(function() {
+            if (changed) {
+                return;
+            }
+            var name = $(this).attr('name');
+            for (var i = 0; i < originalState.length; i++) {
+                if (name == originalState[i][0]) {
+                    var v = $(this).val();
+                    if ($(this).attr('type') == 'checkbox') {
+                        v = $(this).attr('checked') ? '1' : '0';
+                    }
+                    if (v != originalState[i][1]) {
+                        changed = true;
+                    }
+                    return;
+                }
+            }
+            if (($(this).attr('type') != 'hidden') && !$(this).attr('disabled') && $(this).val()) {
+                changed = true;
+            }
+        });
+        return changed;
+    }
+
+</script>

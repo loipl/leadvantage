@@ -1,0 +1,436 @@
+<style>
+
+#dlg-delete {
+	display: none;
+}
+
+#content .activity tr:hover {
+    background-color: #eee7c7;
+}
+
+#content .activity tr.top:hover {
+    background-color: #344a53;
+}
+
+</style>
+
+
+<div class="head">
+	<h2>Partners</h2>
+</div><!--head-->
+
+<div class="activity">
+<table class="data-table" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr class="top">
+			<td class="first">Name</td>
+			<td class="last">Controls</td>
+		</tr>
+<?php
+
+if (!empty($list) && is_array($list)) {
+    $odd = false;
+    foreach ($list as $partner) {
+        $odd = !$odd;
+        $class = $odd ? 'white' : 'grey';
+        echo "\t\t<tr class=\"$class\">\t\t\t<td class=\"first\">";
+        echo escapeHtml($partner['name']);
+        echo "</td>\n\t\t\t<td class=\"last\">";
+
+        echo ''
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" />Edit',        array('action' => 'edit'),    array('id' => $partner['id']), ' class="sheet tt-edit-settings"')
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table_edit.png" />Fields',  array('action' => 'fields'),  array('id' => $partner['id']), ' class="sheet tt-edit-fields"')
+        . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/arrow_branch.png" />Rules', array('action' => 'filters'), array('id' => $partner['id']), ' class="sheet tt-edit-rules"')
+        . App::linkFor($this, '<img style="height:16px; width:11px;" src="' . Config::$urlBase . 'img/icons/cap.gif" />Caps', array('action' => 'caps'), array('id' => $partner['id']), ' class="sheet tt-edit-caps"');
+        if (!isset($revokePartnerControl) || (isset($revokePartnerControl) && (!$revokePartnerControl))) {
+            echo  App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" />Delete',             array('action' => 'delete'),  array('id' => $partner['id']), 'class="sheet tt-delete-partner delete-partner-link" id="delete-' . $partner['id'] . '"');
+        }
+        echo 
+        '<a class="sheet tt-copy-partner" href="javascript:copyPartnerDialog(' . $partner['id'] . ');"><img src="' . Config::$urlBase . 'img/icons/page_copy.png" />Copy</a>';
+        if ($isAdmin) {
+            echo ' &nbsp; ';
+            $isTemplate = isset($templatesAssoc[$partner['id']]);
+            echo '<a class="sheet" href="javascript:' . ($isTemplate ? 'removePartnerTemplate' : 'addPartnerTemplate') . '(' . $partner['id'] . ');">';
+
+            if ($isTemplate) {
+                echo '<img id="delete-template-' . $partner['id'] . '" src="' . Config::$urlBase . 'img/icons/page_delete.png" /></a>';
+                Helper_Tooltip::assignTooltipToId('delete-template-' . $partner['id'], 'Delete Template "' . escapeHtml($templatesAssoc[$partner['id']]) . '"');
+
+                echo '<a id="edit-template-' . $partner['id'] . '" class="sheet" href="javascript:editTemplate(' . $partner['id'] . ', \'' . escapeJSVal($templatesAssoc[$partner['id']]) . '\');"><img src="' . Config::$urlBase .
+                'img/icons/page_edit.png" ';
+                $text = 'Edit Template &quot;' . escapeAttrVal($templatesAssoc[$partner['id']]) . '&quot;';
+                if (!empty($templateIndustriesAssoc[$partner['id']])) {
+                    $ac = false;
+                    foreach ($templateIndustriesAssoc[$partner['id']] as $iid) {
+                        if (isset($industries[$iid])) {
+                            if ($ac) {
+                                $text .= ", ";
+                            } else {
+                                $text .= '<br><br> Industries: ';
+                                $ac = true;
+                            }
+                            $text .= escapeAttrVal($industries[$iid]);
+                        }
+                    }
+                }
+                Helper_Tooltip::assignTooltipToId('edit-template-' . $partner['id'], $text);
+                echo '></span></a>';
+            } else {
+                echo '<img class="tt-set-template" src="' . Config::$urlBase . 'img/icons/page_add.png" /></a>';
+            }
+        }
+        echo "</td>\n\t\t</tr>\n";
+    }
+    Helper_Tooltip::assignTooltipToClass('tt-edit-settings',  'Edit partner settings');
+    Helper_Tooltip::assignTooltipToClass('tt-edit-fields',    'Edit partner fields');
+    Helper_Tooltip::assignTooltipToClass('tt-edit-rules',     'Edit partner rules');
+    Helper_Tooltip::assignTooltipToClass('tt-delete-partner', 'Delete partner');
+    Helper_Tooltip::assignTooltipToClass('tt-copy-partner',   'Copy partner');
+    if (Auth::getInstance()->isAdminLoggedIn()) {
+        Helper_Tooltip::assignTooltipToClass('tt-set-template', 'Set As Template');
+    }
+} else {
+    echo "\t\t<tr><td colspan=\"2\" style=\"text-align: center; height:30px;\">No Partners Available - <a href=\"/partners/add.html\">Add a New Partner</a></td></tr>\n";
+}
+
+?>
+	</tbody>
+</table>
+</div><!--  activity -->
+
+<?php
+if (isset($count, $perPage) && ($count > $perPage)) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo ' <a href="?all">Show All</a></div>';
+}?>
+
+<?php if (!isset($revokePartnerControl) || (isset($revokePartnerControl) && (!$revokePartnerControl))) {?>
+				<div class="addchampaign">
+
+					<div class="leftbutton">
+						<a href="/partners/add.html"><span><img src="/img/icons/add.png" style="margin-bottom: -2px;" alt=""/></span> Add New Partner </a>
+					</div><!--leftbutton-->
+<?php
+if (!empty($templatesAssocInd)) {
+
+?>
+
+					<div class="template">
+
+						<div class="leftpart">
+							<span style="font-size: 14px; font-weight: bold;"><img src="/img/icons/add.png" style="margin-bottom: -2px;" alt=""/> Add New From Template</span>
+						</div><!--leftpart-->
+
+						<div class="rightpart">
+							<p><select id="add-new-from-template">
+								<option value="0">-- Select Template --</option>
+<?php
+
+foreach ($templatesAssocInd as $partnerId => $templateName) {
+    echo '<option value="' . $partnerId . '">' . escapeHtml($templateName) . "</option>\n";
+}
+
+?>
+								</select></p>
+						</div><!--rightpart-->
+
+						<div class="clear"></div>
+					</div><!--template-->
+<?php } ?>
+					<div class="clear"></div>
+				</div><!--addchampaign-->
+<?php } ?>
+<script type="text/javascript">
+
+var titles = [<?php
+
+$comma = false;
+foreach ($list as $row) {
+    if ($comma) {
+        echo ',';
+    } else {
+        $comma = true;
+    }
+    echo '[' . $row['id'] . ', \'' . escapeJSVal($row['name']) . '\']';
+}?>];
+
+var industriesPerPartner = {<?php
+
+$ac = false;
+foreach ($templateIndustriesAssoc as $pid => $arr) {
+    if ($ac) {
+        echo ', ';
+    } else {
+        $ac = true;
+    }
+    echo "'$pid'" . ': [' . implode(', ', $arr) . "]";
+}
+?>};
+
+var lastClickedTemplate = 0;
+
+$(document).ready(function() {
+	$('a.delete-partner-link').click(function(e) {
+		e.preventDefault();
+		var arr = $(this).attr('id').split('-');
+		if (arr.length != 2) {
+			return;
+		}
+		var id = parseInt(arr[1]);
+		if (confirm("Warning: all of your statistics for this partner will be deleted as well.\n\nAre you sure you wish to delete this partner?")) {
+			deletePartner(id);
+		};
+	});
+
+	$('#add-new-from-template').click(addNewFromTemplate).change(addNewFromTemplate);
+    <?php Helper_Tooltip::jscript(); ?>
+
+});
+
+function addNewFromTemplate() {
+	var id = parseInt($('#add-new-from-template').val());
+	if (id == lastClickedTemplate) {
+		return;
+	} else {
+		lastClickedTemplate = id;
+	}
+	if (!id) {
+		return;
+	}
+
+	var templateName = $('#add-new-from-template').find('option[value="' + id + '"]').text();
+	$('#tcopy-partner-fields').attr('checked', 'checked');
+	$('#tcopy-partner-rules').attr('checked', 'checked');
+    $('#tcopy-partner-caps').attr('checked', 'checked');
+	$('#tcopy-partner-new-name').val('');
+
+	$('#new-from-template-dialog').dialog({
+		'modal' : true,
+		'title': 'New partner from template "' + templateName + '"',
+		'open' : function() {attachTemplateButtons(id); $('#tcopy-partner-new-name').focus();},
+		'close' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0;}
+	});
+}
+
+function deletePartner(id) {
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxDelete')) . "?id='"; ?> + id,
+		{'id': id, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			// $('#dlg-delete').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function addPartnerTemplate(id) {
+	$('#partner-template-name').val('');
+	$('#partner-template-name').focus();
+	$('#partner-template-dialog').find('input[type="checkbox"]').removeAttr('checked');
+	$('#partner-template-dialog').dialog({
+		'modal' : true,
+		'title' : 'Add Partner Template',
+		'open'  : function() {attachTemplateDlgButtons(id, true); $('#partner-template-dialog').focus();}
+	});
+};
+
+function editTemplate(id, name) {
+	$('#partner-template-name').val(name);
+	$('#partner-template-name').focus();
+	$('#partner-template-dialog').find('input[type="checkbox"]').removeAttr('checked');
+	var arr = industriesPerPartner['' + id];
+	if (typeof(arr) != 'undefined') {
+		for (var i = 0; i < arr.length; i++) {
+			$('#cbx_industry-' + arr[i]).attr('checked', 'checked');
+		};
+	};
+	$('#partner-template-dialog').dialog({
+		'modal' : true,
+		'title' : 'Edit Partner Template',
+		'open'  : function() {attachTemplateDlgButtons(id, false); $('#partner-template-dialog').focus();}
+	});
+};
+
+function removePartnerTemplate(id) {
+	if (confirm('Remove template?')) {
+		$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxDeletePartnerTemplate')) . "'"; ?>,
+			{'id': id, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+			if (response != 'OK') {
+				alert(response);
+			} else {
+				window.location.reload(true);
+			}
+		});
+	}
+}
+
+function attachButtons(id) {
+	$('#copy-partner-dialog').dialog('option', 'buttons', {
+		'Copy'   : function() {copyPartner(id);},
+		'Cancel' : function() {$('#copy-partner-dialog').dialog('destroy');}
+	});
+}
+
+function attachTemplateButtons(id) {
+	$('#new-from-template-dialog').dialog('option', 'buttons', {
+		'Create' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0; newPartnerFromTemplate(id);},
+		'Cancel' : function() {$('#add-new-from-template').val('0'); lastClickedTemplate = 0; $('#new-from-template-dialog').dialog('destroy');}
+	});
+}
+
+function saveTemplate(id) {
+	var templateName = $('#partner-template-name').val();
+	var arr = [];
+	$('#partner-template-dialog input[type="checkbox"]').each(function() {
+		if ($(this).attr('checked')) {
+			var parts = $(this).attr('id').split('-');
+			if (parts.length == 2) {
+				arr.push(parseInt(parts[1]));
+			};
+		};
+	});
+
+	var data = {'id' : id, 'name' : templateName, 'industries' : arr,
+			'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxMarkPartnerAsTemplate')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			$('#partner-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function updateTemplate(id) {
+	var templateName = $('#partner-template-name').val();
+	var arr = [];
+	$('#partner-template-dialog input[type="checkbox"]').each(function() {
+		if ($(this).attr('checked')) {
+			var parts = $(this).attr('id').split('-');
+			if (parts.length == 2) {
+				arr.push(parseInt(parts[1]));
+			};
+		};
+	});
+	var data = {'id' : id, 'name' : templateName, 'industries' : arr,
+			'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxUpdatePartnerTemplate')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			$('#partner-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function attachTemplateDlgButtons(id, save) {
+	$('#partner-template-dialog').dialog('option', 'buttons', {
+		'Save'   : save ? function() {saveTemplate(id);} : function() {updateTemplate(id);},
+		'Cancel' : function() {$('#partner-template-dialog').dialog('destroy');}
+	});
+}
+
+function copyPartnerDialog(id) {
+	var partnerName = '';
+	for (var i = 0; i < titles.length; i++) {
+		var arr = titles[i];
+		if (arr[0] == id) {
+			partnerName = arr[1];
+		}
+	}
+	$('#copy-partner-fields').attr('checked', 'checked');
+	$('#copy-partner-rules').attr('checked', 'checked');
+    $('#copy-partner-caps').attr('checked', 'checked');
+
+	$('#copy-partner-dialog').dialog({
+		'modal' : true,
+		'title': 'Copy partner "' + partnerName + '"',
+		'open' : function() {attachButtons(id); $('#copy-partner-new-name').focus();}
+	});
+}
+
+function copyPartner(id) {
+	var copyFields = $('#copy-partner-fields').attr('checked')   ? '1' : '';
+	var copyRules  = $('#copy-partner-rules').attr('checked') ? '1' : '';
+    var copyCaps  = $('#copy-partner-caps').attr('checked') ? '1' : '';
+	var newName    = $.trim($('#copy-partner-new-name').val());
+
+	var data       = {'id' : id, 'new_name' : newName, 'fields' : copyFields, 'rules' : copyRules, 'caps' : copyCaps, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+
+	$('#copy-partner-dialog').dialog('option', 'buttons', {});
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxCopyPartner')) . "'" ?>, data, function(response) {
+		if (response != 'OK') {
+			alert(response);
+			attachButtons(id);
+		} else {
+			$('#copy-partner-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function newPartnerFromTemplate(id) {
+	var copyFields   = $('#tcopy-partner-fields').attr('checked')   ? '1' : '';
+	var copyRules    = $('#tcopy-partner-rules').attr('checked')   ? '1' : '';
+    var copyCaps    = $('#tcopy-partner-caps').attr('checked')   ? '1' : '';
+	var newName      = $.trim($('#tcopy-partner-new-name').val());
+
+	var data         = {'id' : id, 'new_name' : newName, 'fields' : copyFields, 'rules' : copyRules, 'caps' : copyCaps, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>};
+
+	$('#new-from-template-dialog').dialog('option', 'buttons', {});
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxNewFromTemplate')) . "'" ?>, data, function (response) {
+		if (response != 'OK') {
+			alert(response);
+			attachTemplateButtons(id);
+		} else {
+			$('#new-from-template-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+function checkAllIndustries() {
+	$('#partner-template-dialog input[type="checkbox"]').attr('checked', 'checked');
+};
+
+function unCheckAllIndustries() {
+	$('#partner-template-dialog input[type="checkbox"]').removeAttr('checked');
+};
+
+</script>
+
+<div id="dlg-delete"></div>
+
+<div id="copy-partner-dialog" style="display: none;">
+<label>Partner Name: <input type="text" id="copy-partner-new-name" /></label><br />
+<label><input type="checkbox" id="copy-partner-fields"> Copy Partner Fields</label><br />
+<label><input type="checkbox" id="copy-partner-rules"> Copy Partner Rules</label><br />
+<label><input type="checkbox" id="copy-partner-caps"> Copy Partner Caps</label><br />
+</div>
+
+<div id="new-from-template-dialog" style="display: none;">
+<label>Partner Name: <input type="text" id="tcopy-partner-new-name" /></label><br />
+<label><input type="checkbox" id="tcopy-partner-fields"> Copy Partner Fields</label><br />
+<label><input type="checkbox" id="tcopy-partner-rules"> Copy Partner Rules</label><br />
+<label><input type="checkbox" id="tcopy-partner-caps"> Copy Partner Caps</label><br />
+</div>
+
+<div id="partner-template-dialog" style="display: none;">
+<label>Template Name: <input type="text" id="partner-template-name"></label><br />
+<?php
+
+if (!empty($industries)) {
+    echo "<br />Industries: (<a href=\"javascript:checkAllIndustries();\">Check All</a>) (<a href=\"javascript:unCheckAllIndustries();\">Clear</a>)<br />\n";
+}
+
+foreach ($industries as $id => $name) {
+    echo "<label><input type=\"checkbox\" id=\"cbx_industry-$id\"> " . escapeHtml($name) . "</label><br />\n";
+}
+
+?>
+</div>

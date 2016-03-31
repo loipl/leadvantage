@@ -1,0 +1,285 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: index.php.
+*/
+div#index-wrapper /* Parent: div#body-content-container. */
+	{
+		z-index: 0;
+		float: left;
+		position: relative;
+		width: 588px; /* Divisible by 2, 3, 4. */
+	}
+div#index-wrapper > div#index-inner-wrapper-a
+	{
+	}
+div#index-wrapper > div#index-inner-wrapper-a > div#index-inner-wrapper-b
+	{
+	}
+div#index-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#index-title /* Parent: ^ container. */
+	{
+		margin: 0 0 50px 0;
+	}
+div#index-title > h1
+	{
+		margin: 0;
+	}
+div#index-title > h1 > a
+	{
+		text-decoration: none;
+	}
+div#index-title > h1 > a:hover
+	{
+	}
+div#index-title > div
+	{
+		color: #666666;
+		font-style: italic;
+		margin: 5px 0 0 0;
+	}
+div#index-title > div > *:first-child,
+div#index-title > div > *.alignleft:first-child + *,
+div#index-title > div > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div#index-upper-nav
+	{
+		display: none;
+	}
+div#index-lower-nav
+	{
+		margin: 25px 0 0 0;
+		padding: 25px 0 0 0;
+		background: url('<?php echo $i; ?>/index-lower-nav-bg.png') no-repeat top center;
+	}
+div#index-upper-nav > div#index-upper-nav-page,
+div#index-lower-nav > div#index-lower-nav-page
+	{
+		float: left;
+		font-size: 130%;
+		margin: 5px 0 0 0;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div#index-upper-nav > div#index-upper-nav-next,
+div#index-lower-nav > div#index-lower-nav-next
+	{
+		float: right;
+		margin: 0 -3px 0 25px;
+	}
+div#index-upper-nav > div#index-upper-nav-next > a,
+div#index-lower-nav > div#index-lower-nav-next > a
+	{
+		width: 32px;
+		height: 32px;
+		opacity: 0.7;
+		display: block;
+		background: url('<?php echo $i; ?>/navigation-arrow-next.png') no-repeat right center;
+	}
+div#index-upper-nav > div#index-upper-nav-next > a:hover,
+div#index-lower-nav > div#index-lower-nav-next > a:hover
+	{
+		opacity: 1.0;
+	}
+div#index-upper-nav > div#index-upper-nav-prev,
+div#index-lower-nav > div#index-lower-nav-prev
+	{
+		float: right;
+		margin: 0 -3px 0 0;
+	}
+div#index-upper-nav > div#index-upper-nav-prev > a,
+div#index-lower-nav > div#index-lower-nav-prev > a
+	{
+		width: 32px;
+		height: 32px;
+		opacity: 0.7;
+		display: block;
+		background: url('<?php echo $i; ?>/navigation-arrow-prev.png') no-repeat left center;
+	}
+div#index-upper-nav > div#index-upper-nav-prev > a:hover,
+div#index-lower-nav > div#index-lower-nav-prev > a:hover
+	{
+		opacity: 1.0;
+	}
+div#index-posts
+	{
+	}
+div#index-posts > div.index-post
+	{
+		margin: 0 0 25px 0;
+		padding: 0 0 25px 0;
+	}
+div#index-posts > div.index-post:last-child
+	{
+		margin-bottom: 0;
+	}
+div#index-posts > div.index-post.index-post-sticky
+	{
+	}
+div#index-posts > div.index-post > div.index-post-wrapper
+	{
+	}
+div#index-posts > div.index-post > div.index-post-wrapper > div.index-post-inner-wrapper-a
+	{
+	}
+div#index-posts > div.index-post > div.index-post-wrapper > div.index-post-inner-wrapper-a > div.index-post-inner-wrapper-b
+	{
+	}
+div.index-post-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div.index-post-upper-section /* Parent: ^ container. */
+	{
+	}
+div.index-post-upper-section > div.index-post-date
+	{
+		float: right;
+		margin: 14px 0 0 10px;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div.index-post-upper-section > div.index-post-edit
+	{
+		z-index: 1;
+		float: right;
+		font-size: 80%;
+		position: relative;
+		margin: 16px 0 0 0;
+	}
+div.index-post-upper-section > div.index-post-edit > a
+	{
+		text-decoration: none;
+		font-family: 'Georgia', serif;
+	}
+div.index-post-upper-section > div.index-post-edit > a:hover
+	{
+	}
+div.index-post-upper-section > div.index-post-title
+	{
+		left: -5px;
+		height: 42px;
+		font-size: 140%;
+		position: relative;
+		padding: 15px 0 0 12px;
+		background: url('<?php echo $i; ?>/index-post-title-bg.png') no-repeat left center;
+	}
+div.index-post-upper-section > div.index-post-title > a
+	{
+		text-decoration: none;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div.index-post-upper-section > div.index-post-title > a:hover
+	{
+	}
+div.index-post-middle-section
+	{
+		padding: 15px 0 15px 0;
+	}
+div.index-post-middle-section > div.index-post-excerpt
+	{
+		text-align: justify;
+	}
+div.index-post-middle-section > div.index-post-excerpt > *:first-child,
+div.index-post-middle-section > div.index-post-excerpt > *.alignleft:first-child + *,
+div.index-post-middle-section > div.index-post-excerpt > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div.index-post-middle-section > div.index-post-excerpt a
+	{
+	}
+div.index-post-middle-section > div.index-post-excerpt a:hover
+	{
+	}
+div.index-post-middle-section > div.index-post-excerpt a.more-link
+	{
+		top: 20px;
+		clear: both;
+		float: right;
+		padding: 5px;
+		position: relative;
+		background: #EAE0D5;
+		display: inline-block;
+		text-decoration: none;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+div.index-post-middle-section > div.index-post-excerpt a.more-link:hover
+	{
+	}
+div.index-post-middle-section > div.index-post-excerpt > div.index-post-excerpt-thumb
+	{
+		float: right;
+		margin: 0 0 0 25px;
+	}
+div.index-post-middle-section > div.index-post-excerpt > div.index-post-excerpt-thumb > a > img
+	{
+		width: 128px;
+		height: 128px;
+	}
+div.index-post-middle-section > div.index-post-excerpt > div.index-post-excerpt-thumb:first-child + *,
+div.index-post-middle-section > div.index-post-excerpt > div.index-post-excerpt-thumb:first-child + *.alignleft + *,
+div.index-post-middle-section > div.index-post-excerpt > div.index-post-excerpt-thumb:first-child + *.alignright + *
+	{
+		margin-top: 0;
+	}
+div.index-post-lower-section
+	{
+	}
+div.index-post-lower-section > div.index-post-comments
+	{
+		font-size: 80%;
+		line-height: 22px;
+		padding: 0 0 0 25px;
+		background: url('<?php echo $i; ?>/post-comments-icon.png') no-repeat center left;
+	}
+div.index-post-lower-section > div.index-post-comments > a
+	{
+		text-decoration: none;
+	}
+div.index-post-lower-section > div.index-post-comments > a:hover
+	{
+	}
+div.index-post-lower-section > div.index-post-tags
+	{
+		display: none;
+	}
+div.index-post-lower-section > div.index-post-tags > img
+	{
+	}
+div.index-post-lower-section > div.index-post-tags > a
+	{
+	}
+div.index-post-lower-section > div.index-post-tags > a:hover
+	{
+	}
+div.index-post-lower-section > div.index-post-author
+	{
+		display: none;
+	}
+div.index-post-lower-section > div.index-post-author > a
+	{
+	}
+div.index-post-lower-section > div.index-post-author > a:hover
+	{
+	}
+div.index-post-lower-section > div.index-post-cats
+	{
+		display: none;
+	}
+div.index-post-lower-section > div.index-post-cats > a
+	{
+	}
+div.index-post-lower-section > div.index-post-cats > a:hover
+	{
+	}

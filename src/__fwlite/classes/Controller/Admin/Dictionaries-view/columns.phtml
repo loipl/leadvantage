@@ -1,0 +1,55 @@
+<style>
+
+#cols-table td {
+	padding: 0px 6px;
+}
+
+#cols-table {
+	margin: 20 px 10px;
+}
+
+#cols-table th {
+	font-weight: bold;
+	padding: 0 6px;
+}
+
+#columns-page a {
+	text-decoration: none;
+}
+#columns-page a span {
+	text-decoration: underline;
+}
+
+</style>
+<div class="head"><h2>Dictionary Columns</h2></div>
+<div id="columns-page">
+<?php
+echo "<table id=\"cols-table\" class=\"data-table\">\n";
+
+echo '
+<thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+</thead>
+
+';
+
+$showDelete = sizeof($columns) > 1;
+
+foreach ($columns as $col) {
+    echo "
+    <tr>
+    	<td>" . escapeHtml($col['name']) . "</td>
+    	<td>" . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <span>Edit</span>',   array('action' => 'editColumn'),   array('id' => $id, 'col_id' => $col['id'])) . "</td>
+    	<td>" . ($showDelete ? App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <span>Delete</span>', array('action' => 'deleteColumn'), array('id' => $id, 'col_id' => $col['id'])) : '&nbsp;') . "</td>
+    </tr>\n";
+}
+
+echo "</table><br>\n";
+
+echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/add.png" style="margin-bottom: 2px;" /> <span>Add Column...</span>', array('action' => 'addColumn'), array('id' => $id)) . ' &nbsp; ';
+echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table_edit.png" style="margin-bottom: 2px;" /> <span>Values</span>', array('action' => 'values'), array('id' => $id));
+
+?>
+</div>

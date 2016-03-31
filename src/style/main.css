@@ -1,0 +1,739 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+Title : Style
+Author : jaranen
+URL : www.fiksie.com
+
+Description : css file
+
+Created :
+Modified : -
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+/* global reset */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,
+cite,code,del,dfn,img,ins,kbd,q,samp,small,strike,sub,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,
+label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+:focus {
+	outline: 0;
+}
+
+a {
+	color: #333;
+}
+
+a:hover {
+	color: #f33;
+}
+
+ol,ul {
+	list-style: none;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+caption,th,td {
+	text-align: left;
+	font-weight: normal;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+	content: "";
+}
+
+blockquote,q {
+	quotes: "" "";
+}
+
+/* end of global reset */
+
+/* ----- CSS ----- */
+body {
+	background-image: url("/images/body-bcg.jpg");
+	background-repeat: repeat-x;
+	background-color: #F1F1F1;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ----- ID'S & CLASSES----- */
+#wrapper {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#container {
+	width: 1200px;
+}
+
+#header {
+	width: 1200px;
+	height: 46px;
+}
+
+#header .logo {
+	float: left;
+}
+
+#header .account {
+	float: right;
+	padding-top: 10px;
+}
+
+#header .account ul {
+	float: right;
+}
+
+#header .account ul li {
+	float: left;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+#header .account ul li a, #header .account ul li span.x {
+	text-decoration: none;
+	color: #344A53;
+	height: 28px;
+	line-height: 28px;
+	margin-right: 10px;
+	display: block;
+}
+
+#header .account ul li span .name {
+	color: #F6841F;
+        cursor: pointer;
+}
+
+#header .account ul .help a {
+	display: block;
+	height: 28px;
+	line-height: 28px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #344A53;
+	padding: 0 7px;
+}
+
+#header .account ul .first span.x {
+	padding-left: 25px;
+	background-image: url("/images/user-image.png");
+	background-repeat: no-repeat;
+	background-position: 2px 5px;
+}
+
+#navigation {
+	width: 1200px;
+	height: 52px;
+	margin-bottom: 30px;
+}
+
+#navigation ul {
+	margin-top: 2px;
+	height: 50px;
+	border-left: 1px solid #FFFFFF;
+}
+
+#navigation ul li {
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	position: relative;
+}
+
+#navigation ul li a {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+	height: 50px;
+	line-height: 51px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 0 20px;
+	border-right: 1px solid #FFFFFF;
+}
+
+#navigation ul li a:hover {
+	background-color: #344A53;
+}
+
+#navigation ul .current a {
+	background-color: #344A53;
+}
+
+#navigation ul li ul {
+	width: 143px;
+	position: absolute;
+	z-index: 9;
+	left: -1px;
+	top: 48px;
+	display: none;
+}
+
+#navigation ul li a:hover ul {
+	background-color: #344A53;
+}
+
+#navigation ul li:hover ul {
+	display: block;
+}
+
+#navigation ul li ul li {
+	font-size: 14px;
+	color: #FFFFFF;
+}
+
+#navigation ul li ul li a {
+	padding: 0 0 0 15px;
+	width: 122px;
+	height: 42px;
+	line-height: 42px;
+	background-color: #F6841F;
+	border-bottom: 1px solid #FE6936;
+	margin-top: 1px;
+	border-right: none;
+}
+
+#navigation ul ul li a:hover {
+	background-color: #344A53;
+}
+
+#content {
+	width: 1150px;
+	padding: 35px;
+	background-color: #FFFFFF;
+	border-left: 1px solid #BCBDBD;
+	border-top: 1px solid #BCBDBD;
+	border-right: 1px solid #BCBDBD;
+}
+
+#content .head {
+	padding-bottom: 40px;
+}
+
+#content .head h2 {
+	font-size: 38px;
+	color: #2E2D2E;
+	font-weight: bold;
+	line-height: 38px;
+}
+
+#content .status {
+	width: 1151px;
+	padding-bottom: 25px;
+}
+
+#content .status div {
+    width: 1129px;
+    padding: 5px 10px 10px;
+    margin-bottom: 8px;
+}
+
+#content .close {
+    float: right;
+    margin-top: 7px;
+}
+
+#content .warning {
+	background-color: #FFF8D8;
+	border: 1px solid #F3D97E;
+}
+
+#content .status div h4 {
+    padding-left: 22px;
+    font-size: 14px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    margin-top: 5px;
+}
+
+#content .warning h4 {
+	color: #ED9D12;
+	background-image: url("/images/warning-bcg.jpg");
+}
+
+#content .info {
+	background-color: #E9F3F8;
+	border: 1px solid #BBD7E4;
+}
+
+#content .info h4 {
+	color: #136BC5;
+	background-image: url("/images/info-bcg.jpg");
+}
+
+#content .error {
+	background-color: #F8E9E9;
+	border: 1px solid #E4BBBC;
+}
+
+#content .error h4 {
+	color: #CE0000;
+	background-image: url("/images/error.jpg");
+}
+
+#content .success {
+	background-color: #EBF9E2;
+	border: 1px solid #BEE4A5;
+}
+
+#content .success h4 {
+	color: #6AA500;
+	background-image: url("/images/success-img.jpg");
+}
+
+#content .breadcrumb {
+	padding-top: 10px;
+}
+
+#content .breadcrumb p {
+	font-size: 16px;
+	color: #344A53;
+}
+
+#content .breadcrumb a {
+	text-decoration: none;
+	color: #2E2D2E;
+	margin-right: 5px;
+}
+
+#content .breadcrumb a:hover {
+	text-decoration: underline;
+}
+
+#content .addchampaign {
+	width: 640px;
+	padding-bottom: 15px;
+}
+
+#content .addphartner {
+	width: 640px;
+	padding-bottom: 15px;
+}
+
+#content .leftbutton {
+	width: 204px;
+	height: 41px;
+	float: left;
+	display: block;
+	border: 1px solid #BCBDBD;
+}
+
+#content .leftbutton a {
+	width: 204px;
+	height: 41px;
+	display: block;
+	color: #000000;
+	line-height: 41px;
+	text-align: center;
+	background-color: #F0F0F0;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#content .template {
+	width: 395px;
+	height: 41px;
+	float: left;
+	background-color: #F0F0F0;
+	border: 1px solid #BCBDBD;
+	padding: 0 9px;
+	margin-left: 17px;
+}
+
+#content .template .leftpart {
+	float: left;
+	width: 200px;
+	line-height: 41px;
+}
+
+#content .template .leftpart a {
+	color: #000000;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#content .template .rightpart {
+	width: 190px;
+	float: right;
+}
+
+#content .template .rightpart select {
+	padding-left: 5px;
+	width: 183px;
+	height: 28px;
+	line-height: 20px;
+	border: 1px solid #BCBDBD;
+	margin-top: 7px;
+}
+
+#content .template .rightpart option {
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content select {
+	height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+	border: 1px solid #BCBDBD;
+	line-height: 20px;
+	vertical-align: middle;
+	background-color: #fff;
+}
+
+#content input {
+	height: 28px;
+	border: 1px solid #BCBDBD;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+	vertical-align: middle;
+}
+
+#content input.cbox {
+	border: 0;
+    vertical-align: middle;
+}
+
+#content .addfield {
+	margin-bottom: 15px;
+	float: left;
+	width: 100%;
+}
+
+#content .addfield a, #content .addfilter a {
+	display: block;
+	color: #000000;
+	background-color: #F0F0F0;
+	height: 45px;
+	width: 120px;
+	text-align: center;
+	line-height: 45px;
+	border: 1px solid #BCBDBD;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#content .settings {
+	padding-bottom: 20px;
+}
+
+#content .settings h3 {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 17px;
+	color: #344A53;
+	margin-bottom: 15px;
+}
+
+#content .settings h3 .closed a {
+	width: 21px;
+	height: 17px;
+	margin-top: 3px;
+}
+
+#content .settings h3 .opened a {
+	width: 21px;
+	height: 17px;
+	margin-top: 3px;
+}
+
+#content .settings ul {
+	float: left;
+}
+
+#content .settings ul li {
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#content .settings ul li a {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+	height: 37px;
+	line-height: 37px;
+	background-color: #1D353F;
+	padding: 0 20px;
+	margin-right: 10px;
+}
+
+#content .settings ul li a:hover {
+	background-color: #F6841F;
+}
+
+#footer {
+	width: 100%;
+	padding-top: 25px;
+	height: 95px;
+	background-image: url("/images/footer-bcg.jpg");
+	background-repeat: repeat-x;
+}
+
+#footer .copy {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 550;
+	color: #D7D7D7;
+}
+
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}
+
+/* ----- ADDED BY BOGDAN ----- */
+
+.qtip {
+	font-size: 14px;
+}
+
+th {
+	font-weight: bold;
+}
+
+.data-table tbody tr:hover {
+	background-color: #ddd;
+}
+
+div.pingtree-form button {
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	background-color: #1D353F;
+	border: 0;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 8px 20px;
+	margin-right: 5px;
+}
+div.pingtree-form button.current {
+    background-color: #f6841f;
+}
+
+div.pingtree-form button img {
+	margin-bottom: -2px;
+}
+
+div.pingtree-form button:hover {
+	background-color: #f6841f;
+}
+
+.form_error, span.form_error {
+	color: red;
+}
+
+.pager {
+    padding-top: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    width: 1000px;
+}
+
+.pager span, .pager a {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+}
+
+.pager span.pager-wrapper, .pager a.pager-wrapper {
+    background-color: #1d353f;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pager a {
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.pager div {
+    color: #000;
+    margin-left: 15px;
+}
+
+div.sql-log {
+	background-color: #fff;
+    margin-top: 20px;
+    padding: 40px;
+    margin-bottom: 50px;
+}
+
+div.sql-log h3 {
+	font-size: 26px;
+	font-weight: bold;
+    font-family: 'DejaVu Sans Mono',Menlo,Consolas,monospace;
+    margin-bottom: 10px;
+}
+
+div.sql-log pre {
+    font-family: 'DejaVu Sans Mono',Menlo,Consolas,monospace;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+
+
+/*
+ *******************************************************************************
+ *                                                                             *
+ *                              FORM STYLES                                    *
+ *                                                                             *
+ *******************************************************************************
+ */
+
+table.form_table {
+    margin: 30px auto;
+}
+
+table.form_table input, table.form_table select, table.form_table textarea {
+    border: 1px solid #ccc;
+    padding: 2px 3px;
+}
+
+table.form_table button {
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 6px 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+}
+
+table.form_table button:hover {
+    color: #008;
+}
+
+table.form_table th h2 {
+    font-size: 20px;
+    font-weight: normal;
+    padding: 8px 12px 4px;
+    margin: 0 0 18px;
+    display: block;
+    color: #222;
+    border-bottom: 4px solid #f33;
+}
+
+table.form_table th h2 div.subtitle {
+    font-size: 12px;
+    color: #777;
+    font-weight: normal;
+    margin: 10px 3px;
+    text-align: left;
+}
+
+table.form_table td {
+    margin: 0;
+    padding: 1px 3px;
+}
+
+table.form_table td.label {
+    vertical-align: top;
+    text-align: right;
+    padding: 3px 5px 0 3px;
+    width: 20px;
+    white-space: nowrap;
+}
+
+table.form_table .soft_border {
+    border: 1px solid #ccc;
+    padding: 1px 2px;
+}
+
+table.form_table .full_width {
+    width: 100%;
+}
+
+table.form_table .checkbox {
+    margin: 0 3px 0 0 ;
+    vertical-align: middle;
+}
+
+table.form_table span.form_error {
+    color: red;
+    display: block;
+    margin: 1px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+table.form_table div.form_hint {
+    padding-left: 10px; color: #777;
+    padding-top: 2px;
+    padding-bottom: 7px;
+    font-size: 11px;
+}
+
+#content table.form_table input {
+    height: inherit;
+    line-height: inherit;
+    padding: 3px;
+}
+
+#content table.form_table select {
+    height: inherit;
+    line-height: inherit;
+    padding: inherit;
+}
+
+div.ui-dialog {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.ui-dialog select {
+    height: 30px;
+    font-size: 14px;
+    color: #2E2D2E;
+    border: 1px solid #BCBDBD;
+    line-height: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+div.ui-dialog input {
+    height: 26px;
+    border: 1px solid #BCBDBD;
+    font-size: 14px;
+    color: #2E2D2E;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+div.ui-dialog input.cbox {
+	border: 0;
+	background-color: transparent;
+}
+
+img.tooltip-img {
+	margin-bottom: -2px !important;
+}

@@ -1,0 +1,322 @@
+/* ----- CSS ----- */
+#content .setup {
+	width: 688px;
+	padding: 10px;
+	background-color: #F0F0F0;
+	border: 1px solid #BCBDBD;
+}
+
+#content .setup .leftinfo {
+	width: 287px;
+	float: left;
+}
+
+#content .setup .leftinfo .top {
+	padding-bottom: 10px;
+}
+
+#content .setup .leftinfo span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 30px;
+	margin-bottom: 5px;
+}
+
+#content .setup .leftinfo input {
+	padding-left: 5px;
+	width: 260px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+	border: 1px solid #BCBDBD;
+}
+
+#content .setup .leftinfo select {
+	padding-left: 5px;
+	width: 267px;
+}
+
+#content .setup .rightinfo {
+	width: 377px;
+	float: left;
+	padding-left: 20px;
+}
+
+#content .setup .rightinfo p {
+	padding-bottom: 8px;
+}
+
+#content .setup .rightinfo select {
+	padding-left: 5px;
+	width: 100px;
+}
+
+#content .setup .rightinfo span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 30px;
+	margin-bottom: 5px;
+}
+
+#content .setup .rightinfo span.form_error {
+	color: red;
+}
+
+#content .setup .rightinfo input {
+	width: 370px;
+	padding-left: 5px;
+}
+
+#content .setup .rightinfo .curency {
+	color: #036B03;
+	font-weight: bold;
+	line-height: 30px;
+	margin-right: 3px;
+	font-size: 18px;
+}
+
+#content .setup .rightinfo .first {
+	width: 172px;
+	padding-left: 5px;
+	height: 28px;
+	line-height: 28px;
+	border: 1px solid #BCBDBD;
+}
+
+#content .settings .options {
+	width: 688px;
+	padding: 10px;
+	margin-bottom: 15px;
+	background-color: #F0F0F0;
+	border: 1px solid #BCBDBD;
+}
+
+#content .settings .options  p {
+	padding-bottom: 5px;
+}
+
+#content .settings .options span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 26px;
+}
+
+#content .settings .options select {
+	width: 100px;
+	padding-left: 5px;
+}
+
+#content .settings .partner-timezone select {
+	width: 150px;
+	padding-left: 5px;
+}
+
+#content .settings .options .check {
+	width: 13px;
+	height: 13px;
+}
+
+#content .settings .options input {
+	width: 283px;
+	padding-left: 5px;
+}
+
+#content .settings .options .bottom p {
+	width: 145px;
+	float: left;
+	margin-right: 10px;
+}
+
+#content .settings .options .bottom span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 30px;
+	display: inline;
+}
+
+#content .settings .options .bottom input {
+	width: 100px;
+	padding-left: 5px;
+	height: 26px;
+	border: 1px solid #BCBDBD;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content .settings .options .bottom .last {
+	padding-bottom: 2px;
+	line-height: 17px !important;
+}
+
+#content .settings .options .bottom .last span {
+	line-height: 17px;
+}
+
+#content .settings .options .bottom .last input {
+	width: 13px;
+	height: 13px;
+}
+
+#content table .top {
+	background-color: #344A53;
+	color: #FFFFFF;
+}
+
+#content table .top td {
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#content table tr td {
+	font-size: 16px;
+	color: #000000;
+	line-height: 38px;
+	font-weight: bold;
+	height: 38px;
+	padding-left: 10px;
+	float: left;
+	border-left: 1px solid #D1D3D6;
+}
+
+#content table .first {
+	width: 80px;
+	border-left: none;
+}
+
+#content table .second {
+	width: 300px;
+}
+
+#content table .third {
+	width: 160px;
+}
+
+#content table .last {
+	width: 53px;
+	text-align: center;
+}
+
+#content table .top td {
+	height: 36px;
+	line-height: 36px;
+	float: left;
+	color: #FFFFFF;
+}
+
+#content table .grey td {
+	background-color: #F0F0F0;
+	height: 50px;
+	line-height: 50px;
+}
+
+#content table .white td {
+	background-color: #FFFFFF;
+	height: 50px;
+	line-height: 50px;
+}
+
+#content table .up {
+	background-image: url(../images/arrow-up-span.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 20px;
+}
+
+#content table .down {
+	background-image: url(../images/arrow-down-span.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 20px;
+}
+
+#content table .second a {
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content table .second .erlink {
+	padding-left: 20px;
+	background-image: url(../images/error-link.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content table .third select {
+	width: 140px;
+	height: 30px;
+	background-color: #FFFFFF;
+	line-height: 30px;
+	padding-left: 5px;
+	margin-top: 10px;
+}
+
+#content table .last a {
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 18px auto;
+}
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}
+
+#ping-post-tab {
+    float: right;
+}
+
+#ping-post-tab ul li {
+    float: left;
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px 20px;
+    border: 2px solid #FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#ping-post-tab ul li:not(.current):hover {
+    background-color: #344A53;
+}
+#ping-post-tab ul li:not(.current){
+    background-color: #f6841f;
+}
+#ping-post-tab ul li.current {
+    background-color: #344A53;
+    border-color: #f6841f;
+}
+#content .settings .options .bottom input#auction-transaction-id {
+    width: 142;
+}
+#content .setup .leftinfo span.form_error, #content .settings .options .bottom span.form_error {
+    color: red;
+}
+.breadcrumb {
+    width: 688px;
+}
+#success-url-wrapper-replacement {
+    height: 75px;
+    display: none;
+}
+#content .setup .rightinfo input#failure-keyword {
+    width: 260px;
+}
+#content select:disabled {
+    background-color: gainsboro;
+}
+
+#content .settings input, #content .settings select {
+     border-radius: 4px;
+}

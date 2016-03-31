@@ -1,0 +1,19 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: embedded fonts.
+This incorporates some PHP for browser sniffing.
+*/
+@font-face
+	{
+		font-family: 'e-Titles-Bold';
+		src: local('Trebuchet MS'), local('Arial'), local('Helvetica'), local('sans-serif');
+		<?php #echo font_face ("includes/fonts/Font/PostscriptName"); ?>
+	}

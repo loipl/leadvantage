@@ -1,0 +1,78 @@
+<style>
+<!--
+
+table.form_table tr th {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+-->
+</style>
+
+<a href="<?php echo App::getFrontController()->urlFor($this, array('action' => 'nodes')); ?>">Servers / Nodes</a>
+
+<form method="POST">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<?php
+
+/* @var $this Controller_Admin_Engine */
+$count = sizeof($this->nodesAssoc);
+
+$pf = new PageFragment_FormAuto($this, $this->form, false);
+
+
+?>
+<table class="form_table">
+
+	<thead>
+		<tr>
+			<th colspan="2" align="center"><h2>Engine Control Panel<br></h2>
+			</th>
+		</tr>
+	</thead>
+
+<?php foreach (Model_EngineConfig::$universalSettings as $name) { ?>
+    <tr>
+        <td><?php echo ucwords(str_replace('_', ' ', $name)); ?></td>
+        <td colspan="<?php echo $count; ?>"><?php echo $pf->getHtmlForNamedElement($name); ?><div class="form_hint"><?php echo $this->descriptions[$name]; ?></div></td>
+    </tr>
+<?php } ?>
+
+    <tr>
+        <td>&nbsp;</td>
+        <?php foreach ($this->nodesAssoc as $ip => $name) { ?>
+        <th><?php
+        if ($name) {
+        echo escapeHtml($name) . ($ip ? "<br>$ip" : '');
+        } else {
+            echo $ip;
+        }
+        ?></th>
+        <?php } ?>
+    </tr>
+
+<?php foreach (Model_EngineConfig::$perDomainSettings as $name) { ?>
+    <tr>
+        <td><?php echo ucwords(str_replace('_', ' ', $name)); ?></td>
+
+        <?php foreach ($this->nodesAssoc as $ip => $nodeName) { ?>
+        <td><?php
+        if (!$ip) {
+            echo $pf->getHtmlForNamedElement($name);
+        } else {
+            echo $pf->getHtmlForNamedElement($name . '_' . str_replace('.', '_', $ip));
+        }
+        ?></td>
+        <?php } ?>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td colspan="<?php echo $count; ?>"><div class="form_hint"><?php echo $this->descriptions[$name]; ?></div><br></td>
+    </tr>
+<?php } ?>
+    <tr>
+        <td>&nbsp;</td>
+        <td colspan="<?php echo $count; ?>"><button type="submit">Submit</button></td>
+    </tr>
+</table>
+</form>

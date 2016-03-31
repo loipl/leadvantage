@@ -1,0 +1,79 @@
+<div class="head"><h2>Sub-Account Setting</h2>
+
+    <div class="breadcrumb">
+        <p>
+            <a href="/subaccount/">Sub-Account &gt;</a> <a href="/subaccount/add.html">Add New Account</a>
+        </p>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+<form id="add-subaccount-form" style="margin: 0;" method="POST">
+    <?php if(!empty($form->message)): ?>
+    <div class="error"><?php echo $form->message; ?></div>
+    <?php endif; ?>
+    <div class="setup">
+        <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+        <div style="margin: 10px;">
+            <div class="label">Username </div>
+            <div><?php echo $pf->getHtmlForNamedElementFull('username'); ?></div>
+        </div>
+        <div style="margin: 10px;">
+            <div class="label">Email </div>
+            <div><?php echo $pf->getHtmlForNamedElementFull('email'); ?></div>
+        </div>
+        <div style="margin: 10px;">
+            <div class="label">Password </div>
+            <div><?php echo $pf->getHtmlForNamedElementFull('password'); ?></div>
+        </div>
+        <div style="margin: 10px;">
+            <div class="label">Retype Password </div>
+            <div><?php echo $pf->getHtmlForNamedElementFull('re_password'); ?></div>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_reporting_access'); ?>
+            </label>
+            <span>Revoke reporting access</span>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_campaign_control'); ?>
+            </label>
+            <span>Revoke campaign controls (Add/Delete)</span>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_partner_control'); ?>
+            </label>
+            <span>Revoke partner controls (Add/Delete)</span>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_success_leads'); ?>
+            </label>
+            <span>Revoke success leads</span>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_failed_leads'); ?>
+            </label>
+            <span>Revoke failed leads</span>
+        </div>
+        <div style="margin: 4px;">
+            <label>
+                <?php echo $pf->getHtmlForNamedElementFull('revoke_skipped_leads'); ?>
+            </label>
+            <span>Revoke skipped leads</span>
+        </div>
+    </div>
+    <button type="submit" id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />Save</button>
+    <button type="button" id="cancelButton" ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</form>
+
+<script type="text/javascript">
+    $('#cancelButton').click(function(){
+        window.location.href = "index.html";
+    });
+</script>

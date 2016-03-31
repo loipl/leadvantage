@@ -1,0 +1,44 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: backonly.x.php.
+*/
+div#backonly-wrapper /* Parent: <body>. */
+	{
+		z-index: 0;
+		position: relative;
+		margin: 0 auto 0 auto;
+		max-width: 960px; /* Divisible by 2, 3, 4. */
+	}
+div#backonly-wrapper > div#backonly-inner-wrapper-a
+	{
+	}
+div#backonly-wrapper > div#backonly-inner-wrapper-a > div#backonly-inner-wrapper-b
+	{
+	}
+div#backonly-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#backonly-content /* Parent: ^ container. */
+	{
+		color: #FFFFFF;
+	}
+div#backonly-content a
+	{
+		color: #EEEEEE;
+	}
+div#backonly-content a:hover
+	{
+		color: #FFFFFF;
+	}
+div#backonly-content h1
+	{
+		color: #FFFFFF;
+	}

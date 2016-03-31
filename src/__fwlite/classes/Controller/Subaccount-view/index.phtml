@@ -1,0 +1,95 @@
+<div class="head"><h2>Sub-Accounts</h2></div>
+
+<div class="activity">
+<table cellpadding="0" cellspacing="0" style="width:100%;" id="sub_account_table">
+
+	<tbody>
+		<tr class="top">
+			<td class="first">Sub Account</td>
+			<td class="second">Campaign Count</td>
+			<td class="second">Partner Count</td>
+            <td class="second">View Reporting</td>
+            <td class="second">Campaign Control</td>
+            <td class="second">Partner Control</td>
+            <td class="second">View Success Leads</td>
+            <td class="second">View Failed Leads</td>
+            <td class="second">View Skipped Leads</td>
+            <td>Controls</td>
+		</tr>
+                <?php foreach ($allSubAccount as $subAccount): ?>
+                <tr>
+                    <td class="first">
+                        <?php echo $subAccount['sub_account_username'] ?>
+                    </td>
+                    <td><?php echo $subAccount['campaign_count'] ?></td>
+                    <td><?php echo $subAccount['partner_count'] ?></td>
+                    <td><?php echo $subAccount['revoke_reporting_access'] ? 'No' : 'Yes';?></td>
+                    <td><?php echo $subAccount['revoke_campaign_control'] ? 'No' : 'Yes';?></td>
+                    <td><?php echo $subAccount['revoke_partner_control'] ? 'No' : 'Yes';?></td>
+                    <td><?php echo $subAccount['revoke_success_leads'] ? 'No' : 'Yes';?></td>
+                    <td><?php echo $subAccount['revoke_failed_leads'] ? 'No' : 'Yes';?></td>
+                    <td><?php echo $subAccount['revoke_skipped_leads'] ? 'No' : 'Yes';?></td>
+                    
+                    <td class="last">
+                        <a href="edit.html?sub_account_id=<?php echo $subAccount['sub_account_id'];?>" class="sheet tt-edit-settings"><img src="/img/icons/pencil.png"> Edit</a>
+                        <a href="delete.html?id=<?php echo $subAccount['id'];?>" class="sheet tt-delete-partner delete-partner-link" id="delete-<?php echo $subAccount['id'];?>"><img src="/img/icons/delete.png"> Delete</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+        </tbody>
+</table>
+    <?php if (!isset($reachSubAccountLimit)) {?>
+    <div class="leftbutton">
+        <a href="/subaccount/add.html">
+            <span><img src="/img/icons/add.png" style="margin-bottom: -2px;" alt=""></span> 
+            Add Sub-Account 
+        </a>
+    </div>
+    <?php } ?>
+    <div style="clear: both;"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        updateTRColors();
+        
+        $('a.delete-partner-link').click(function(e) {
+		e.preventDefault();
+		var arr = $(this).attr('id').split('-');
+		if (arr.length != 2) {
+			return;
+		}
+		var id = parseInt(arr[1]);
+		if (confirm("Warning: All of your settings will be deleted as well.\n\nAre you sure you wish to delete this subaccount?")) {
+			deleteSubaccount(id);
+		};
+	});
+    });
+    
+    function updateTRColors() {
+	var odd = false;
+	$('#sub_account_table tr').each(function() {
+		if ($(this).hasClass("top") || $(this).hasClass("noti") || $(this).hasClass("static_row")) {
+			return;
+		}
+		odd = !odd;
+		$(this).removeClass('grey');
+		$(this).removeClass('white');
+		$(this).addClass(odd ? 'grey' : 'white');
+	});
+    }
+    
+    function deleteSubaccount(id) {
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxDelete')) . "?id='"; ?> + id,
+		{'id': id, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+
+		if (response != 'OK') {
+			alert(response);
+		} else {
+			// $('#dlg-delete').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+}
+
+</script>

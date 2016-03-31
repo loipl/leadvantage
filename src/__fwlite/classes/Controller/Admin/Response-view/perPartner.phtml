@@ -1,0 +1,64 @@
+<style>
+
+#response thead tr th {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#response tbody tr td {
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: right;
+}
+
+#response tbody tr:hover {
+	background-color: yellow;
+}
+
+#response tbody tr td.name {
+    text-align: left;
+}
+
+</style>
+
+<a href="<?php echo App::getFrontController()->urlFor($this); ?>">Per Domain Stats</a><br><br>
+
+<table id="response">
+    <thead>
+        <tr>
+            <th>Partner</th>
+            <th>User</th>
+            <th>Domain</th>
+            <th>Average Response Time</th>
+            <th>Response Count</th>
+            <th>Timeout Count</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php
+foreach ($counts as $row) {
+    if (!isset($partners[$row['partner_id']])) {
+        continue;
+    }
+    $partner = $partners[$row['partner_id']];
+    $username = isset($usernames[$partner['user_id']]) ? $usernames[$partner['user_id']] : '';
+    $avg = empty($row['sum_rc']) ? '0.0000' : number_format($row['sum_rt'] / $row['sum_rc'], 4);
+    $domain = parse_url($partner['delivery_addr'], PHP_URL_HOST);
+
+    echo "
+        <tr>
+            <td class=\"name\">$partner[name]</td>
+            <td class=\"name\">$username</td>
+            <td class=\"name\">$domain</td>
+            <td>$avg</td>
+            <td>$row[sum_rc]</td>
+            <td>$row[sum_ti]</td>
+        </tr>";
+}
+?>
+
+    </tbody>
+</table>
+<?php
+

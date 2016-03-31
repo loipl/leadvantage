@@ -1,0 +1,105 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: page.php.
+*/
+div#page-wrapper /* Parent:  div#body-content-container. */
+	{
+		z-index: 0;
+		float: left;
+		position: relative;
+		width: 588px; /* Divisible by 2, 3, 4. */
+	}
+div#page-wrapper > div#page-inner-wrapper-a
+	{
+	}
+div#page-wrapper > div#page-inner-wrapper-a > div#page-inner-wrapper-b
+	{
+	}
+div#page-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#page-upper-section /* Parent: ^ container. */
+	{
+		position: relative;
+		margin: 0 0 25px 0;
+	}
+div#page-upper-section > div#page-share-save
+	{
+		top: 10px;
+		right: 0;
+		position: absolute;
+	}
+div#page-upper-section > div#page-share-save > a > img
+	{
+		width: 106px;
+		height: 16px;
+	}
+div#page-upper-section > div#page-edit
+	{
+		top: 12px;
+		right: 115px;
+		font-size: 80%;
+		position: absolute;
+	}
+div#page-upper-section > div#page-edit > a
+	{
+		text-decoration: none;
+		font-family: 'Georgia', serif;
+	}
+div#page-upper-section > div#page-edit > a:hover
+	{
+	}
+div#page-upper-section > div#page-title
+	{
+		max-width: 70%;
+	}
+div#page-upper-section > div#page-title > h1
+	{
+		margin: 0;
+	}
+div#page-upper-section > div#page-title > div
+	{
+		color: #666666;
+		font-style: italic;
+		margin: 5px 0 0 0;
+	}
+div#page-middle-section
+	{
+	}
+div#page-middle-section > div#page-content
+	{
+	}
+div#page-middle-section > div#page-content > *:first-child,
+div#page-middle-section > div#page-content > *.alignleft:first-child + *,
+div#page-middle-section > div#page-content > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div#page-middle-section > div#page-content a
+	{
+	}
+div#page-middle-section > div#page-content a:hover
+	{
+	}
+div#page-lower-section
+	{
+	}
+div#page-lower-section > div#page-lower-parts
+	{
+	/* Parts styled by common.css.
+		Override here as needed. */
+	}
+div#page-lower-section > div#page-lower-parts > a
+	{
+	}
+div#page-lower-section > div#page-lower-parts > a:hover
+	{
+	}

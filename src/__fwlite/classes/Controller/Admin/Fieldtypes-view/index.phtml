@@ -1,0 +1,74 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+td i {
+    color: #888;
+    display: block;
+    text-align: center;
+}
+
+</style>
+
+<div class="head"><h2>Field types</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Validation</th>
+    <th>Industies</th>
+  </tr>
+  </thead>
+
+<?php
+
+// remove Email from list
+foreach ($list as $k => $v) {
+    if ($v['id'] == Model_CampaignField::FIELD_TYPE_EMAIL) {
+        unset($list[$k]);
+        break;
+    }
+}
+
+
+foreach ($list as $row) {
+    $arr = array();
+    if (isset($row['industries']) && is_array($row['industries'])) {
+        foreach ($row['industries'] as $iid) {
+            if (isset($industries[$iid])) {
+                $arr[] = escapeHtml($industries[$iid]);
+            }
+        }
+    }
+
+    echo "
+  <tr>
+    <td>" . escapeHtml($row['name']) . "</td>
+    <td>" . escapeHtml(isset($validationTypes[$row['validation_type']]) ? $validationTypes[$row['validation_type']] : '') . "</td>
+    <td>" . ($arr ? implode(', ', $arr) : '<i>All</i>') . "</td>
+    <td>" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?><br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add Field Type...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>

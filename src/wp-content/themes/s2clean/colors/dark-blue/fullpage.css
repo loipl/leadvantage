@@ -1,0 +1,176 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: fullpage.x.php.
+*/
+div#fullpage-wrapper /* Parent: div#body-content-container. */
+	{
+		z-index: 0;
+		position: relative;
+	}
+div#fullpage-wrapper > div#fullpage-inner-wrapper-a
+	{
+	}
+div#fullpage-wrapper > div#fullpage-inner-wrapper-a > div#fullpage-inner-wrapper-b
+	{
+	}
+div#fullpage-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#fullpage-upper-section /* Parent: ^ container. */
+	{
+		position: relative;
+		margin: 0 0 25px 0;
+	}
+div#fullpage-upper-section > div#fullpage-share-save
+	{
+		top: 10px;
+		right: 0;
+		position: absolute;
+	}
+div#fullpage-upper-section > div#fullpage-share-save > a > img
+	{
+		width: 256px;
+		height: 24px;
+	}
+div#fullpage-upper-section > div#fullpage-edit
+	{
+		top: 12px;
+		right: 265px;
+		font-size: 80%;
+		position: absolute;
+	}
+div#fullpage-upper-section > div#fullpage-edit > a
+	{
+		text-decoration: none;
+		font-family: 'Georgia', serif;
+	}
+div#fullpage-upper-section > div#fullpage-edit > a:hover
+	{
+	}
+div#fullpage-upper-section > div#fullpage-title
+	{
+		max-width: 70%;
+	}
+div#fullpage-upper-section > div#fullpage-title > h1
+	{
+		margin: 0;
+	}
+div#fullpage-upper-section > div#fullpage-title > div
+	{
+		color: #666666;
+		font-style: italic;
+		margin: 5px 0 0 0;
+	}
+div#fullpage-middle-section
+	{
+	}
+div#fullpage-middle-section > div#fullpage-content
+	{
+	}
+div#fullpage-middle-section > div#fullpage-content > *:first-child,
+div#fullpage-middle-section > div#fullpage-content > *.alignleft:first-child + *,
+div#fullpage-middle-section > div#fullpage-content > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div#fullpage-middle-section > div#fullpage-content a
+	{
+	}
+div#fullpage-middle-section > div#fullpage-content a:hover
+	{
+	}
+div#fullpage-middle-section > div#fullpage-content > form#contact-form
+	{
+	}
+form#contact-form /* Parent: ^ fullpage-content. */
+	{
+	}
+form#contact-form > div#contact-form-response
+	{
+		padding: 5px;
+		margin: 0 0 20px 0;
+		background: #EEEEEE;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+form#contact-form > div#contact-form-response > div.success
+	{
+		color: #28364F;
+	}
+form#contact-form > div#contact-form-response > div.failure
+	{
+		color: #CC0000;
+	}
+form#contact-form > div#contact-form-response > div.success,
+form#contact-form > div#contact-form-response > div.failure
+	{
+		font-weight: bold;
+	}
+form#contact-form > div#contact-form-name,
+form#contact-form > div#contact-form-email,
+form#contact-form > div#contact-form-subject,
+form#contact-form > div#contact-form-message
+	{
+		margin: 0 0 10px 0;
+	}
+form#contact-form > div#contact-form-name > input,
+form#contact-form > div#contact-form-email > input,
+form#contact-form > div#contact-form-subject > input,
+form#contact-form > div#contact-form-message > textarea
+	{
+		width: 98.9%;
+	}
+form#contact-form > div#contact-form-submit
+	{
+		text-align: right;
+	}
+div#s2-welcome-profile-avatar
+	{
+		width: 130px;
+		float: right;
+	}
+div#s2-welcome-profile-avatar > div.profile
+	{
+		margin: 0 0 10px 0;
+		text-align: center;
+	}
+div#s2-welcome-profile-avatar > img.avatar
+	{
+		border: 1px solid #FFFFFF;
+		-moz-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		-webkit-box-shadow: 1px 1px 1px #999999, -1px -1px 1px #999999;
+		box-shadow: 1px 1px 0 #999999, -1px -1px 1px #999999;
+	}
+div#s2-welcome-name /* Current Member's display name. */
+	{
+		font-size: 150%;
+	}
+div#s2-welcome-label /* Member's access label. */
+	{
+		color: #666666;
+		font-size: 90%;
+	}
+div#fullpage-lower-section
+	{
+		clear: both;
+	}
+div#fullpage-lower-section > div#fullpage-lower-parts
+	{
+	/* Parts styled by common.css.
+		Override here as needed. */
+	}
+div#fullpage-lower-section > div#fullpage-lower-parts > a
+	{
+	}
+div#fullpage-lower-section > div#fullpage-lower-parts > a:hover
+	{
+	}

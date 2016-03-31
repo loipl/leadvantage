@@ -1,0 +1,2831 @@
+LOG ENTRY: Mon Jun 22nd, 2015 @ precisely 9:43 am UTC
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.46 MB :: Real Memory 5.75 MB :: Peak Memory 5.57 MB :: Real Peak Memory 5.75 MB
+www.w5.localhost/wp-admin/user-new.php
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+array (
+  'user_id' => 61,
+  'password' => false,
+  'pagenow' => 'user-new.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '61',
+       'user_login' => 'sub-account-1',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'sub-account-1',
+       'user_email' => 'tuanphamle112@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-06-22 09:43:51',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'Tuan Pham',
+    )),
+     'ID' => 61,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    'action' => 'createuser',
+    '_wpnonce_create-user' => '99186bb1d1',
+    '_wp_http_referer' => '/wp-admin/user-new.php',
+    'user_login' => 'sub account 1',
+    'email' => 'tuanphamle112@gmail.com',
+    'first_name' => 'Tuan',
+    'last_name' => 'Pham',
+    'url' => '',
+    'pass1' => 'xxxxxxxx/pass',
+    'pass2' => 'xxxxxxxx/pass',
+    'role' => 'subscriber',
+    'ws_plugin__s2member_user_new_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_user_new_s2member_subscr_id' => '',
+    'ws_plugin__s2member_user_new_s2member_custom' => '',
+    'ws_plugin__s2member_user_new_s2member_registration_ip' => '',
+    'ws_plugin__s2member_user_new_s2member_ccaps' => '',
+    'ws_plugin__s2member_user_new_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_user_new_phone' => '',
+    'ws_plugin__s2member_user_new_skype' => '',
+    'ws_plugin__s2member_user_new_street_address' => '',
+    'ws_plugin__s2member_user_new_city' => '',
+    'ws_plugin__s2member_user_new_state' => '',
+    'ws_plugin__s2member_user_new_postal_code' => '',
+    'ws_plugin__s2member_user_new_country' => '',
+    'ws_plugin__s2member_user_new_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_user_new_company' => '',
+    'ws_plugin__s2member_user_new_s2member_notes' => '',
+    'createuser' => 'Add New User',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_id' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_custom' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_registration_ip' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_ccaps' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_custom_reg_field_phone' => '',
+    'ws_plugin__s2member_custom_reg_field_skype' => '',
+    'ws_plugin__s2member_custom_reg_field_street_address' => '',
+    'ws_plugin__s2member_custom_reg_field_city' => '',
+    'ws_plugin__s2member_custom_reg_field_state' => '',
+    'ws_plugin__s2member_custom_reg_field_postal_code' => '',
+    'ws_plugin__s2member_custom_reg_field_country' => '',
+    'ws_plugin__s2member_custom_reg_field_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_custom_reg_field_company' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_notes' => '',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'tuanphamle112@gmail.com',
+  'login' => 'sub-account-1',
+  'ip' => '',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'Tuan',
+  'lname' => 'Pham',
+  'name' => 'Tuan Pham',
+  'pass' => 'xxxxxxxx/pass',
+  'fields' => 
+  array (
+    'phone' => '',
+    'skype' => '',
+    'street_address' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'company' => '',
+  ),
+)
+
+LOG ENTRY: Mon Jun 22nd, 2015 @ precisely 10:16 am UTC
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.46 MB :: Real Memory 5.75 MB :: Peak Memory 5.57 MB :: Real Peak Memory 5.75 MB
+www.w5.localhost/wp-admin/user-new.php
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+array (
+  'user_id' => 62,
+  'password' => false,
+  'pagenow' => 'user-new.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '62',
+       'user_login' => 'sub-account-2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'sub-account-2',
+       'user_email' => 'lethinghi2302@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-06-22 10:16:22',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'Le Thi',
+    )),
+     'ID' => 62,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    'action' => 'createuser',
+    '_wpnonce_create-user' => '99186bb1d1',
+    '_wp_http_referer' => '/wp-admin/user-new.php',
+    'user_login' => 'sub account 2',
+    'email' => 'lethinghi2302@gmail.com',
+    'first_name' => 'Le',
+    'last_name' => 'Thi',
+    'url' => '',
+    'pass1' => 'xxxxxxxx/pass',
+    'pass2' => 'xxxxxxxx/pass',
+    'role' => 'subscriber',
+    'ws_plugin__s2member_user_new_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_user_new_s2member_subscr_id' => '',
+    'ws_plugin__s2member_user_new_s2member_custom' => '',
+    'ws_plugin__s2member_user_new_s2member_registration_ip' => '',
+    'ws_plugin__s2member_user_new_s2member_ccaps' => '',
+    'ws_plugin__s2member_user_new_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_user_new_phone' => '',
+    'ws_plugin__s2member_user_new_skype' => '',
+    'ws_plugin__s2member_user_new_street_address' => '',
+    'ws_plugin__s2member_user_new_city' => '',
+    'ws_plugin__s2member_user_new_state' => '',
+    'ws_plugin__s2member_user_new_postal_code' => '',
+    'ws_plugin__s2member_user_new_country' => '',
+    'ws_plugin__s2member_user_new_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_user_new_company' => '',
+    'ws_plugin__s2member_user_new_s2member_notes' => '',
+    'createuser' => 'Add New User',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_id' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_custom' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_registration_ip' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_ccaps' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_custom_reg_field_phone' => '',
+    'ws_plugin__s2member_custom_reg_field_skype' => '',
+    'ws_plugin__s2member_custom_reg_field_street_address' => '',
+    'ws_plugin__s2member_custom_reg_field_city' => '',
+    'ws_plugin__s2member_custom_reg_field_state' => '',
+    'ws_plugin__s2member_custom_reg_field_postal_code' => '',
+    'ws_plugin__s2member_custom_reg_field_country' => '',
+    'ws_plugin__s2member_custom_reg_field_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_custom_reg_field_company' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_notes' => '',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'lethinghi2302@gmail.com',
+  'login' => 'sub-account-2',
+  'ip' => '',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'Le',
+  'lname' => 'Thi',
+  'name' => 'Le Thi',
+  'pass' => 'xxxxxxxx/pass',
+  'fields' => 
+  array (
+    'phone' => '',
+    'skype' => '',
+    'street_address' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'company' => '',
+  ),
+)
+
+LOG ENTRY: Mon Jul 6th, 2015 @ precisely 10:03 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.29 MB :: Real Memory 5.75 MB :: Peak Memory 5.37 MB :: Real Peak Memory 5.75 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36
+array (
+  'user_id' => 63,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '63',
+       'user_login' => 'xxx',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'xxx',
+       'user_email' => 'xxx@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-07-06 17:03:36',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'xxx',
+    )),
+     'ID' => 63,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => 'c8b9de46734cc0105f7eee778c036728c5413a97',
+    'username' => 'xxx',
+    'email' => 'xxx@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'xxx@gmail.com',
+  'login' => 'xxx',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'xxx',
+  'lname' => '',
+  'name' => 'xxx',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Mon Jul 6th, 2015 @ precisely 10:39 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.07 MB :: Real Memory 5.25 MB :: Peak Memory 5.10 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36
+array (
+  'user_id' => 64,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '64',
+       'user_login' => 'yyy',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'yyy',
+       'user_email' => 'yyy@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-07-06 17:39:28',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'yyy',
+    )),
+     'ID' => 64,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => 'c8b9de46734cc0105f7eee778c036728c5413a97',
+    'username' => 'yyy',
+    'email' => 'yyy@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'yyy@gmail.com',
+  'login' => 'yyy',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'yyy',
+  'lname' => '',
+  'name' => 'yyy',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Jul 7th, 2015 @ precisely 7:45 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.47 MB :: Real Memory 5.75 MB :: Peak Memory 5.51 MB :: Real Peak Memory 5.75 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36
+array (
+  'user_id' => 65,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '65',
+       'user_login' => 'test',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'test',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-07-07 14:45:07',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'test',
+    )),
+     'ID' => 65,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => 'c8b9de46734cc0105f7eee778c036728c5413a97',
+    'username' => 'test',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'test',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'test',
+  'lname' => '',
+  'name' => 'test',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 9:33 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.47 MB :: Real Memory 5.75 MB :: Peak Memory 5.51 MB :: Real Peak Memory 5.75 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 66,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '66',
+       'user_login' => 'abc',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'abc',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 04:33:44',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'abc',
+    )),
+     'ID' => 66,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'abc',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'abc',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'abc',
+  'lname' => '',
+  'name' => 'abc',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 9:41 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 67,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '67',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 04:41:46',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 67,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 9:51 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 68,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '68',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 04:51:33',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 68,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 9:54 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 69,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '69',
+       'user_login' => 'test',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'test',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 04:54:35',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'test',
+    )),
+     'ID' => 69,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'test',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'test',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'test',
+  'lname' => '',
+  'name' => 'test',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 9:56 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.04 MB :: Real Memory 5.25 MB :: Peak Memory 5.10 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 70,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '70',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 04:56:38',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 70,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 10:02 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 71,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '71',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 05:02:58',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 71,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 10:06 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 72,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '72',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 05:06:11',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 72,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 18th, 2015 @ precisely 10:15 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.06 MB :: Real Memory 5.25 MB :: Peak Memory 5.12 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 73,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '73',
+       'user_login' => 'b',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'b',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 05:15:33',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'b',
+    )),
+     'ID' => 73,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'b',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'b',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'b',
+  'lname' => '',
+  'name' => 'b',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Aug 19th, 2015 @ precisely 9:03 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.46 MB :: Real Memory 5.50 MB :: Peak Memory 5.49 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 63,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '63',
+       'user_login' => 'b',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'b',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 16:03:04',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'b',
+    )),
+     'ID' => 63,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'b',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'b',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'b',
+  'lname' => '',
+  'name' => 'b',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Aug 19th, 2015 @ precisely 9:29 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.06 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 64,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '64',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 16:29:05',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 64,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Aug 19th, 2015 @ precisely 9:30 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.03 MB :: Real Memory 5.25 MB :: Peak Memory 5.06 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
+array (
+  'user_id' => 65,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '65',
+       'user_login' => 'a',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'a',
+       'user_email' => 'abc@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-19 16:29:59',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'a',
+    )),
+     'ID' => 65,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '24956115abccdca1bdfa98d0c6887a8fa57b5ea5',
+    'username' => 'a',
+    'email' => 'abc@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'abc@gmail.com',
+  'login' => 'a',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'a',
+  'lname' => '',
+  'name' => 'a',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 25th, 2015 @ precisely 7:05 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.43 MB :: Real Memory 5.50 MB :: Peak Memory 5.47 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 63,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '63',
+       'user_login' => 'test',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'test',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-25 14:05:51',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'test',
+    )),
+     'ID' => 63,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '2861fa21db6fb2b51c0478a58db639bbb960d7c1',
+    'username' => 'test',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_reporting_access' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'test',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'test',
+  'lname' => '',
+  'name' => 'test',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Tue Aug 25th, 2015 @ precisely 7:06 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.04 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 64,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '64',
+       'user_login' => '2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '2',
+       'user_email' => '2@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-25 14:06:20',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '2',
+    )),
+     'ID' => 64,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '2861fa21db6fb2b51c0478a58db639bbb960d7c1',
+    'username' => '2',
+    'email' => '2@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '2@gmail.com',
+  'login' => '2',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '2',
+  'lname' => '',
+  'name' => '2',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Fri Aug 28th, 2015 @ precisely 3:01 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.43 MB :: Real Memory 5.50 MB :: Peak Memory 5.47 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 61,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '61',
+       'user_login' => 'test',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'test',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-28 10:01:28',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'test',
+    )),
+     'ID' => 61,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '7bec748ce97de16b863b22f9879abbf23cb5f880',
+    'username' => 'test',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_reporting_access' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'test',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'test',
+  'lname' => '',
+  'name' => 'test',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Fri Aug 28th, 2015 @ precisely 3:03 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.04 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 62,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '62',
+       'user_login' => 'test',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'test',
+       'user_email' => 'test@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-28 10:03:08',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'test',
+    )),
+     'ID' => 62,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '7bec748ce97de16b863b22f9879abbf23cb5f880',
+    'username' => 'test',
+    'email' => 'test@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_campaign_control' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'test@gmail.com',
+  'login' => 'test',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'test',
+  'lname' => '',
+  'name' => 'test',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Fri Aug 28th, 2015 @ precisely 3:04 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.04 MB :: Real Memory 5.25 MB :: Peak Memory 5.07 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 63,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '63',
+       'user_login' => '1',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '1',
+       'user_email' => '1@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-28 10:04:33',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '1',
+    )),
+     'ID' => 63,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '7bec748ce97de16b863b22f9879abbf23cb5f880',
+    'username' => '1',
+    'email' => '1@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_reporting_access' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '1@gmail.com',
+  'login' => '1',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '1',
+  'lname' => '',
+  'name' => '1',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Sun Aug 30th, 2015 @ precisely 11:48 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.44 MB :: Real Memory 5.50 MB :: Peak Memory 5.47 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 64,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '64',
+       'user_login' => '2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '2',
+       'user_email' => '2@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-31 06:48:10',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '2',
+    )),
+     'ID' => 64,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '6fcd50b7f27c7b2ce94f50b14778fd60e3a8c15b',
+    'username' => '2',
+    'email' => '2@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_reporting_access' => '1',
+    'revoke_campaign_control' => '1',
+    'revoke_partner_control' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '2@gmail.com',
+  'login' => '2',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '2',
+  'lname' => '',
+  'name' => '2',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Mon Aug 31st, 2015 @ precisely 12:15 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.07 MB :: Real Memory 5.25 MB :: Peak Memory 5.13 MB :: Real Peak Memory 5.25 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36
+array (
+  'user_id' => 65,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '65',
+       'user_login' => '1',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '1',
+       'user_email' => '1@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-08-31 07:15:37',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '1',
+    )),
+     'ID' => 65,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '6fcd50b7f27c7b2ce94f50b14778fd60e3a8c15b',
+    'username' => '1',
+    'email' => '1@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_reporting_access' => '1',
+    'revoke_campaign_control' => '1',
+    'revoke_partner_control' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '1@gmail.com',
+  'login' => '1',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '1',
+  'lname' => '',
+  'name' => '1',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Mon Sep 14th, 2015 @ precisely 10:32 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.44 MB :: Real Memory 5.50 MB :: Peak Memory 5.48 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+array (
+  'user_id' => 66,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '66',
+       'user_login' => '2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '2',
+       'user_email' => '2@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-09-15 05:32:44',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '2',
+    )),
+     'ID' => 66,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '1c8727d3415ef8eb2cbd9d986376e0f013d8d3bb',
+    'username' => '2',
+    'email' => '2@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_success_leads' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '2@gmail.com',
+  'login' => '2',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '2',
+  'lname' => '',
+  'name' => '2',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Sep 16th, 2015 @ precisely 1:29 am America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.44 MB :: Real Memory 5.50 MB :: Peak Memory 5.48 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+array (
+  'user_id' => 66,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '66',
+       'user_login' => '2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '2',
+       'user_email' => '2@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-09-16 08:29:00',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '2',
+    )),
+     'ID' => 66,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '8f606e1ae08f1db1a77b37d8cd0837f96e825e77',
+    'username' => '2',
+    'email' => '2@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_success_leads' => '1',
+    'revoke_failed_leads' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '2@gmail.com',
+  'login' => '2',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '2',
+  'lname' => '',
+  'name' => '2',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Sep 16th, 2015 @ precisely 8:53 pm America/Los_Angeles
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.44 MB :: Real Memory 5.50 MB :: Peak Memory 5.48 MB :: Real Peak Memory 5.50 MB
+www.w5.localhost/subaccount/add.html
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36
+array (
+  'user_id' => 66,
+  'password' => false,
+  'pagenow' => 'index.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '66',
+       'user_login' => '3',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => '3',
+       'user_email' => '3@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2015-09-17 03:53:09',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => '3',
+    )),
+     'ID' => 66,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    '__nonce' => '054f9eff6fb93c22f5ebdd94d15d3ded9c1af710',
+    'username' => '3',
+    'email' => '3@gmail.com',
+    'password' => 'xxxxxxxx/pass',
+    're_password' => 'xxxxxxxx/pass',
+    'revoke_skipped_leads' => '1',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'reg_cookies' => false,
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => '3@gmail.com',
+  'login' => '3',
+  'ip' => '::1',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => '3',
+  'lname' => '',
+  'name' => '3',
+  'pass' => false,
+  'fields' => 
+  array (
+  ),
+)
+
+LOG ENTRY: Wed Mar 23rd, 2016 @ precisely 9:37 am UTC
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.76 MB :: Real Memory 6.25 MB :: Peak Memory 6.09 MB :: Real Peak Memory 6.25 MB
+leadvantage.localhost/wp-admin/user-new.php
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+array (
+  'user_id' => 3,
+  'password' => false,
+  'pagenow' => 'user-new.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '3',
+       'user_login' => 'loiphamle2',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'loiphamle2',
+       'user_email' => 'loi@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2016-03-23 09:37:48',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'Loi Test',
+    )),
+     'ID' => 3,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    'action' => 'createuser',
+    '_wpnonce_create-user' => '131be957b3',
+    '_wp_http_referer' => '/wp-admin/user-new.php',
+    'user_login' => 'loiphamle2',
+    'email' => 'loi@gmail.com',
+    'first_name' => 'Loi',
+    'last_name' => 'Test',
+    'url' => '',
+    'pass1' => 'xxxxxxxx/pass',
+    'pass2' => 'xxxxxxxx/pass',
+    'role' => 'subscriber',
+    'ws_plugin__s2member_user_new_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_user_new_s2member_subscr_id' => '',
+    'ws_plugin__s2member_user_new_s2member_custom' => '',
+    'ws_plugin__s2member_user_new_s2member_registration_ip' => '',
+    'ws_plugin__s2member_user_new_s2member_ccaps' => '',
+    'ws_plugin__s2member_user_new_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_user_new_phone' => '',
+    'ws_plugin__s2member_user_new_skype' => '',
+    'ws_plugin__s2member_user_new_street_address' => '',
+    'ws_plugin__s2member_user_new_city' => '',
+    'ws_plugin__s2member_user_new_state' => '',
+    'ws_plugin__s2member_user_new_postal_code' => '',
+    'ws_plugin__s2member_user_new_country' => '',
+    'ws_plugin__s2member_user_new_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_user_new_company' => '',
+    'ws_plugin__s2member_user_new_s2member_notes' => '',
+    'createuser' => 'Add New User',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_id' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_custom' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_registration_ip' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_ccaps' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_custom_reg_field_phone' => '',
+    'ws_plugin__s2member_custom_reg_field_skype' => '',
+    'ws_plugin__s2member_custom_reg_field_street_address' => '',
+    'ws_plugin__s2member_custom_reg_field_city' => '',
+    'ws_plugin__s2member_custom_reg_field_state' => '',
+    'ws_plugin__s2member_custom_reg_field_postal_code' => '',
+    'ws_plugin__s2member_custom_reg_field_country' => '',
+    'ws_plugin__s2member_custom_reg_field_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_custom_reg_field_company' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_notes' => '',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'loi@gmail.com',
+  'login' => 'loiphamle2',
+  'ip' => '',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'Loi',
+  'lname' => 'Test',
+  'name' => 'Loi Test',
+  'pass' => 'xxxxxxxx/pass',
+  'fields' => 
+  array (
+    'phone' => '',
+    'skype' => '',
+    'street_address' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'company' => '',
+  ),
+)
+
+LOG ENTRY: Wed Mar 23rd, 2016 @ precisely 9:45 am UTC
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.40 MB :: Real Memory 5.50 MB :: Peak Memory 5.43 MB :: Real Peak Memory 5.50 MB
+leadvantage.localhost/wp-admin/user-new.php
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+array (
+  'user_id' => 4,
+  'password' => false,
+  'pagenow' => 'user-new.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '4',
+       'user_login' => 'loiphamle3',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'loiphamle3',
+       'user_email' => 'loiphamle3@gmail.com',
+       'user_url' => '',
+       'user_registered' => '2016-03-23 09:45:03',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'Loi Test',
+    )),
+     'ID' => 4,
+     'caps' => 
+    array (
+      'subscriber' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'subscriber',
+    ),
+     'allcaps' => 
+    array (
+      'read' => true,
+      'level_0' => true,
+      'access_s2member_level0' => true,
+      'subscriber' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    'action' => 'createuser',
+    '_wpnonce_create-user' => '131be957b3',
+    '_wp_http_referer' => '/wp-admin/user-new.php',
+    'user_login' => 'loiphamle3',
+    'email' => 'loiphamle3@gmail.com',
+    'first_name' => 'Loi',
+    'last_name' => 'Test',
+    'url' => '',
+    'pass1' => 'xxxxxxxx/pass',
+    'pass2' => 'xxxxxxxx/pass',
+    'role' => 'subscriber',
+    'ws_plugin__s2member_user_new_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_user_new_s2member_subscr_id' => '',
+    'ws_plugin__s2member_user_new_s2member_custom' => '',
+    'ws_plugin__s2member_user_new_s2member_registration_ip' => '',
+    'ws_plugin__s2member_user_new_s2member_ccaps' => '',
+    'ws_plugin__s2member_user_new_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_user_new_phone' => '',
+    'ws_plugin__s2member_user_new_skype' => '',
+    'ws_plugin__s2member_user_new_street_address' => '',
+    'ws_plugin__s2member_user_new_city' => '',
+    'ws_plugin__s2member_user_new_state' => '',
+    'ws_plugin__s2member_user_new_postal_code' => '',
+    'ws_plugin__s2member_user_new_country' => '',
+    'ws_plugin__s2member_user_new_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_user_new_company' => '',
+    'ws_plugin__s2member_user_new_s2member_notes' => '',
+    'createuser' => 'Add New User',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_id' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_custom' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_registration_ip' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_ccaps' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_custom_reg_field_phone' => '',
+    'ws_plugin__s2member_custom_reg_field_skype' => '',
+    'ws_plugin__s2member_custom_reg_field_street_address' => '',
+    'ws_plugin__s2member_custom_reg_field_city' => '',
+    'ws_plugin__s2member_custom_reg_field_state' => '',
+    'ws_plugin__s2member_custom_reg_field_postal_code' => '',
+    'ws_plugin__s2member_custom_reg_field_country' => '',
+    'ws_plugin__s2member_custom_reg_field_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_custom_reg_field_company' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_notes' => '',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'current_role' => 'subscriber',
+  'role' => 'subscriber',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => '0',
+  'ccaps' => '',
+  'email' => 'loiphamle3@gmail.com',
+  'login' => 'loiphamle3',
+  'ip' => '',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'Loi',
+  'lname' => 'Test',
+  'name' => 'Loi Test',
+  'pass' => 'xxxxxxxx/pass',
+  'fields' => 
+  array (
+    'phone' => '',
+    'skype' => '',
+    'street_address' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'company' => '',
+  ),
+)
+
+LOG ENTRY: Wed Mar 23rd, 2016 @ precisely 10:05 am UTC
+PHP v5.4.27 :: WordPress v3.5.1 :: s2Member v140328 :: s2Member Pro v140328
+Memory 5.74 MB :: Real Memory 6.50 MB :: Peak Memory 6.00 MB :: Real Peak Memory 6.50 MB
+leadvantage.localhost/wp-admin/user-new.php
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+array (
+  'user_id' => 5,
+  'password' => false,
+  'pagenow' => 'user-new.php',
+  'email_config' => true,
+  'processed' => 'yes',
+  'user' => 
+  WP_User::__set_state(array(
+     'data' => 
+    stdClass::__set_state(array(
+       'ID' => '5',
+       'user_login' => 'mitesh',
+       'user_pass' => 'xxxxxxxx/pass',
+       'user_nicename' => 'mitesh',
+       'user_email' => 'mitesh@ecrux.com',
+       'user_url' => '',
+       'user_registered' => '2016-03-23 10:05:26',
+       'user_activation_key' => '',
+       'user_status' => '0',
+       'display_name' => 'Mitesh Patel',
+    )),
+     'ID' => 5,
+     'caps' => 
+    array (
+      'administrator' => true,
+    ),
+     'cap_key' => 'wp_capabilities',
+     'roles' => 
+    array (
+      0 => 'administrator',
+    ),
+     'allcaps' => 
+    array (
+      'switch_themes' => true,
+      'edit_themes' => true,
+      'activate_plugins' => true,
+      'edit_plugins' => true,
+      'edit_users' => true,
+      'edit_files' => true,
+      'manage_options' => true,
+      'moderate_comments' => true,
+      'manage_categories' => true,
+      'manage_links' => true,
+      'upload_files' => true,
+      'import' => true,
+      'unfiltered_html' => true,
+      'edit_posts' => true,
+      'edit_others_posts' => true,
+      'edit_published_posts' => true,
+      'publish_posts' => true,
+      'edit_pages' => true,
+      'read' => true,
+      'level_10' => true,
+      'level_9' => true,
+      'level_8' => true,
+      'level_7' => true,
+      'level_6' => true,
+      'level_5' => true,
+      'level_4' => true,
+      'level_3' => true,
+      'level_2' => true,
+      'level_1' => true,
+      'level_0' => true,
+      'edit_others_pages' => true,
+      'edit_published_pages' => true,
+      'publish_pages' => true,
+      'delete_pages' => true,
+      'delete_others_pages' => true,
+      'delete_published_pages' => true,
+      'delete_posts' => true,
+      'delete_others_posts' => true,
+      'delete_published_posts' => true,
+      'delete_private_posts' => true,
+      'edit_private_posts' => true,
+      'read_private_posts' => true,
+      'delete_private_pages' => true,
+      'edit_private_pages' => true,
+      'read_private_pages' => true,
+      'delete_users' => true,
+      'create_users' => true,
+      'unfiltered_upload' => true,
+      'edit_dashboard' => true,
+      'update_plugins' => true,
+      'delete_plugins' => true,
+      'install_plugins' => true,
+      'update_themes' => true,
+      'install_themes' => true,
+      'update_core' => true,
+      'list_users' => true,
+      'remove_users' => true,
+      'add_users' => true,
+      'promote_users' => true,
+      'edit_theme_options' => true,
+      'delete_themes' => true,
+      'export' => true,
+      'access_s2member_level0' => true,
+      'access_s2member_level1' => true,
+      'access_s2member_level2' => true,
+      'access_s2member_level3' => true,
+      'access_s2member_level4' => true,
+      'access_s2member_level5' => true,
+      'access_s2member_level6' => true,
+      'access_s2member_level7' => true,
+      'administrator' => true,
+    ),
+     'filter' => NULL,
+  )),
+  '_pmr' => 
+  array (
+    'action' => 'createuser',
+    '_wpnonce_create-user' => '131be957b3',
+    '_wp_http_referer' => '/wp-admin/user-new.php',
+    'user_login' => 'mitesh',
+    'email' => 'mitesh@ecrux.com',
+    'first_name' => 'Mitesh',
+    'last_name' => 'Patel',
+    'url' => '',
+    'pass1' => 'xxxxxxxx/pass',
+    'pass2' => 'xxxxxxxx/pass',
+    'role' => 'administrator',
+    'ws_plugin__s2member_user_new_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_user_new_s2member_subscr_id' => '',
+    'ws_plugin__s2member_user_new_s2member_custom' => '',
+    'ws_plugin__s2member_user_new_s2member_registration_ip' => '',
+    'ws_plugin__s2member_user_new_s2member_ccaps' => '',
+    'ws_plugin__s2member_user_new_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_user_new_phone' => '',
+    'ws_plugin__s2member_user_new_skype' => '',
+    'ws_plugin__s2member_user_new_street_address' => '',
+    'ws_plugin__s2member_user_new_city' => '',
+    'ws_plugin__s2member_user_new_state' => '',
+    'ws_plugin__s2member_user_new_postal_code' => '',
+    'ws_plugin__s2member_user_new_country' => '',
+    'ws_plugin__s2member_user_new_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_user_new_company' => '',
+    'ws_plugin__s2member_user_new_s2member_notes' => '',
+    'createuser' => 'Add New User',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_gateway' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_subscr_id' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_custom' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_registration_ip' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_ccaps' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_auto_eot_time' => '',
+    'ws_plugin__s2member_custom_reg_field_phone' => '',
+    'ws_plugin__s2member_custom_reg_field_skype' => '',
+    'ws_plugin__s2member_custom_reg_field_street_address' => '',
+    'ws_plugin__s2member_custom_reg_field_city' => '',
+    'ws_plugin__s2member_custom_reg_field_state' => '',
+    'ws_plugin__s2member_custom_reg_field_postal_code' => '',
+    'ws_plugin__s2member_custom_reg_field_country' => '',
+    'ws_plugin__s2member_custom_reg_field_industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'ws_plugin__s2member_custom_reg_field_company' => '',
+    'ws_plugin__s2member_custom_reg_field_s2member_notes' => '',
+    0 => '',
+  ),
+  'custom_reg_display_name' => 'full',
+  'current_role' => 'administrator',
+  'role' => 'administrator',
+  'php_errormsg' => 'Undefined index: ws_plugin__s2member_registration_return_url',
+  'level' => 7,
+  'ccaps' => '',
+  'email' => 'mitesh@ecrux.com',
+  'login' => 'mitesh',
+  'ip' => '',
+  'custom' => '',
+  'subscr_id' => '',
+  'subscr_baid' => '',
+  'subscr_gateway' => '',
+  'cv' => 
+  array (
+    0 => '',
+  ),
+  'eot' => '',
+  'auto_eot_time' => '',
+  'notes' => '',
+  'opt_in' => false,
+  'fname' => 'Mitesh',
+  'lname' => 'Patel',
+  'name' => 'Mitesh Patel',
+  'pass' => 'xxxxxxxx/pass',
+  'fields' => 
+  array (
+    'phone' => '',
+    'skype' => '',
+    'street_address' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'industry' => 
+    array (
+      0 => 'DAT',
+    ),
+    'company' => '',
+  ),
+  'pr_times' => 
+  array (
+    'level' => 1458727527,
+    'level7' => 1458727527,
+  ),
+)
+

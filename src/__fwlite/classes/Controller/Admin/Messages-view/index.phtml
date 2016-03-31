@@ -1,0 +1,50 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+</style>
+
+<div class="head"><h2>System Messages</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Time</th>
+    <th>Recipient</th>
+    <th>Text</th>
+  </tr>
+  </thead>
+
+<?php
+
+foreach ($list as $row) {
+    echo "
+  <tr>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['msg_time']) . "</td>
+    <td>" . (isset($usernames[$row['user_id']]) ? escapeHtml($usernames[$row['user_id']]) : '<i>All</i>') . "</td>
+    <td>" . escapeHtml($row['text']) . "</td>
+    <td nowrap=\"nowrap\">" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?><br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add Message...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>

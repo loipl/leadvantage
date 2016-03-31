@@ -1,0 +1,57 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+</style>
+<div class="head"><h2>User Levels</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>S2 Role</th>
+    <th>Role Label</th>
+    <th>Max Posts</th>
+    <th>Max Sub-accounts</th>
+    <th>Email</th>
+    <th>Phone</th>
+  </tr>
+  </thead>
+
+<?php
+
+/* @var $this Controller_Admin_Userlevels */
+
+foreach ($list as $row) {
+    echo "
+  <tr>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['level']) . "</td>
+    <td nowrap=\"nowrap\">" . (isset($this->prettyNames[$row['level']]) ? escapeHtml($this->prettyNames[$row['level']]) : '&nbsp;') . "</td>
+    <td>" . ($row['max_posts'] ? $row['max_posts'] : '<i style="color: #555;">unlimited</i>') . "</td>
+    <td>" . ($row['max_sub_accounts'] ? $row['max_sub_accounts'] : '<i style="color: #555;">No sub-account</i>') . "</td>
+    <td style=\"text-align: center;\">" . ($row['can_validate_email'] ? '<span style="color: green;">Yes</span>' : '<span style="color: red;">No</span>') . "</td>
+    <td style=\"text-align: center;\">" . ($row['can_validate_phone'] ? '<span style="color: green;">Yes</span>' : '<span style="color: red;">No</span>') . "</td>
+    <td nowrap=\"nowrap\">" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <u>Edit</u>',   array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>', array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?><br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add User Level...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>

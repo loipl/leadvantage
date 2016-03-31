@@ -1,0 +1,70 @@
+<style>
+<!--
+
+#uploaded_files tbody td{
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 10px;
+}
+
+#uploaded_files thead th {
+    border-bottom: 1px gray solid;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+#uploaded_files tbody tr:hover {
+    background-color: #eee7c7;
+}
+
+#uploaded_files tfoot td {
+    padding: 10px;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+}
+
+-->
+</style>
+<div class="head">
+    <h2>Uploaded File</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/admin/">Administration &gt;</a> Uploaded Files
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<table id="uploaded_files">
+    <thead>
+        <tr>
+            <th>Campaign</th>
+            <th>Filename</th>
+            <th>User</th>
+            <th>In Queue</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <?php
+
+    foreach ($uploadedFiles as $row) {
+        echo "
+        <tr>
+            <td>" . escapeHtml($row['campaign_name']) . "</td>
+            <td>" . escapeHtml($row['upload_file']) . "</td>
+            <td>" . escapeHtml($usernamesAssoc[$row['user_id']]) . "</td>
+            <td>" . $row['count'] . "</td>
+            <td><a href=\"deleteFile.html?name=$row[upload_file]&user_id=$row[user_id]&campaign_id=$row[campaign_id]\">Cancel</a></td>
+        </tr>\n";
+    }
+
+    if (empty($uploadedFiles)) {
+        echo "<tfoot><tr><td colspan=\"4\">There Are No Uploaded File</td></tr></tfoot>";
+    }
+
+    ?>
+    </tbody>
+</table>

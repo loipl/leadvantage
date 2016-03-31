@@ -1,0 +1,826 @@
+<style>
+<!--
+input.dummy-hidden {
+
+}
+.custom-combobox {
+    width: 148px;
+    height: 26px !important;
+    position: relative;
+    display: inline-block;
+    background: white !important;
+    padding-bottom: 2px;
+}
+.custom-combobox-input,.ui-menu-item {
+    width:120px;
+    height: 24px !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
+    font: -webkit-small-control;
+    background: none !important;
+    -webkit-border-radius: 0px;
+    padding-left: 5px;
+}
+
+.custom-combobox-toggle {
+    width: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    height: 26px !important;
+    background: none !important;
+}
+
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;   /* prevent horizontal scrollbar */
+    overflow-x: hidden; /* add padding to account for vertical scrollbar */
+    z-index:1000 !important;
+}
+
+#combobox-email {
+    width:148px !important;
+}
+
+
+#content #campaign-fields-table select:disabled {
+    color: #888888 !important;
+}
+#add-new-campaign-field {
+    float: left;
+}
+#add-new-campaign-field-from-form {
+    float: left;
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#add-field-from-url-dialog button {
+    height: 32px;
+    background-color: #f6a828;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+}
+#add-field-from-url-dialog button:hover {
+    background-color: #1D353F;
+}
+
+-->
+</style>
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> <a href="/campaigns/edit.html?id=<?php echo $data['id']?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Fields
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<h1 id="js-warning">This page requires JavaScript!</h1>
+<script type="text/javascript">
+$('#js-warning').remove();
+(function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function () {
+        console.log(this);
+            this.wrapper = $("<span>")
+                .addClass("custom-combobox")
+                .insertAfter(this.element)
+                .attr('id', this.element[0].id+'_combobox');
+            this.element.hide();
+            this._createAutocomplete();
+            this._createShowAllButton();
+        },
+      
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+    
+    // check os
+    if (navigator.platform.toLowerCase().indexOf('mac') > -1) {
+        $('body').addClass('ios');
+    }
+  })( jQuery );
+ 
+</script>
+
+
+<form style="margin: 0;" method="POST" id="main-fields-form">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<table id="campaign-fields-table" cellpadding="0" cellspacing="0">
+<tbody>
+	<tr class="top">
+		<td class="first">Field Name <?php   Helper_Tooltip::toolTipFromWP('what-is-campaign-field-na'); ?></td>
+		<td class="second">Description <?php Helper_Tooltip::toolTipFromWP('what-is-campaign-field-description'); ?></td>
+		<td class="third">Field Type <?php   Helper_Tooltip::toolTipFromWP('what-is-the-campaign-field-type'); ?></td>
+<?php
+
+if ($canVerifyViaAPI) {
+    echo '<td class="verify" title="Verify">V</td>';
+}
+if ($data['shadow_of']) {
+    echo '<td class="verify" title="Verify Override">O</td>';
+}
+
+?>
+		<td class="third">Mandatory? <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-field-mandatory-toggle'); ?></td>
+		<td class="last">&nbsp;</td>
+	</tr>
+
+        <?php if (!empty($data['email_field_name'])): ?>
+	<tr class="static_row"><?php $cmp = $shadow ? $shadow : $data; ?>
+		<td class="first"><input maxlength="64" class="t150 table-field-name" id="email_field_name" name="email_field_name" type="text" value="<?php echo escapeAttrVal($cmp['email_field_name']); ?>"></td>
+		<td class="second"><input class="t350" id="email_field_description" name="email_field_description" type="text" value="<?php echo escapeAttrVal($cmp['email_field_description']); ?>"></td>
+		<td class="third"><select id="combobox-email" name="ftype-name" disabled="disabled"><option value="<?php echo Model_CampaignField::FIELD_TYPE_EMAIL; ?>">Email</option><?php
+
+	//unset($fieldTypes[Model_CampaignField::FIELD_TYPE_EMAIL]);
+
+
+		// We only need this to keep the dropdown's width same as others
+	foreach ($fieldTypes as $id => $name) {
+	    echo "\n" . '<option>' . escapeHtml($name) . "</option>";
+	}
+	?></select><?php
+
+	if ($canVerifyViaAPI && !empty($cvFTypes)) {
+	    echo '</td><td class="verify" style="vertical-align: middle; padding-left: 0; text-align: center;">';
+	    if (is_array($cvFTypes) && in_array(Model_CampaignField::FIELD_TYPE_EMAIL, $cvFTypes)) {
+    	    echo '<input class="vfy-cbx cbox" ';
+    	    if (!Auth::getInstance()->isAdminLoggedIn() && ($data['email_field_verify'] == '2')) {
+    	        echo 'disabled="disabled" title="This checkbox is activated by site admin, you cannot disable it"';
+    	    } else {
+    	        echo ' title="Verify this field"';
+    	    }
+    	    echo 'type="checkbox" id="span-verify-checkbox_email" name="span-verify-checkbox_email"' . (empty($cmp['email_field_verify']) ? '' : ' checked="checked"') . ' />';
+	    } else {
+            echo '&nbsp;';
+        }
+	}
+	if ($data['shadow_of']) {
+	    echo '</td><td style="vertical-align: middle; padding-left: 0; text-align: center;">';
+	    if (isset($cvFTypes) && is_array($cvFTypes) && in_array(Model_CampaignField::FIELD_TYPE_EMAIL, $cvFTypes)) {
+	        echo '<input type="checkbox" class="cbx-shadow-override" id="override-email';
+	        if (!empty($data['email_field_verify'])) {
+	            echo '-1" checked="checked"';
+	        } else {
+	            echo '-0"';
+	        }
+	        echo ' />';
+	    } else {
+	        echo '&nbsp;';
+	    }
+	}
+
+	?></td>
+            <td class="third mandatory_setting">
+                <?php if ($data['is_ping_and_post']): ?>
+                    <?php 
+                        $pingMandatory = ($data['email_field_mandatory'] == '1' || $data['email_field_mandatory'] == '2') ? 'checked' : '';
+                        $postMandatory = ($data['email_field_mandatory'] == '1' || $data['email_field_mandatory'] == '3') ? 'checked' : '';
+                    ?>
+                    <input type="checkbox" name="email_field_ping_mandatory" <?php echo $pingMandatory;?>> Ping 
+                    <input type="checkbox" name="email_field_post_mandatory" <?php echo $postMandatory;?>> Post
+                <?php else: ?>
+                    <select name="email_field_mandatory">
+                        <option style="color: red;" value="1">Mandatory</option>
+                        <option style="color: green;" value="0" <?php if (!$data['email_field_mandatory']) echo 'selected';?>>Not Mandatory</option>
+                    </select>
+                <?php endif; ?>
+
+            </td>
+            <td class="last">
+                &nbsp;<img src="/img/icons/cross.png" title="Delete this field" onclick="deleteRow($(this));">
+            </td>
+	</tr>
+        <?php endif; ?>
+</tbody>
+</table>
+
+<div class="addfield">
+	<p>
+            <a id="add-new-campaign-field" href="#"><img src="/img/icons/add.png" style="margin-bottom: -2px;"/> Add Field</a>
+            <a id="add-new-campaign-field-from-form" href="javascript:void(0);">Add From Form</a>
+        </p>
+	<div class="clear"></div>
+</div><!--addfield-->
+
+<div class="pingtree-form" style="margin-top: 30px;">
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />SAVE</button>
+<button type="submit" name="redir" value="edit"     id="editSettings" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png" />Edit Settings</button>
+<button type="submit" name="redir" value="delivery" id="editDelivery" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/package.png" />Edit Delivery</button>
+<button type="submit" name="redir" value="filters" id="editRule" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+<button type="button" id="cancelButton" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+
+var newCounter = 1;
+var checkDirty = true;
+
+var emailOrigFieldName  = '<?php echo escapeJSVal($data['email_field_name']); ?>';
+var emailOrigFieldDesc  = '<?php echo escapeJSVal($data['email_field_description']); ?>';
+<?php if ($canVerifyViaAPI) { ?>
+var cvFTypes = [<?php if (isset($cvFTypes) && is_array($cvFTypes)) echo implode(', ', $cvFTypes); ?>];
+var emilOrigFieldVerify = <?php echo empty($data['email_field_verify']) ? 0 : 1; ?>;
+<?php } ?>
+
+var originalState = [];<?php
+
+if (!empty($fields) && is_array($fields)) {
+    foreach ($fields as $c) {
+        $b = !empty($c['validate']) && in_array($c['field_type'], $cvFTypes);
+        echo "\noriginalState.push([{$c['id']}, '" . escapeJSVal($c['name']) . "', '" .
+        escapeJSVal($c['description']) . "', " . $c['field_type'] . ", " .
+        $c['is_mandatory'] . ", " . ($b ? 1 : 0) . ", " . ($b ? (int)$c['validate'] : 0) . "]);";
+    }
+}
+
+if (!$data['shadow_of']) {
+?>
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+	checkDirty = true;
+});
+<?php } ?>
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	$('.email_field_name').keyup(fieldListChanged).change(fieldListChanged);
+	for(var i = 0; i < originalState.length; i++) {
+		var arr = originalState[i];
+		addCampaignField(arr[0], arr[1], arr[2], arr[3], arr[4], 0, arr[5], arr[6]);
+	}
+
+	$('#add-new-campaign-field').click(function(e) {
+		<?php if ($data['shadow_of']) echo 'return;'; ?>
+
+		e.preventDefault();
+		addCampaignField(newCounter++, '', '', 0, 1, 1, 0, 0);
+		fieldListChanged();
+	});
+        
+	$('#main-fields-form').submit(function(e) {
+		fieldListChanged();
+		fieldListChanged(1);
+		checkDirty = false;
+
+		if ($('#campaign-fields-table').find('.hasError').size() > 0) {
+			e.preventDefault();
+			$('#campaign-fields-table').find('.hasError:first').focus();
+			return false;
+		}
+		$('input.table-field-name').each(function() {
+			if (!isValidName($(this), true, true)) {
+				e.preventDefault();
+				return false;
+			}
+		});
+	});
+        
+        $('select[name=email_field_mandatory]').change(function(){
+            updateMandatDropdownColor($(this));
+        });
+        $('select[name=email_field_mandatory]').change();
+
+	fieldListChangedWithoutAlert();
+
+<?php if ($data['shadow_of']) { ?>
+
+	$('input.cbx-shadow-override').click(function() {shadowOverrideClicked($(this));});
+	$('#campaign-fields-table input[class!="cbx-shadow-override"]').attr('disabled', 'disabled');
+	$('#campaign-fields-table select').attr('disabled', 'disabled');
+
+<?php
+}
+
+Helper_Tooltip::jscript();
+
+?>
+$('#add-field-from-url-dialog').dialog({
+    title: 'Get fields from your own submission form',
+    minHeight:250,
+    minWidth:600,
+    autoOpen:false
+});        
+$('#add-new-campaign-field-from-form').click(function(){
+    $('#add-field-from-url-dialog').dialog("open");
+});       
+$('#add-field-from-url-cancel-button').click(function(){
+    $('#add-field-from-url-dialog').dialog("close");
+});       
+$('#add-field-from-url-accept-button').click(function(){
+    var existingFields = getExistingField();
+    $('#add-field-from-url-forms input').each(function(){
+        if (!$(this).is(":checked")) {
+            return;
+        }
+        var index = $(this).val();
+        if (typeof forms[index] !== 'undefined') {
+            $(forms[index]).find('input').each(function(){
+                var name = $(this).attr('name');
+                if (typeof name !== 'undefined' && name != '' && existingFields.indexOf(name) === -1) {
+                    addCampaignField(newCounter++, name, '', 0, 0, 1, 0, 0);
+                    existingFields.push(name);
+                }             
+            });
+            $(forms[index]).find('select').each(function(){
+                var name = $(this).attr('name');
+                if (typeof name !== 'undefined' && name != '' && existingFields.indexOf(name) === -1) {
+                    addCampaignField(newCounter++, name, '', 0, 0, 1, 0, 0);
+                    existingFields.push(name);
+                }             
+            });
+            fieldListChanged();
+        }
+    });
+    $('#add-field-from-url-dialog').dialog("close");
+});       
+
+$('#add-field-from-url-get-form-button').click(function(){
+    var url = $('#add-field-from-url-url').val();
+    if (url == '') {
+        return;
+    }
+    var __nonce = $('input[name=__nonce]').val();
+    $.post('ajaxGetFormFromUrl.html', {url:url,__nonce:__nonce}, function(data){
+        forms = $(data).find('form');
+        if (forms.length == 0) {
+            $('#add-field-from-url-forms').html('Cannot find any form');
+        } else {
+            $('#add-field-from-url-forms').html('');
+        }
+        for (var i = 0; i < forms.length; i++) {
+            var formName = $(forms[i]).attr('name') || $(forms[i]).attr('action') || 'form ' + (i + 1);
+            var inputHtml = '<div><input type="checkbox" value="' + i + '" checked>' + formName + '</div>';
+            $('#add-field-from-url-forms').append(inputHtml);
+        }
+        
+        $('#add-field-from-url-button-zone').show();
+    });
+    
+});
+
+});
+
+<?php if ($data['shadow_of']) { ?>
+
+function shadowOverrideClicked(cb) {
+	var arr = cb.attr('id').split('-');
+	if (arr.length != 3) {
+		alert('wtf?!');
+	}
+	var fid = arr[1];
+	var origState = arr[2];
+	var checked = cb.attr('checked') ? 1 : 0;
+	var url = <?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxToggleShadowOverride')) . "'"; ?>;
+	cb.after('<span>...</span>');
+	$.post(url, {'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'" ?>, 'id' : <?php echo $data['id']; ?>, 'source_id' : <?php echo $data['shadow_of']; ?>, 'fid' : fid, 'validate' : checked}, function(response) {
+		if (response == 'OK') {
+			cb.next().html('');
+			cb.attr('id', arr[0] + '-' + arr[1] + '-' +  checked);
+		} else {
+			alert(response);
+			if (origState) {
+				cb.attr('checked', 'checked');
+			} else {
+				cb.removeAttr('checked');
+			}
+		};
+	});
+}
+
+<?php } ?>
+
+function addCampaignField(id, name, description, fieldType, isMandatory, isNew, validate, validate2) {
+	var p = (isNew ? '[new]' : '[old]') + '[' + id + ']';
+
+	var s = '<select id="combobox-'+ id + '" name="ftype' + p + '">';<?php
+	foreach ($fieldTypes as $id => $name) {
+	    echo "\n" . '	s += \'<option value="' . $id . '"\' + ((parseInt(fieldType) == ' . $id . ') ? \' selected="selected"\' : \'\') +  \'>' . escapeHtml($name) . "</option>';";
+	}
+	?>
+                
+        if (isNew) {
+            s += '<option value="0" selected="selected"></option>';
+        }
+
+	s += '</select>';<?php
+	if ($canVerifyViaAPI) {
+	    echo "\n\ts += '</td><td class=\"verify\" style=\"vertical-align: middle; padding-left: 0; text-align: center;\"><input class=\"vfy-cbx cbox\" type=\"checkbox\" id=\"span-verify-checkbox_' + id + '\" name=\"span-verify-checkbox' + p + '\"';";
+	    if (!Auth::getInstance()->isAdminLoggedIn()) {
+	        echo "\n\tif (validate2 == 2) {\n\t\ts += ' disabled=\"disabled\" title=\"This checkbox is activated by site admin, you cannot disable it\"';\n\t} else {s += ' title=\"Verify this field\"'}";
+	    } else {
+	        echo "\n\ts += ' title=\"Verify this field\"'";
+	    }
+	    echo "\n\ts += (validate ? ' checked=\"checked\"' : '') + '>';\n";
+	}
+	if ($data['shadow_of']) {
+	    echo "\n\ts += '</td><td style=\"vertical-align: middle; padding-left: 0; text-align: center;\">';";
+	    if (isset($cvFTypes) && is_array($cvFTypes)) {
+	        echo "\n\tif ((fieldType == ";
+	        echo implode(') || (fieldType == ', $cvFTypes);
+	        echo ")) {\n\t\ts += '<input type=\"checkbox\" id=\"validate-' + id;\n\t\tvar b = false;";
+	        foreach ($shadowOverrides as $ftId => $val) {
+	            if ($val) {
+	                echo "\n\t\tif (id == $ftId) {b = true; s += '-1\" checked=\"checked\"';};";
+	            }
+	        }
+	        echo "\n\t\tif (!b) s += '-0\"';";
+	        echo "\n\t\ts += '\" class=\"cbx-shadow-override\">';\n\t}";
+	    } else {
+	        echo "\n\ts += '&nbsp;':";
+	    }
+	}
+        ?>
+                
+        <?php if ($data['is_ping_and_post']): ?>
+            var mandatorySetting = '<input type="checkbox" name="ping_mandatory' + p + '"' + 
+                                    (isMandatory == 1 || isMandatory == 2 ? 'checked' : '') +
+                                    '> Ping ' + 
+                                    '<input type="checkbox" name="post_mandatory' + p + '"' + 
+                                    (isMandatory == 1 || isMandatory == 3 ? 'checked' : '') +
+                                    '> Post';
+        <?php else: ?>
+            var mandatorySetting = '<select name="mandatory' + p + '"><option style="color: red;" value="1"' +
+                                    (isMandatory ? ' selected="selected"' : '') + '>Mandatory</option><option style="color: green;" value="0"' +
+                                    (isMandatory ? '' : ' selected="selected"') + '>Not Mandatory</option></select>';
+        <?php endif; ?>
+
+	$('#campaign-fields-table tbody').append("\n" + '<tr><td class="first"><input maxlength="64" class="table-field-name" name="name' + p +
+			'" type="text"></td><td class="second"><input name="desc' + p +
+			'" type="text"><td class="third">' + s +
+			'</td><td class="third mandatory_setting">' + mandatorySetting + '</td><td class="last">&nbsp;' +
+			'<img src="/img/icons/cross.png" title="Delete this field" onclick="deleteRow($(this));"></td></tr>' + "\n");
+	var tf = $('#campaign-fields-table input[name="name' + p + '"]:last');
+	tf.val($.trim(name + ''));
+	tf.keyup(fieldListChanged);
+	$('#campaign-fields-table input[name="desc' + p + '"]:last').val($.trim(description + ''));
+	$('#campaign-fields-table select[name="ftype' + p + '"]:last').click(fieldListChanged).change(fieldListChanged).keyup(fieldListChanged);
+	$('#campaign-fields-table select[name="mandatory' + p + '"]:last')
+		.click(function() {updateMandatDropdownColor($(this));})
+		.keyup(function() {updateMandatDropdownColor($(this));})
+		.change(function() {updateMandatDropdownColor($(this));});
+	$('#campaign-fields-table select[name="mandatory' + p + '"]:last').click();
+        var field_type_lead_id = <?php echo Model_CampaignField::FIELD_TYPE_LEAD_ID; ?>;
+        <?php if (!$data['shadow_of']): ?>
+            if (fieldType == field_type_lead_id) {
+                $('#campaign-fields-table tr:last select').attr('disabled', 'disabled');
+                $('#campaign-fields-table tr:last input[type=checkbox]').attr('disabled', 'disabled');
+                $('#campaign-fields-table tr:last td.last img').remove();
+                $('#combobox-'+id).css('width', '148px');
+                $('#main-fields-form').append('<input type="hidden" name="ftype' + p + '" value="' + field_type_lead_id + '">');
+                $('#main-fields-form').append('<input type="hidden" name="post_mandatory' + p + '" value="1">');
+                
+            } else {
+                $('#combobox-'+id).combobox();
+            }
+        <?php else: ?>
+            $('#combobox-'+id).css('width', '148px');
+        <?php endif; ?>
+	return true;
+}
+
+function updateMandatDropdownColor(dropdown) {
+	dropdown.attr('style', 'color: ' + (parseInt(dropdown.val()) ? 'red' : 'green') + ';');
+}
+
+function deleteRow(field) {
+	<?php if ($data['shadow_of']) echo 'return;'; ?>
+
+	if (confirm('Delete this field?')) {
+		field.parent().parent().remove();
+		fieldListChanged();
+	}
+}
+
+function isValidName(field, checkUnique, shouldAlert) {
+	var name = field.val();
+	var n = $.trim(name).toLowerCase();
+	if (checkUnique) {
+    	var counter = 0;
+    	$('input.table-field-name').each(function() {
+    		if ($(this).val().toLowerCase() == n) {
+    	    	if (++counter > 1) {
+    				$(this).focus();
+    	    	}
+    		}
+    	});
+    	if (counter > 1) {
+    		if (shouldAlert) {
+        		alert('Field "' + name + '" already exists');
+    		}
+    		return false;
+    	}
+	}
+	if (n.search(/^[\w:@\[\]]{1,}$/) == -1) {
+		field.focus();
+		if (shouldAlert) {
+			alert('Name must consist of letters, numbers and underscores only');
+		}
+		return false;
+	}
+	return true;
+}
+
+function fieldListChangedWithoutAlert() {
+	fieldListChanged(false);
+}
+
+function updateTRColors() {
+	var odd = false;
+	$('#campaign-fields-table tr').each(function() {
+		if ($(this).hasClass("top") || $(this).hasClass("static_row")) {
+			return;
+		}
+		odd = !odd;
+		$(this).removeClass('grey');
+		$(this).removeClass('white');
+		$(this).addClass(odd ? 'grey' : 'white');
+	});
+}
+
+function fieldListChanged(showAlert) {
+	updateTRColors();
+	var foundTypes = [];
+	var foundNames = [];
+	$('#campaign-fields-table tbody tr').each(function() {
+		if ($(this).hasClass("top")) {
+			return;
+		};
+		var fldName = $(this).find('input.table-field-name');
+		var fldType = $(this).find('select[name^="ftype"]');
+
+		var isUnique  = true;
+		var fieldName = $.trim(fldName.val()).toLowerCase();
+		var fieldType = parseInt(fldType.val());
+
+		if (fieldType == 0) {
+			fldType.addClass('hasError');
+			if (showAlert === 1) {
+				alert('Please select field type');
+				return;
+			}
+		}
+
+<?php if ($canVerifyViaAPI) { ?>
+		var cb = $(this).find('input[id^="span-verify-checkbox"]');
+		if ($.inArray(fieldType, cvFTypes) != -1) {
+			cb.show();
+			cb.removeClass('dummy-hidden');
+		} else {
+			cb.hide();
+			cb.addClass('dummy-hidden');
+		};
+<?php } ?>
+
+		if (fieldType != 0) {
+    		for (var i = 0; i < foundTypes.length; i++) {
+    			if (foundTypes[i] == fieldType) {
+    				fldType.addClass('hasError');
+    				if (showAlert === 1) {
+    					alert('Cannot have two field with same field type');
+    					return;
+    				}
+    				isUnique = false;
+    				break;
+    			}
+    		}
+		}
+		if (isUnique && (fieldType != 0)) {
+			fldType.removeClass('hasError');
+			foundTypes.push(fieldType);
+		}
+		isUnique = true;
+		for (var i = 0; i < foundNames.length; i++) {
+			if (fieldName.search(/^[\w:@\[\]]{1,}$/) == -1) {
+				fldName.addClass('hasError');
+				if (showAlert === 1) {
+					alert('Name must consist of letters, numbers and underscores only');
+					return;
+				}
+				isUnique = false;
+				break;
+			}
+			if ((foundNames[i] == fieldName) && fieldName.length) {
+				fldName.addClass('hasError');
+				if (showAlert === 1) {
+					alert('Cannot have field two fields with same name');
+					return;
+				}
+				isUnique = false;
+				break;
+			}
+		}
+		if (isUnique) {
+			fldName.removeClass('hasError');
+			foundNames.push(fieldName);
+		}
+	});
+}
+
+function pageStateChanged() {
+	if ($('#email_field_name').val() != emailOrigFieldName) {
+		return true;
+	}
+	if ($('#email_field_description').val() != emailOrigFieldDesc) {
+		return true;
+	}
+<?php if ($canVerifyViaAPI) { ?>
+	if (($('#span-verify-checkbox_email').attr('checked') ? 1 : 0) != emilOrigFieldVerify) {
+		return true;
+	}
+<?php } ?>
+	var tb = $('#campaign-fields-table tbody');
+	if (tb.find('tr').size() != (originalState.length + 2)) {
+		return true;
+	}
+	var changed = false;
+	var i = -1;
+	tb.find('tr').each(function() {
+		// skip first two rows - title row and email row
+		if ($(this).hasClass("top") || $(this).hasClass("static_row")) {
+			i = 0;
+			return;
+		};
+		if (changed) {
+			return;
+		}
+		var arr = originalState[i++];
+		var nf = $(this).find('input[name^="name"]');
+		if (nf.attr('name') != ('name[old][' + arr[0] + ']')) {
+			changed = true;
+			return;
+		}
+		if ($.trim(nf.val()) != $.trim(arr[1])) {
+			changed = true;
+			return;
+		}
+		if ($.trim($(this).find('input[name^="desc"]').val()) != $.trim(arr[2])) {
+			changed = true;
+			return;
+		}
+		if ($(this).find('select[name^="ftype"]').val() != (arr[3] + '')) {
+			changed = true;
+			return;
+		}
+		if ($(this).find('select[name^="mandatory"]').val() != (arr[4] + '')) {
+			changed = true;
+			return;
+		}
+
+<?php if ($canVerifyViaAPI) { ?>
+		var cbv = $(this).find('input[name^="span-verify-checkbox"]');
+		var v = cbv.hasClass('dummy-hidden') ? 0 : (cbv.attr('checked') ? 1 : 0);
+		if (v != arr[5]) {
+			changed = true;
+			return;
+		}
+<?php } ?>
+	});
+	return changed;
+}
+
+function getExistingField() {
+    var result = [];
+    $('.table-field-name').each(function(data) {
+        result.push($(this).val());
+    })
+    return result;
+}
+
+</script>
+
+<div id="add-field-from-url-dialog" style="display:none;">
+    <div>
+        <input id="add-field-from-url-url" placeholder="Please enter url of your page" style="width:400px;">
+        <button id="add-field-from-url-get-form-button">Get Forms</button>
+    </div>
+    <div id="add-field-from-url-forms" style="margin-top:20px;"></div>
+    <div id="add-field-from-url-button-zone" style="margin-top:20px;display: none;">
+        <button id="add-field-from-url-accept-button">OK</button>
+        <button id="add-field-from-url-cancel-button">Cancel</button>
+    </div>
+    
+</div>

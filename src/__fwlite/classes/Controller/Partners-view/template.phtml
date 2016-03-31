@@ -1,0 +1,163 @@
+<style type="text/css">
+
+#lhtd input {
+    border: 0;
+    color: navy;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#ta-template {
+    border: 1px solid #ccc;
+    width: 800px;
+    height: 400px;
+}
+
+#ping-post-tab {
+    float: right;
+}
+
+#ping-post-tab ul li {
+    float: left;
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px 20px;
+    border: 2px solid #FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#ping-post-tab ul li:not(.current):hover {
+    background-color: #344A53;
+}
+#ping-post-tab ul li:not(.current){
+    background-color: #f6841f;
+}
+#ping-post-tab ul li.current {
+    background-color: #344A53;
+    border-color: #f6841f;
+}
+.breadcrumb {
+    width: 960px;
+    margin-bottom: 10px;
+}
+
+</style>
+<div class="breadcrumb">
+        <div style="float:left">
+            <h1 class="page-title">Edit template for "<?php echo escapeHtml($data['name']); ?>"</h1>
+        </div>
+        <?php if ($data['partner_type'] == Model_Partner::PARTNER_TYPE_PING_POST): ?>
+            <div id="ping-post-tab" class="pingtree-form">
+                <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+                    <ul>
+                        <li id="pingTab" class="current">PING</li>
+                        <li id="postTab">POST</li>
+                    </ul>
+                <?php else: ?>
+                    <ul>
+                        <li id="pingTab">PING</li>
+                        <li id="postTab" class="current">POST</li>
+                    </ul>
+                <?php endif; ?>
+            
+                <div class="clear"></div>
+            </div><!--breadcrumb-->
+        <?php endif; ?>
+    <div class="clear"></div>
+</div>
+<form method="post" id="template-form">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>">
+<table>
+	<tr>
+		<td id="lhtd"><?php
+
+		foreach ($fields as $row) {
+		    echo "<input type=\"text\" value=\"%" . escapeAttrVal($row['name']) . "%\" readonly=\"readonly\"><br />\n";
+		}
+
+        ?></td>
+		<td><textarea name="template" id="ta-template"><?php echo "\n"; if (isset($tv)) { echo escapeHtml($tv); } ?></textarea></td>
+	</tr>
+</table>
+<div class="pingtree-form" style="margin-top: 30px;">
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />Save</button>
+<button type="submit" name="redir" value="edit"    id="editSettings" style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png"       />Edit Settings</button>
+<button type="submit" name="redir" value="fields"  id="editFields"   style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png"   />Edit Fields</button>
+<button type="submit" name="redir" value="filters" id="editFilters"  style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+<?php if ($data['ping_post_type'] != Model_Partner::PING_POST_TYPE_PING): ?>
+<button type="submit" name="redir" value="caps" id="editCaps"  style="margin-left: 15px;"><img style="margin-top: -2px; width: 11px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cap.gif" />Edit Caps</button>
+<?php endif; ?>
+<button type="button" id="cancelButton" style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+    
+<?php if ($data['posting_type'] == Model_Partner::POST_TYPE_XML || $data['posting_type'] == Model_Partner::POST_TYPE_XML_FIELD) { ?>
+    var templateType = 'XML';
+<?php } else if ($data['posting_type'] == Model_Partner::POST_TYPE_JSON) {?>
+    var templateType = 'JSON';
+<?php } else { ?>
+    var templateType = '';
+<?php } ?>
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	$('#lhtd input').mouseover(function() {
+		$(this).select();
+	});
+        
+    $('#pingTab').click(function() {
+        if ($(this).hasClass('current')) {
+            return false;
+        }
+
+        $('#template-form').append('<input type="hidden" name="redir" value="ping">');
+        $('#template-form').submit();
+    });
+
+    $('#postTab').click(function() {
+        if ($(this).hasClass('current')) {
+            return false;
+        }
+
+        $('#template-form').append('<input type="hidden" name="redir" value="post">');
+        $('#template-form').submit();
+    });
+    
+    $('#template-form').on('submit', function(){
+        var text = $('#ta-template').val();
+        $('.template_error').remove();
+        if (templateType === 'XML' && validateXML(text) === false) {
+            $(this).append('<input name="valid_template" value="0">');
+        } else if (templateType === 'JSON' && validateJSON(text) === false) {
+            $(this).append('<input name="valid_template" value="0">');
+        }
+    });
+});
+
+function validateXML(text) {
+    try {
+        var parser=new DOMParser();
+        var xmlDoc=parser.parseFromString(text,"application/xml");
+        if (xmlDoc.getElementsByTagName("parsererror").length>0){
+            return false;
+        } else {
+            return true;
+        }
+    } catch(err) {
+        return false;
+    }
+}
+
+function validateJSON(str) {
+    var trimStr = str.replace(/(\r\n|\n|\r)/gm, "");
+    try {
+        JSON.parse(trimStr);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+</script>

@@ -1,0 +1,115 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: jquery.megafish.js.
+These are required functionaly styles.
+Unless you're making drastic changes,
+you should NEVER alter these.
+*/
+ul.megafish
+	{
+		zoom: 1 !ie<8;
+	}
+ul.megafish,
+ul.megafish ul
+	{
+		list-style: none;
+		text-align: left;
+	}
+ul.megafish:after
+	{
+		clear: both;
+		content: '.';
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		visibility: hidden;
+		display: block;
+	}
+ul.megafish li,
+ul.megafish li > a,
+ul.megafish li > ins.arrow
+	{
+		position: relative;
+	}
+ul.megafish,
+ul.megafish ul,
+ul.megafish li,
+ul.megafish li > a,
+ul.megafish li > ins.arrow
+	{
+		white-space: nowrap;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+		line-height: 1.0;
+		padding: 0;
+		margin: 0;
+	}
+ul.megafish li > a,
+ul.megafish li > ins.arrow
+	{
+		padding: .50em;
+		display: block;
+		display: inline-block;
+		vertical-align: middle;
+	}
+ul.megafish > li,
+ul.megafish > li > a,
+ul.megafish > li > ins.arrow
+	{
+		float: left;
+	}
+ul.megafish li > ins.arrow
+	{
+		cursor: pointer;
+		text-decoration: none;
+	}
+ul.megafish > li.parent > a
+	{
+		padding-right: .25em;
+	}
+ul.megafish > li.parent > ins.arrow
+	{
+		padding-left: .25em;
+	}
+ul.megafish > li ul > li.parent > a
+	{
+		margin-right: 2.5em;
+	}
+ul.megafish > li ul > li.parent > ins.arrow
+	{
+		top: 0;
+		right: 0;
+		position: absolute;
+	}
+ul.megafish > li > ul,
+ul.megafish > li > ul li > ul
+	{
+		position: absolute;
+		padding: .50em;
+		display: none;
+	}
+ul.megafish > li > ul
+	{
+		left: 0;
+		top: 2.0em;
+		z-index: 1;
+	}
+ul.megafish > li > ul li > ul
+	{
+		top: 0;
+		left: 85%;
+		z-index: 2;
+	}
+ul.megafish > li > ul
+	{
+		min-width: 100%;
+	}

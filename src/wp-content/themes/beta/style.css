@@ -1,0 +1,124 @@
+/*
+Theme Name: Lead Wrench Beta Page
+Version: 1.0
+*/
+@charset "utf-8";
+/* CSS Document */
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li,
+legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+    vertical-align: baseline; */
+	text-decoration: none;
+	}
+
+body { background-color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; color: #676767; font-size: 13px; line-height: 1.4em; font-weight: normal; background-image:url(images/bg.jpg); text-shadow:0 1px 0 rgba(255,255,255,.8); -webkit-font-smoothing: subpixel-antialiased; }
+
+p {	font-family: Arial, Helvetica, sans-serif color: #000000; font-size: 14px; line-height: 1.4em; font-weight: normal; }
+
+a:link { color: #064A5A; text-decoration: none; }
+a:visited {	color: #064A5A;	text-decoration: none;	}
+a:hover { text-decoration: underline; color: #000000;}
+a:active { text-decoration: none; color: #064A5A; }
+
+#mainwrapper { width: 1024px; height: auto !important; margin-right: auto; margin-left: auto; padding-bottom: 60px; }
+#top { width: 1024px; height: 580px; background-image: url(images/topbg.jpg);}
+.logo { width: 303px; height: 97px; margin-right: auto; margin-left: auto; padding-top: 21px; }
+#header { width: 933px; height: 431px; background-image: url(images/box.png); margin-right: auto; margin-left: auto; margin-top: 20px; }
+
+h1 { font-size: 54px; font-weight: bold; width: 900px; height: auto; margin-right: auto; margin-left: auto; color: #2E2D2E; text-align: center; line-height: 1.2em; padding-top: 85px; }
+
+.h1 { font-size: 34px; font-weight: bold; width: 800px; height: auto; margin-right: auto; margin-left: auto; color: #2E2D2E; text-align: center; line-height: 2em; padding-top: 105px; }
+
+h2 { font-size: 46px; font-weight: normal; width: 900px; height: auto; margin-right: auto; margin-left: auto; color: #064A5A; text-align: center; line-height: 1.2em; padding-top: 0px; }
+
+.h2 { font-size: 34px; font-weight: normal; width: 800px; height: auto; margin-right: auto; margin-left: auto; color: #064A5A; text-align: center; line-height: 2em; padding-top: 0px; }
+
+h3 { font-size: 18px; font-weight: bold; width: 900px; height: auto; margin-right: auto; margin-left: auto; color: #CA0202; text-align: center; line-height: 1.2em; padding-top: 14px; }
+
+.h3 { font-size: 28px; font-weight: bold; width: 800px; height: auto; margin-right: auto; margin-left: auto; color: #000000; text-align: center; line-height: 2em; padding-top: 14px; }
+
+h4 { font-size: 18px; font-weight: bold; width: 900px; height: auto; margin-right: auto; margin-left: auto; color: #000000; text-align: center; line-height: 1.2em; padding-top: 10px; }
+
+.h4 { color: #054352;}
+
+h5 { font-size: 18px; font-weight: bold; color: #064A5A; line-height: 2em; padding-top: 0px; }
+
+#contentWrap { width: 930px; height:500px !important; margin-right: auto; margin-left: auto; margin-top: 20px; }
+#content1 { width: 400px; height: auto !important; float: left; text-align: left; margin-left: 20px;  }
+#content2 { width: 390px; height: auto !important; float: left; text-align: left; margin-left: 120px; }
+.text { width: 335px; height: auto; line-height: 1.6em; padding-bottom: 30px; }
+.divider { margin-right: auto; margin-left: auto; width: 984px; height: 36px; }
+
+#footwrap { width: 930px; height: 50px; margin-right: auto; margin-left: auto; margin-top: 20px; }
+#foot1 { width: 465px; height: auto; float: left; text-align: left; }
+#foot2 { width: 465px; height: auto; float: left; text-align: right; }
+
+#email { width: 503px; height: 106px; margin-right: auto; margin-left: auto; background-image: url(images/emailbg.jpg); margin-top: 20px; }
+
+
+/*FORM*/
+
+      
+    fieldset {  
+        border:none;
+		margin: 0px;
+		}  
+      
+    form {  
+        width:444px;
+		margin: 0px;
+		border: 0px;
+		height: 47px;
+		margin-left: 64px;
+		padding-top: 25px;
+        }  
+      
+    input {  
+        border:none;  
+        background-color:none;
+		margin: 0px;
+    }  
+      
+    #signup-email {  
+        color:#9E9E9E;  
+       	border: 0px;
+		width: 196px;
+		height: auto;
+		padding: 5px;
+		padding-top: 10px;
+	   	margin-right:4px;
+		margin-left: 20px;
+		font-size: 16px;
+		outline:0;
+		}  
+      
+    #signup-email:focus {  
+        background-image:none;  
+        color:#000;  
+    }  
+      
+    #signup-button {
+		background-image: url(images/button.jpg);
+		width: 154px;
+		height: 47px;
+		border: 0px;
+		margin: 0px;   
+    	}  
+      
+    #signup-button:hover {  
+        cursor:pointer;  
+        background-image: url(images/button.jpg);
+		width: 154px;
+		height: 47px;
+		}  
+      

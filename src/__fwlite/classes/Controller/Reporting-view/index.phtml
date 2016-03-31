@@ -1,0 +1,840 @@
+<style>
+
+#options-div {
+	background-color: #83a0a6;
+	padding: 5px;
+}
+
+#options-div input, #options-div select {
+	border: 1px solid #ccc;
+}
+
+#options-div label {
+	margin: 0 6px;
+}
+
+#pick-columns-link {
+    text-decoration: none;
+    color: navy;
+}
+
+#pick-columns-link:hover {
+	text-decoration: underline;
+	color: red;
+}
+
+#export-report-as-csv-div {
+    text-align: right;
+    float: right;
+}
+
+#timezone-dialog {
+    display: none;
+}
+
+#timezone-picker {
+    cursor: pointer;
+    color: #333;
+    text-decoration: underline;
+}
+
+#content .activity tr:hover {
+    background-color: #eee7c7;
+}
+
+#content .activity tr.top:hover {
+    background-color: #344a53;
+}
+
+#content .activity .toptable input, #content .activity .toptable select{float: none;}
+#content .activity .toptable .interval, #content .activity .toptable .projects, #content .activity .toptable .from
+{float: none; display: inline-block; width: auto; vertical-align: top;}
+#content .activity .toptable .from .item:first-child{margin-right: 0;}
+#content .activity .toptable .item{float: left; padding:0 3px; margin-right: 18px;}
+#content .activity .toptable span{float: none !important; display: block; line-height: normal !important; text-align: left;}
+#content .activity .toptable{height: 55px;}
+#content .activity .toptable .projects #campaign-success-status{margin-right: 5px;}
+#content .activity .toptable .projects .button{margin-top:18px; }
+</style>
+
+<div class="head">
+	<h2>Reports</h2>
+<?php
+
+$xtz = Session::getSession()->timeZone;
+if (isset($_GET['tz'])) {
+    $zones = Controller_Dashboard::listTimeZones();
+    foreach ($zones as $arr) {
+        if ($arr[0] == $_GET['tz']) {
+            $xtz = $arr[0];
+            break;
+        }
+    }
+}
+
+if (Config::$timeZone != $xtz) {
+    date_default_timezone_set($xtz);
+}
+?>
+	<p>Current time: <span class="date"><?php echo date('m/d/Y H:i');
+echo ' <span id="timezone-picker" title="Click to change the timezone">';
+echo date('T') . '</span>';
+if ($xtz != Session::getSession()->timeZone) {
+    echo '<sup>*** Showing user\'s timezone</sup>';
+}
+
+if (Config::$timeZone != $xtz) {
+    date_default_timezone_set(Config::$timeZone);
+}
+
+?></span></p>
+    <div id="export-report-as-csv-div"><?php if ($isAdminReport) { ?>
+User:&nbsp;
+<select id="user-id" style="margin-right: 10px; background-color: #fff;">
+<option value="0">All Users</option>
+<?php
+
+foreach ($usernames as $uid => $uname) {
+    echo "<option value=\"$uid\">" . escapeHtml($uname) . "</option>\n";
+}
+
+?>
+</select><?php } ?><label style="margin-right: 10px;"><input type="checkbox" style="border: none;" id="hide-repost-checkbox" <?php if (!empty($_GET['hide_repost'])) {echo ' checked="checked"'; };?>/> Hide Reposts</label>
+<?php echo App::linkFor($this, 'Export as CSV', array('action' => 'csvReport'), $_GET); ?> <a id="pick-columns-link" style="margin: 8px;" title="Pick Columns" href="#"><img src="/img/icons/table_gear.png" style="margin-top: -3px;"></a></div>
+</div><!--head-->
+
+<div class="activity">
+
+	<div class="toptable"><form id="reporting-filters-form" style="margin: 0;">
+	    <?php
+	    echo '<input type="hidden" name="hide_repost" id="hide-repost-hidden" value="' . (empty($_GET['hide_repost']) ? 0 : 1) . '" />';
+	    if ($isAdminReport) {
+	        echo '<input type="hidden" name="uid" id="user-id-hidden" />';
+	    } elseif (!Auth::getInstance()->isAdmin()) {
+	        echo '<input type="hidden" name="muid" value="' . Auth::getInstance()->getUserId() . '">';
+	    }
+        $oldTimeZone = date_default_timezone_get();
+        date_default_timezone_set(Session::getSession()->timeZone);
+	    ?>
+		<div class="from">
+		<!--
+		<span>From:</span><input id="from-date" name="from" value="<?php echo isset($_GET['from']) ? escapeAttrVal($_GET['from']) : date('m/d/Y', strtotime('- 6 day')); ?>" size="10" />
+		-->
+        <div class="item"><span>From:</span><input id="from-date" name="from" value="<?php echo isset($_GET['from']) ? escapeAttrVal($_GET['from']) : date('m/d/Y', strtotime('-0 day')); ?>" size="10" /></div>
+        <div class="item"><span>&nbsp;To:</span><input id="to-date" name="to" value="<?php echo isset($_GET['to']) ? escapeAttrVal($_GET['to']) : date('m/d/Y'); ?>" size="10" /></div>
+		</div>
+		<?php date_default_timezone_set($oldTimeZone); ?>
+
+		<div class="interval">
+            <div class="item">
+                <span>Range:</span><select id="pick-interval">
+                <option value="custom">Custom</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="last7days">Last 7 Days</option>
+                <option value="thisweek">This week</option>
+                <option value="lastweek">Last week</option>
+                <option value="last30days">Last 30 Days</option>
+                <option value="thismonth">This month</option>
+                <option value="lastmonth">Last month</option>
+                </select>
+            </div>
+        </div>
+
+		<div class="projects">
+            <div class="item">
+                <span>Campaign:</span>
+                <select id="campaign-id" class="prj-names" name="cid"><option value="0">All Campaigns</option></select>
+                <select id="campaign-success-status" class="prj-status" name="cst" title="Whether form submission was accepted">
+                    <option value="0">All</option>
+                    <option value="2">Accepted</option>
+                    <option value="1">Rejected</option>
+                </select>
+            </div>
+            <div class="item">
+                <span>Partner:</span>
+                <select id="partner-id" name="pid" class="prj-names"><option value="0">All Partners</option></select>
+                <select id="success-status" class="prj-status" name="sst" title="Whether partner accepted the delivered data">
+                    <option value="0">All</option>
+                    <?php if(empty($isRevokeSuccessLeads)) {?> <option value="2">Success</option> <?php } ?>
+                    <?php if(empty($isRevokeFailedLeads)) {?> <option value="1">Declined</option> <?php } ?>
+                    <?php if(empty($isRevokeSkippedLeads)) {?> <option value="3">Skipped</option> <?php } ?>
+                </select>
+            </div>
+            <div class="item">
+                <span class="search-area">
+                    <span>Field Search:</span>
+                    <input type="text" name="search" placeholder="Keyword" id="search"/>
+                </span>
+            </div>
+            <input class="button" type="submit" value="UPDATE" />
+        </div>
+
+		<div class="clear"></div>
+	</form></div><!--toptable-->
+<?php
+$oldSessionData = false;
+foreach (Session::getSession()->reportColumns as $i => $row) {
+    if ($row !== $this->columns[$i]) {
+        $oldSessionData = true;
+        break;
+    }
+}
+
+if (empty(Session::getSession()->reportColumns) || $oldSessionData) {
+    $cols = $this->columns;
+    unset($cols[2]);
+    unset($cols[4]);
+    unset($cols[5]);
+    unset($cols[6]);
+    unset($cols[9]);
+    Session::getSession()->reportColumns = $cols;
+    $columns = $cols;
+} else {
+    $columns = Session::getSession()->reportColumns;
+}
+
+if (isset($showRevenueReport) && !isset(Session::getSession()->markAsCustomColumns)) {
+    $columns[9] = "Revenue";
+    ksort($columns);
+}
+
+if (!$isAdminReport) {
+    unset ($columns[1]);
+}
+
+?>
+
+<table cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr class="top"><?php
+
+$colCount = 1;
+foreach ($columns as $k => $col) {
+    if ($k == 9) {
+        // Revenue
+        $s = ' class="fourth"';
+    } else {
+        $s = '';
+    }
+    echo "
+		<td$s>$col</td>";
+    $colCount++;
+
+}
+echo "
+		<td class=\"last\">&nbsp;</td>\n";
+
+?>
+		</tr>
+
+<?php
+
+$rejectColors = array(
+    'skipped' => '#f00',
+    'username' => 'brown',
+    'curl' => '#c59',
+    'network error' => '#c59',
+    'timeout' => '#c59'
+);
+if (is_array($report) && $report) {
+    $odd = false;
+    $p = 0;
+    foreach ($report as $row) {
+        $odd = !$odd;
+        $cid = $row['campaign_id'];
+        $c = isset($allC[$cid]) ? $allC[$cid] : array('shadow_of' => 0, 'skim_percentage' => 0);
+
+        $rj = $row['reject_reason'];
+        if ($rj == 'curl') {
+            $rj = 'network error';
+            if (!empty($timeouts[$row['delivery_id']])) {
+                $rj = 'timeout';
+            }
+        }
+
+        $psc = ''; $pst = ''; $successState = '';
+        if (is_null($row['is_accepted'])) {
+            $successState = '';
+        } else {
+            if ($row['is_accepted']) {
+                $psc = 'active';
+                $pst = 'Success - partner accepted the data';
+            } else {
+                if ($row['reject_reason'] == 'skipped') {
+                    $psc = 'skiped';
+                    $pst = 'Partner was skipped';
+                    $rj  = (!empty($row['message'])) ? $row['message'] : 'Rules';
+                    $successState = ' <span style="color: #c59;">(' . $rj . ')</span>';
+                } else {
+                    $psc = 'inactive';
+                    $pst = 'Partner declined the data';
+                    if ($row['reject_reason']) {
+                        $successState = ' <span style="color: ' . $rejectColors[$row['reject_reason']] . ';">(' . $rj . ')</span>';
+                    }
+                }
+            }
+        }
+        if (!empty($row['is_repost']) && empty($c['shadow_of'])) {
+            $successState .= ' <span style="color: navy; font-weight: bold;">(Repost)</span>';
+        }
+        $revenue = ((empty($row['revenue']) || ($row['revenue'] == 0)) ? '<span class="zero-revenue">$0.00</span>' : '$' . $row['revenue']);
+        $rowColor = $odd ? ' class="white"' : ' class="grey"';
+        echo "
+    <tr$rowColor>
+        ";
+        $i = 1;
+        if ($isAdminReport && isset($columns[1])) {
+            echo "<td>" . (isset($usernames[$row['user_id']]) ? escapeHtml($usernames[$row['user_id']]) : '') . "</td>\n        ";
+        }
+        if (isset($columns[2])) {
+            echo "<td>{$row['full_name']}</td>\n        ";
+            
+        }
+        if (isset($columns[3])) {
+            echo "<td>";
+            if ($row['email']) {
+                echo "<a href=\"mailto:" . $row['email'] . '">' . $row['email'] . "</a>";
+            } else {
+                echo '&nbsp;';
+            }
+            echo "</td>\n        ";
+        }
+        if (isset($columns[4])) {
+            echo "<td>{$row['full_address']}</td>\n        ";
+        }
+        if (isset($columns[5])) {
+            echo "<td>{$row['phone']}</td>\n        ";
+        }
+        if (isset($columns[6])) {
+            echo "<td>{$row['campaign']}</td>\n        ";
+            
+        }
+        if (isset($columns[7])) {
+            $spanTitle = '';
+            $spanClass = '';
+            $incomingRejectReason = '';
+            if ($c['shadow_of']) {
+                if ($c['skim_percentage'] == 0) {
+                    $spanClass = 'shadow';
+                    $spanTitle = 'Shadow / Parasite';
+                } else {
+                    $spanClass = 'skim';
+                    $spanTitle = 'Skim ' . $c['skim_percentage'] . '%:';
+                }
+                $isOOB = '';
+            } else {
+                $isOOB = (intval($oobStates[$cid]) === Model_Campaign::DELIVERY_TYPE_QUEUED_KEY) ? true : false;
+                if (isset($oobRanges[$cid]) && is_array($oobRanges[$cid])) {
+                    foreach ($oobRanges[$cid] as $oobRow) {
+                        if (($oobRow['start_inc_id'] <= $row['incoming_id']) && (is_null($oobRow['end_inc_id']) || ($oobRow['end_inc_id'] >= $row['incoming_id']))) {
+                            $isOOB = $oobRow['is_oob'];
+                            break;
+                        }
+                    }
+                }
+                $isOOB = $isOOB ? ' <b>(Queued)</b> ' : '';
+                $spanClass = $row['is_success'] ? 'active' : 'inactive';
+                $spanTitle = $row['is_success'] ? 'Lead was accepted' : 'Lead was rejected';
+                $incomingRejectReason = !empty($row['incoming_reject_reason']) ? '<span style="color: #c59;">('.$row['incoming_reject_reason'].')</span>': '';
+            }
+            echo "<td><span class=\"$spanClass\" title=\"$spanTitle\">" . escapeHtml(isset($allCampaigns[$cid]) ? $allCampaigns[$cid] : '') . "</span>" . $isOOB . (($c['shadow_of'] && ($c['skim_percentage'] == 0)) ? ' <span style="color: navy; font-weight: bold;">(Repost)</span>' : ''). $incomingRejectReason;
+            echo "</td>\n        ";
+        }
+        if (isset($columns[8])) {
+            echo "<td>";
+            if (isset($partnersWithWrappers[$row['partner_id']])) {
+                echo "<span class=\"$psc\" title=\"$pst\">" . escapeHtml($partnersWithWrappers[$row['partner_id']]) . '</span>';
+            } else {
+                echo '<span style="color: gray; font-style: italic;">&lt;';
+                if (in_array($row['incoming_id'], $npErrors)) {
+                    echo 'delivery list was empty';
+                } else {
+                    echo 'no partners';
+                }
+                echo '&gt;</span>';
+            }
+            echo $successState . "</td>\n        ";
+        }
+        if (isset($columns[9])) {
+            echo "<td class=\"fourth\">$revenue</td>\n        ";
+        }
+        if (isset($columns[10])) {
+            echo "<td>" . str_replace(' ', '&nbsp;', $row['delivery_time']) . "</td>\n        ";
+        }
+        if (isset($columns[11])) {
+            
+            echo "<td>{$row['remote_ip']}</td>\n        ";
+        }
+        if (isset($columns[12])) {
+            echo "<td>";
+            if ($row['http_referer']) {
+                echo "<span title=\"" . escapeAttrVal($row['http_referer']) . '">' . ellipsify($row['http_referer'], 32) . "</span>";
+            } else {
+                echo '&nbsp;';
+            }
+            echo "</td>\n        ";
+        }
+        echo '<td class="last">';
+        $did = $row['delivery_id'];
+        if ($row['reject_reason'] == 'skipped') {
+            $did = "0,$p";
+        }
+        $p++;
+        $getParamsI = array('inc_id' => $row['incoming_id'], 'delivery_id' => $did, 'o' => $_GET, 'iids' => implode('-', $iids), 'dids' => implode('-', $dids), 'iar' => $isAdminReport ? 1 : 0);
+        $getParamsD = array('delivery_id' => $did, 'o' => $_GET, 'dids' => implode('-', $dids), 'iar' => $isAdminReport ? 1 : 0);
+        if ($isAdminReport) {
+            $getParamsI['o']['muid'] = $row['user_id'];
+            $getParamsD['o']['muid'] = $row['user_id'];
+        }
+        if (!empty($_GET['hide_repost'])) {
+            $getParamsI['hide_repost'] = 1;
+            $getParamsD['hide_repost'] = 1;
+        }
+        if (is_null($allC[$cid]['user_id'])) {
+            echo '<a href="#" onclick="return false;" class="tt-sent-values"><img src="/images/colorless-system.png"></a>';
+            echo '<a href="#" onclick="return false;" class="tt-sent-values"><img src="/images/colorless-box.png"></a>';
+            echo '<a href="#" onclick="return false;" class="tt-response"><img src="/images/colorless-note.png"></a>';
+            echo '<a href="#" onclick="return false;" class="tt-response"><img src="/images/colorless-head.png"></a>';
+        } else {
+            echo App::linkFor($this, '<img src="/images/color-first.png" />', array('action' => 'viewFormValues'), $getParamsI, ' class="tt-form-values"');
+
+            if ($row['delivery_id'] && ($row['reject_reason'] != 'skipped') && !empty($row['log_del_id']) && 
+                    isset($partnersWithWrappers[$row['partner_id']]) && $partnersWithWrappers[$row['partner_id']] != $row['partner_id']) {
+                echo App::linkFor($this, '<img src="/images/color-box.png" />', array('action' => 'viewSentValues'), $getParamsD, ' class="tt-sent-values"');
+                echo App::linkFor($this, '<img src="/images/note-color.png" />', array('action' => 'viewPartnerResponse'), $getParamsD, ' class="tt-response"');
+            } else {
+                echo '<a href="#" onclick="return false;" class="tt-sent-values"><img src="/images/colorless-box.png"></a>';
+                echo '<a href="#" onclick="return false;" class="tt-response"><img src="/images/colorless-note.png"></a>';
+            }
+
+            if ($row['is_repost'] || ($c['shadow_of'] && ($c['skim_percentage'] == 0)) || 
+                    (isset($partnersWithWrappers[$row['partner_id']]) && $partnersWithWrappers[$row['partner_id']] == $row['partner_id'])) {
+                echo '<a href="#" onclick="return false;" class="tt-sys-response"><img src="/images/colorless-head.png"></a>';
+            } else {
+                echo App::linkFor($this, '<img src="/images/colorlast.png" />', array('action' => 'viewSystemResponse'),  $getParamsI, ' class="tt-sys-response"');
+            }
+        }
+
+        echo "</td>\n        ";
+
+        echo "
+    </tr>\n\n";
+    }
+    Helper_Tooltip::assignTooltipToClass('tt-form-values',  'Form Values');
+    Helper_Tooltip::assignTooltipToClass('tt-sent-values',  'Values Delivered to Partner');
+    Helper_Tooltip::assignTooltipToClass('tt-response',     'Partner Response');
+    Helper_Tooltip::assignTooltipToClass('tt-sys-response', 'System Response');
+} else {
+    echo '<tr><td colspan="' . $colCount . '" style="text-align: center; padding: 10px; font-size: 17px;">No Data</td></tr>';
+}
+
+?>
+	</tbody>
+</table>
+
+<?php
+
+if (isset($count, $perPage) && ($count > $perPage)) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?>
+	<div class="legend">
+
+		<p><span class="active">Accepted / Success</span><span class="inactive">Rejected / Declined</span><span class="skiped">Skipped</span><?php
+		if (Auth::getInstance()->isAdmin()) {
+		    echo '<span class="shadow">Shadow / Parasite</span>';
+		    echo '<span class="skim">Shadow / Skim</span>';
+		}
+		?></p>
+
+		<div class="clear"></div>
+	</div><!--legend-->
+	<div class="clear"></div>
+</div><!--activity-->
+<script type="text/javascript">
+<?php
+
+$oldTimeZone = date_default_timezone_get();
+date_default_timezone_set(Session::getSession()->timeZone);
+
+$n = date('N') - 1;
+
+$today         = date('m/d/Y');
+$yesterday     = date('m/d/Y', strtotime('-1 day'));
+$back7         = date('m/d/Y', strtotime('-6 day'));
+$back30        = date('m/d/Y', strtotime('-29 day'));
+$weekStart     = date('m/d/Y', strtotime("-$n day"));
+$lastWeekStart = date('m/d/Y', strtotime("-" . ($n + 7) . " day"));
+$lastWeekEnd   = date('m/d/Y', strtotime("-" . ($n + 1) . " day"));
+$monthStart    = date('m/01/Y');
+$lMonthStart   = date('m/01/Y', strtotime('-1 month', strtotime(date('Y-m-01'))));
+$lMonthEnd     = date('m/d/Y', strtotime('-' . (date('d')) . ' day'));
+
+date_default_timezone_set($oldTimeZone);
+
+?>
+var autoUpdate = true;
+var lastSetUserId = 0;
+var columns   = [<?php
+
+$ac = false;
+foreach ($columns as $cid => $cname) {
+    if ($ac) {
+        echo ',';
+    } else {
+        $ac = true;
+    }
+    echo $cid;
+}
+
+?>];
+var campaigns = [<?php
+
+$comma1 = false;
+foreach ($campaigns as $userId => $arr) {
+    if ($comma1) {
+        echo ", ";
+    } else {
+        $comma1 = true;
+    }
+    echo "$userId, [";
+    $comma2 = false;
+    foreach ($arr as $crow) {
+        if ($comma2) {
+            echo ', ';
+        } else {
+            $comma2 = true;
+        }
+        echo $crow['id'] . ", '" . escapeJSVal($crow['name']) . "'";
+    };
+    echo ']';
+}
+
+?>];
+
+var partners = [<?php
+
+$comma1 = false;
+foreach ($partners as $userId => $arr) {
+    if ($comma1) {
+        echo ", ";
+    } else {
+        $comma1 = true;
+    }
+    echo "$userId, [";
+    $comma2 = false;
+    foreach ($arr as $pid => $pname) {
+        if ($comma2) {
+            echo ', ';
+        } else {
+            $comma2 = true;
+        }
+        echo "$pid, '" . escapeJSVal($pname) . "'";
+    }
+    echo ']';
+}
+
+?>];
+
+$(document).ready(function() {
+	autoUpdate = false;
+	$('#from-date, #to-date').datepicker({showOn: 'focus', onSelect: function() {$('#pick-interval').val('custom')} });
+
+	$('#pick-interval').click(setDateInterval).change(setDateInterval);
+	$('#user-id').click(userIdChanged2).change(userIdChanged2);
+	$('#pick-columns-link').click(function(e) {e.preventDefault(); showPickColumnsDialog();});
+	$('#campaign-success-status').click(campaignSuccessStateChanged).change(campaignSuccessStateChanged);
+	$('#timezone-picker').click(function() {timezonePicker($(this));});
+	$('#hide-repost-checkbox').click(updateHiddenHideRepostField).change(updateHiddenHideRepostField);
+
+<?php
+    Helper_Tooltip::jscript();
+    if (isset($_GET['uid'])) {
+        echo "\t$('#user-id').find('option[value=\"" . (int)$_GET['uid'] . "\"]').attr('selected', 'selected');\n";
+    }
+    if ($reportForUserId) {
+        echo "\tsetUserTo($reportForUserId);\n";
+    }
+    if ($isAdminReport) {
+	    echo "\tuserIdChanged2();\n";
+    }
+    if (isset($_GET['cid'])) {
+        echo "	$('#campaign-id').val(" . (int)$_GET['cid'] . ");\n";
+    }
+    if (isset($_GET['pid'])) {
+        echo "	$('#partner-id').val(" . (int)$_GET['pid'] . ");\n";
+    }
+    if (isset($_GET['sst'])) {
+        echo "	$('#success-status').val(" . (int)$_GET['sst'] . ");\n";
+    }
+    if (isset($_GET['cst'])) {
+        echo "	$('#campaign-success-status').val(" . (int)$_GET['cst'] . ");\n";
+    }
+    if (isset($_GET['search'])) {
+        echo "	$('#search').val('" . (string) $_GET['search'] . "');\n";
+    }
+?>
+	figureOutDateInterval();
+	campaignSuccessStateChanged();
+	if ($('#campaign-id').attr('disabled')) {
+		$('#partner-id').attr('disabled', 'disabled');
+	}
+	autoUpdate = true;
+});
+
+function updateHiddenHideRepostField() {
+	var cb = $('#hide-repost-checkbox');
+	$('#hide-repost-hidden').val(cb.attr('checked') ? '1' : '0');
+	var url = document.location.href;
+	var p = url.indexOf('hide_repost=');
+	var s = 'hide_repost=' + (cb.attr('checked') ? '1' : '0');
+	if (p == -1) {
+		var qmp = url.indexOf('?');
+		if (qmp == -1) {
+			url = url + '?' + s;
+		} else {
+			url = url + '&' + s;
+		}
+	} else {
+		url = url.replace('hide_repost=0', s);
+		url = url.replace('hide_repost=1', s);
+	}
+	document.location.href = url;
+};
+
+function userIdChanged2() {
+    $('#user-id-hidden').val($('#user-id').val());
+    userIdChanged();
+};
+
+function userIdChanged() {
+	var userId = parseInt($('#user-id').val());
+	if (userId == 0) {
+		$('#campaign-id').attr('disabled', 'disabled');
+		$('#partner-id').attr('disabled', 'disabled');
+	} else {
+		$('#campaign-id').removeAttr('disabled');
+		$('#partner-id').removeAttr('disabled');
+	}
+	if (lastSetUserId == userId) {
+		return;
+	}
+	lastSetUserId = userId;
+	setUserTo(userId);
+};
+
+function campaignSuccessStateChanged(e) {
+	if ($('#campaign-success-status').val() == '1') {
+		$('#partner-id').attr('disabled', 'disabled');
+		$('#success-status').attr('disabled', 'disabled');
+	} else {
+		$('#partner-id').removeAttr('disabled');
+		$('#success-status').removeAttr('disabled');
+	}
+};
+
+function setUserTo(userId) {
+	$('#campaign-id').find('option[value!="0"]').remove();
+	var i = 0;
+	var j = 0;
+	var html = '';
+	for(i = 0; i < campaigns.length; i+= 2) {
+		var uid = campaigns[i];
+		if (uid == userId) {
+			var arr = campaigns[i + 1];
+			for(j = 0; j < arr.length; j += 2) {
+				html = '<option value="' + arr[j] + '"></option>';
+				$('#campaign-id').append(html);
+				$('#campaign-id').find('option:last').text(arr[j + 1]);
+			}
+		}
+	}
+
+	$('#partner-id').find('option[value!="0"]').remove();
+	for(i = 0; i < partners.length; i+= 2) {
+		var uid = partners[i];
+		if (uid == userId) {
+			var arr = partners[i + 1];
+			for(j = 0; j < arr.length; j += 2) {
+				html = '<option value="' + arr[j] + '"></option>';
+				$('#partner-id').append(html);
+				$('#partner-id').find('option:last').text(arr[j + 1]);
+			}
+		}
+	}
+}
+
+function setDateInterval() {
+	var fd = $('#from-date');
+	var td = $('#to-date');
+
+	switch ($('#pick-interval').val()) {
+	case 'today':
+		fd.val('<?php echo $today; ?>');
+		td.val('<?php echo $today; ?>');
+		break;
+	case 'yesterday':
+		fd.val('<?php echo $yesterday; ?>');
+		td.val('<?php echo $yesterday; ?>');
+		break;
+	case 'last7days':
+		fd.val('<?php echo $back7; ?>');
+		td.val('<?php echo $today; ?>');
+		break;
+	case 'thisweek':
+		fd.val('<?php echo $weekStart; ?>');
+		td.val('<?php echo $today; ?>');
+		break;
+	case 'lastweek':
+		fd.val('<?php echo $lastWeekStart; ?>');
+		td.val('<?php echo $lastWeekEnd; ?>');
+		break;
+	case 'last30days':
+		fd.val('<?php echo $back30; ?>');
+		td.val('<?php echo $today; ?>');
+		break;
+	case 'thismonth':
+		fd.val('<?php echo $monthStart; ?>');
+		td.val('<?php echo $today; ?>');
+		break;
+	case 'lastmonth':
+		fd.val('<?php echo $lMonthStart; ?>');
+		td.val('<?php echo $lMonthEnd; ?>');
+		break;
+	case 'custom':
+	default:
+		break;
+	}
+}
+
+function figureOutDateInterval() {
+	var fd = $('#from-date');
+	var td = $('#to-date');
+	if ((fd.val() == <?php echo "'$today'"; ?>) && (td.val() == <?php echo "'$today'"; ?>)) {
+		$('#pick-interval').val('today');
+	}
+	if ((fd.val() == <?php echo "'$yesterday'"; ?>) && (td.val() == <?php echo "'$yesterday'"; ?>)) {
+		$('#pick-interval').val('yesterday');
+	}
+	if ((fd.val() == <?php echo "'$back7'"; ?>) && (td.val() == <?php echo "'$today'"; ?>)) {
+		$('#pick-interval').val('last7days');
+	}
+	if ((fd.val() == <?php echo "'$weekStart'"; ?>) && (td.val() == <?php echo "'$today'"; ?>)) {
+		$('#pick-interval').val('thisweek');
+	}
+	if ((fd.val() == <?php echo "'$lastWeekStart'"; ?>) && (td.val() == <?php echo "'$lastWeekEnd'"; ?>)) {
+		$('#pick-interval').val('lastweek');
+	}
+	if ((fd.val() == <?php echo "'$monthStart'"; ?>) && (td.val() == <?php echo "'$today'"; ?>)) {
+		$('#pick-interval').val('thismonth');
+	}
+	if ((fd.val() == <?php echo "'$back30'"; ?>) && (td.val() == <?php echo "'$today'"; ?>)) {
+		$('#pick-interval').val('last30days');
+	}
+	if ((fd.val() == <?php echo "'$lMonthStart'"; ?>) && (td.val() == <?php echo "'$lMonthEnd'"; ?>)) {
+		$('#pick-interval').val('lastmonth');
+	}
+}
+
+function showPickColumnsDialog() {
+	$('#columns-dialog input[type="checkbox"]').removeAttr('checked');
+	for (var i = 0; i < columns.length; i++) {
+		$('#column-option-id_' + columns[i]).attr('checked', 'checked');
+	}
+	$('#columns-dialog').dialog({
+		title: 'Pick Report Columns',
+		buttons: {
+			'OK':     function() {saveReportColumnsSelection();},
+			'Cancel': function() {$('#columns-dialog').dialog('destroy');}
+		}
+	});
+}
+
+function saveReportColumnsSelection() {
+	var ids = [];
+	$('#columns-dialog input[type="checkbox"]').each(function() {
+		if (!$(this).attr('checked')) {
+			return;
+		}
+		var arr = $(this).attr('id').split('_');
+		if (arr.length == 2) {
+			ids.push(parseInt(arr[1]));
+		}
+	});
+	var data = {'ids' : ids, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'" ?>};
+	$.post(<?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'saveReportColumnsSelection')) . "'" ?>, data, function (response) {
+		if (response == 'OK') {
+			window.location.reload(true);
+		} else {
+			alert(response);
+		}
+	});
+};
+
+function timezonePicker(elem) {
+	$('#timezone-dialog').dialog({
+		'title'   : 'Select Your Time Zone',
+		'modal'   : true,
+		'width'   : 350,
+		'open'    : function() {
+			$('#tz-picker-select').find('option[value="<?php echo Session::getSession()->timeZone; ?>"]:first').attr('selected', 'selected');
+		},
+		'buttons' : {
+			'OK'     : function() {setUsersTimeZone();},
+			'Cancel' : function() {$('#timezone-dialog').dialog('destroy');}
+		}
+	});
+};
+
+function setUsersTimeZone() {
+	var tz = $('#tz-picker-select').val();
+	if (tz == '') {
+		alert('Please pick your time zone');
+		return;
+	}
+	$.post('/reporting/setTimeZone.html', {'tz' : tz, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+		    $('#timezone-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+};
+
+</script>
+
+<div id="columns-dialog" style="display: none;">
+<?php
+
+$allColumns = $this->columns;
+if (!$isAdminReport) {
+    unset($allColumns[1]);
+}
+foreach ($allColumns as $cid => $cname) {
+    $s = isset($columns[$cid]) ? ' checked="checked"' : '';
+    echo "<label><input type=\"checkbox\"$s value=\"$cid\" id=\"column-option-id_$cid\"> $cname</label><br>\n";
+}
+
+?>
+</div>
+
+<div id="timezone-dialog">
+    <select id="tz-picker-select">
+<?php
+
+foreach (Controller_Dashboard::listTimeZones() as $arr) {
+    if (is_array($arr)) {
+        echo "<option value=\"$arr[0]\">$arr[1]</option>\n";
+    } else {
+        echo "<option disabled=\"disabled\"></option>\n";
+    }
+}
+
+?>
+    </select>
+</div>

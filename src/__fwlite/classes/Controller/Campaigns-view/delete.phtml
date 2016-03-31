@@ -1,0 +1,14 @@
+<h1 class="page-title">Delete campaign "<?php echo escapeHtml($data['name']); ?>" ?</h1>
+<form style="margin: 0;" method="POST">
+<div class="pingtree-form" style="margin-top: 30px;">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/delete.png" />Delete</button>
+<button type="button" id="cancelButton" style="margin-left: 15px;"><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#cancelButton').click(function() {document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+});
+</script>

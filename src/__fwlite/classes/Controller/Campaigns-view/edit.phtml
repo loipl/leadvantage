@@ -1,0 +1,167 @@
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> <a href="/campaigns/edit.html?id=<?php echo $data['id']?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Campaign Settings
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+<div style="color: #555; margin-bottom: 0px;">Form should be submitted to:<br>
+<?php
+
+echo '<b>http://<span id="api-submit-domain">' . $_SERVER['HTTP_HOST'] . '</span>/api/' . $hash . '/</b><br><br>';
+
+?></div><a href="#" id="show-postback-url">Show Postback URL</a><br><br>
+
+<form id="edit-campaign-form" style="margin: 0;" method="POST">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<?php
+
+require_once dirname(__FILE__) . '/_form.phtml';
+
+?>
+<div class="pingtree-form" style="margin-top: 30px;">
+
+<button type="submit" id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />Save</button>
+<button type="submit" name="redir" value="fields" id="editFields" ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<button type="submit" name="redir" value="delivery" id="editDelivery"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/package.png" />Edit Delivery</button>
+<button type="submit" name="redir" value="filters" id="editRule" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+
+<button type="button" id="cancelButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+<?php echo "</div><!-- settings -->\n"; ?>
+</form>
+
+<script type="text/javascript">
+
+var checkDirty = true;
+
+var originalState = [
+<?php
+$ac = false;
+foreach ($data as $k => $v) {
+    if (is_int($k)) {
+        continue;
+    }
+    if ($ac) {
+        echo ",\n";
+    } else {
+        $ac = true;
+    }
+    echo "['" . escapeJSVal($k) . "', '" . escapeJSVal($v) . "']";
+}
+?>
+];
+
+var normalDomain = '<?php echo escapeJSVal($_SERVER['HTTP_HOST']); ?>';
+var apiDomain    = '<?php
+
+$s = $_SERVER['HTTP_HOST'];
+if (strpos($s, 'www.') === 0) {
+    $s = 'api.' . substr($s, 4);
+} else {
+    $s = "api.$s";
+}
+echo escapeJSVal($s);
+
+?>';
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	<?php if (Auth::getInstance()->isAdminLoggedIn()) { ?>
+
+	$('#is-oob-checkbox').click(changeDomain);
+	<?php } else { ?>
+            $('#industry-id').attr('disabled',true);
+        <?php }?>
+
+	changeDomain();
+
+	if ($('#is-oob-checkbox').attr('checked')
+		|| ($.trim($('#partner-retries').val()) != '2')
+		|| ($.trim($('#leads-per').val()) != '1')
+		|| ($('#should-repost').val() == '1')
+                || ($('#campaign-distribution').val()  != '0')
+                || ($('#delivery-type').val() == '2')
+                || ($('#response-type').val() == '2')
+		) {
+		$('#advanced-settings-div').show();
+		$('#advanced-settings-toggle-link').html('<img src="/images/opened.png"/>');
+	}
+
+	$('#show-postback-url').click(showPostbackUrlDialog);
+        
+        var currentCampaignType = $('#campaign-type').val();
+        var hasDeliveryPartner = '<?php echo $hasDeliveryPartner;?>';
+        var isPingPost         = <?php echo $data['is_pingpost'];?>;
+        var isPingAndPost      = <?php echo $data['is_ping_and_post'];?>;
+
+        if (isPingPost || isPingAndPost) {
+            if (hasDeliveryPartner) {
+                $("#campaign-type option[value='1']").remove();
+                $("#campaign-type option[value='2']").remove();
+            }
+        } else {
+            if (hasDeliveryPartner) {
+                $("#campaign-type option[value='3']").remove();
+                $("#campaign-type option[value='4']").remove();
+            }
+        }
+});
+
+$('#edit-campaign-form').submit(function() {checkDirty = false;});
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+});
+
+function changeDomain() {
+	if ($('#is-oob-checkbox').attr('checked')) {
+		$('#api-submit-domain').text(apiDomain);
+	} else {
+		$('#api-submit-domain').text(normalDomain);
+	}
+};
+
+function pageStateChanged() {
+	var changed = false;
+	$('#edit-campaign-form').find('input,select').each(function() {
+		if (changed || ($(this).attr('type') == 'hidden') || $(this).attr('disabled')) {
+			return;
+		}
+		var name = $(this).attr('name');
+		for(var i = 0; i < originalState.length; i++) {
+			if (name == originalState[i][0]) {
+				var v = $(this).val();
+				if ($(this).attr('type') == 'checkbox') {
+					v = $(this).attr('checked') ? '1' : '0';
+				}
+				if (v != originalState[i][1]) {
+					changed = true;
+				}
+				return;
+			}
+		}
+	});
+	return changed;
+};
+
+function showPostbackUrlDialog(e) {
+	e.preventDefault();
+	$('#postback-url-dialog-div').dialog({
+		'title'   : "Postback URL",
+		'width'   : "700px",
+		'modal'   : true,
+		'buttons' : {
+			'OK' : function() {$('#postback-url-dialog-div').dialog('destroy');}
+		}
+	});
+};
+
+
+</script>
+<div id="postback-url-dialog-div" style="display: none;"><?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/postback/' . Auth::userIdToPostbackHash($data['user_id']) . '/?action=' . Helper_Postback::ACTION_STOP_DELIVERY . '&campaign_id=' . $id . '&email=EMAIL-ADDRESS'; ?></div>

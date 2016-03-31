@@ -1,0 +1,41 @@
+<div class="head">
+	<h2>Reports</h2>
+	<div class="breadcrumb">
+		<p><?php
+		$arr = array('iid' => $incId);
+		if (!empty($_GET['hide_repost'])) {
+		    $arr['hide_repost'] = 1;
+		}
+		if (isset($_GET['o']['muid'])) {
+		    $arr['uid'] = $_GET['o']['muid'];
+		}
+		echo App::linkFor($this, 'Associated Transactions', array('action' => 'index'), $arr); ?>&gt; System Response</p>
+	</div><!--breadcrumb-->
+	<div class="breadcrumb"><?php
+	echo $this->getIidPrevNext(str_replace('.phtml', '.html', basename(__FILE__)), !empty($_GET['iar']), $_GET['inc_id'], isset($_GET['delivery_id']) ? $_GET['delivery_id'] : '', !empty($_GET['hide_repost']),
+	            (isset($_GET['o']) && is_array($_GET['o'])) ? $_GET['o'] : array(),
+                (isset($_GET['iids'])) ? explode('-', $_GET['iids']) : array(),
+                (isset($_GET['dids'])) ? explode('-', $_GET['dids']) : array());
+
+	?></div>
+</div><!--head-->
+
+<div style="padding: 10px 20px; border: 1px solid #ccc;">
+<?php
+
+// echo $response ? $response : '<i style="color: #777;">No data</i>';
+
+if (strlen($response)) {
+    preg_match('!<a\s[^>]+>(.*?)</a>!is',$response,$matches);
+
+    if (isset($matches) && is_array($matches) && isset($matches[1])) {
+        $formattedResponse = str_replace($matches[1],htmlspecialchars($matches[1]),$response);
+        echo $formattedResponse;
+    } else {
+        echo $response;
+    }
+} else {
+    echo '<i>No Data</i>';
+}
+
+?></div>

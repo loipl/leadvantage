@@ -1,0 +1,280 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: footbar.x.php.
+*/
+div#footbar-wrapper /* Parent: <body>. */
+	{
+		z-index: 0;
+		position: relative;
+		margin: 25px auto 0 auto;
+		width: 960px; /* Divisible by 2, 3, 4. */
+	}
+div#footbar-wrapper > div#footbar-inner-wrapper-a
+	{
+	}
+div#footbar-wrapper > div#footbar-inner-wrapper-a > div#footbar-inner-wrapper-b
+	{
+	}
+div#footbar-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+ul#footbar /* Parent: ^ container. */
+	{
+		margin: 0;
+		padding: 0;
+		font-size: 90%;
+		color: #FFFFFF;
+		list-style-type: none;
+		list-style-image: none;
+	}
+ul#footbar a
+	{
+		color: #CCCCCC;
+	}
+ul#footbar a:hover
+	{
+		color: #FFFFFF;
+	}
+ul#footbar > li.widget
+	{
+		float: left;
+		width: 304px;
+		margin: 0 24px 0 0;
+	}
+ul#footbar > li.widget:after
+	{
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		content: '.';
+		visibility: hidden;
+		display: block;
+	}
+html.msie-lt-8 ul#footbar > li.widget
+	{
+		zoom: 1;
+	}
+/* Some browsers handle this incorrectly.
+See: http://www.quirksmode.org/css/contents.html
+ul#footbar > li.widget:nth-child(3n)
+	{
+		margin-right: 0;
+	}
+ul#footbar > li.widget:nth-child(3n):after
+	{
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		content: '.';
+		visibility: hidden;
+		display: block;
+	}
+ul#footbar > li.widget:nth-child(1n+4)
+	{
+		margin-top: 24px;
+	} */
+ul#footbar > li.widget > h2
+	{
+		height: 38px;
+		color: #000000;
+		font-size: 140%;
+		text-align: center;
+		margin: 0 0 20px 0;
+		padding: 17px 0 0 0;
+		background: url('<?php echo $i; ?>/footbar-widget-h2-bg.png') no-repeat center center;
+	}
+ul#footbar > li.widget > h2 a
+	{
+		color: #000000;
+		text-decoration: none;
+	}
+ul#footbar > li.widget > h2 img
+	{
+		display: none;
+	}
+ul#footbar > li.widget > p,
+ul#footbar > li.widget > div > p
+	{
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+ul#footbar > li.widget ul
+	{
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+ul#footbar > li.widget > ul
+	{
+		margin: 0 0 0 8px;
+	}
+ul#footbar > li.widget ul ul
+	{
+		margin: 0 0 0 5px;
+	}
+ul#footbar > li.widget ul li
+	{
+		padding: 0 0 0 20px;
+		background: url('<?php echo $i; ?>/footbar-list-style-image.png') no-repeat left 3px;
+	}
+ul#footbar > li.widget.widget_text
+	{
+	}
+ul#footbar > li.widget.widget_tag_cloud
+	{
+		text-align: center;
+	}
+ul#footbar > li.widget.widget_tag_cloud > a
+	{
+		text-decoration: none;
+		padding: 2px 5px 2px 5px;
+	}
+ul#footbar > li.widget.widget_tag_cloud > a:hover
+	{
+		text-decoration: underline;
+	}
+ul#footbar > li.widget.widget_archive > select
+	{
+		width: 100%;
+	}
+ul#footbar > li.widget.widget_categories > select
+	{
+		width: 100%;
+	}
+ul#footbar > li.widget.widget_recent_comments ul li
+	{
+	}
+ul#footbar > li.widget.widget_calendar > div > table
+	{
+		border: 0px;
+		width: 100%;
+		margin: 0 auto 0 auto;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > caption
+	{
+		text-align: center;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > thead
+	{
+		text-align: center;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tbody
+	{
+		text-align: center;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tbody a
+	{
+		color: #000000;
+		background: #CCCCCC;
+		text-decoration: none;
+		padding: 2px 5px 2px 5px;
+		border: 1px solid #000000;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tbody a:hover
+	{
+		background: #FFFFFF;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tbody td
+	{
+		width: 14.2%;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tfoot > tr > td:first-child
+	{
+		text-align: left;
+	}
+ul#footbar > li.widget.widget_calendar > div > table > tfoot > tr > td:last-child
+	{
+		text-align: right;
+	}
+ul#footbar > li.widget.widget_search > form /* Give search form some margin. */
+	{
+		margin: 0 5px 0 5px;
+	}
+ul#footbar > li.widget.widget_search > form > div > input[type = "text"]
+	{
+		width: 60%;
+		float: left;
+	}
+ul#footbar > li.widget.widget_search > form > div > input[type = "submit"]
+	{
+		width: 30%;
+		float: right;
+	}
+div#footbar-appendage-code
+	{
+		color: #FFFFFF;
+		text-align: center;
+		margin: 24px 0 0 0;
+	}
+div#footbar-appendage-code a
+	{
+		color: #CCCCCC;
+	}
+div#footbar-appendage-code a:hover
+	{
+		color: #FFFFFF;
+	}
+/*
+These CSS selectors are for: lfbcomp.x.php.
+*/
+div#lfbcomp-wrapper /* Parent: <body>. */
+	{
+		z-index: 0;
+		font-size: 90%;
+		position: relative;
+		background: #FFFFFF;
+		margin: 25px 0 0 0;
+		padding: 15px 0 10px 0;
+		border: 0 solid #000000;
+		border-width: 1px 0 0 0;
+	}
+div#lfbcomp-wrapper > div#lfbcomp-inner-wrapper-a
+	{
+	}
+div#lfbcomp-wrapper > div#lfbcomp-inner-wrapper-a > div#lfbcomp-inner-wrapper-b
+	{
+	}
+div#lfbcomp-container /* Parent: ^ inner-wrapper-b. */
+	{
+		width: 970px;
+		margin: 0 auto 0 auto;
+	}
+div#lfbcomp-left /* Parent: ^ container. */
+	{
+		float: left;
+		width: 485px;
+		padding: 3px 0 0 0;
+	}
+div#lfbcomp-left > a
+	{
+		text-decoration: none;
+	}
+div#lfbcomp-left > a:hover
+	{
+	}
+div#lfbcomp-right
+	{
+		float: right;
+		width: 485px;
+		text-align: right;
+	}
+div#lfbcomp-right > a
+	{
+		text-decoration: none;
+	}
+div#lfbcomp-right > a:hover
+	{
+	}

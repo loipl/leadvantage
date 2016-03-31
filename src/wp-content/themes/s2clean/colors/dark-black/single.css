@@ -1,0 +1,147 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: single.php.
+*/
+div#single-wrapper /* Parent: div#body-content-container. */
+	{
+		z-index: 0;
+		float: left;
+		position: relative;
+		width: 588px; /* Divisible by 2, 3, 4. */
+	}
+div#single-wrapper > div#single-inner-wrapper-a
+	{
+	}
+div#single-wrapper > div#single-inner-wrapper-a > div#single-inner-wrapper-b
+	{
+	}
+div#single-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#single-upper-section /* Parent: ^ container. */
+	{
+		position: relative;
+		margin: 0 0 25px 0;
+	}
+div#single-upper-section > div#single-share-save
+	{
+		top: 10px;
+		right: 0;
+		position: absolute;
+	}
+div#single-upper-section > div#single-share-save > a > img
+	{
+		width: 106px;
+		height: 16px;
+	}
+div#single-upper-section > div#single-edit
+	{
+		top: 12px;
+		right: 115px;
+		font-size: 80%;
+		position: absolute;
+	}
+div#single-upper-section > div#single-edit > a
+	{
+		text-decoration: none;
+		font-family: 'Georgia', serif;
+	}
+div#single-upper-section > div#single-edit > a:hover
+	{
+	}
+div#single-upper-section > div#single-time
+	{
+		right: 0;
+		top: 63px;
+		font-size: 110%;
+		position: absolute;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div#single-upper-section > div#single-title
+	{
+		max-width: 70%;
+	}
+div#single-upper-section > div#single-title > h1
+	{
+		margin: 0;
+	}
+div#single-upper-section > div#single-title > div
+	{
+		color: #666666;
+		font-style: italic;
+		margin: 5px 0 0 0;
+	}
+div#single-upper-section > div#single-cats
+	{
+		font-size: 90%;
+		max-width: 70%;
+		margin: 10px 0 0 0;
+		font-style: italic;
+	}
+div#single-upper-section > div#single-cats > a
+	{
+	}
+div#single-upper-section > div#single-cats > a:hover
+	{
+	}
+div#single-upper-section > div#single-author
+	{
+		display: none;
+	}
+div#single-upper-section > div#single-author > a
+	{
+	}
+div#single-upper-section > div#single-author > a:hover
+	{
+	}
+div#single-middle-section
+	{
+	}
+div#single-middle-section > div#single-content
+	{
+	}
+div#single-middle-section > div#single-content > *:first-child,
+div#single-middle-section > div#single-content > *.alignleft:first-child + *,
+div#single-middle-section > div#single-content > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div#single-middle-section > div#single-content a
+	{
+	}
+div#single-middle-section > div#single-content a:hover
+	{
+	}
+div#single-lower-section
+	{
+		clear: both;
+	}
+div#single-lower-section > div#single-lower-parts
+	{
+	/* Parts styled by common.css.
+		Override here as needed. */
+	}
+div#single-lower-section > div#single-lower-parts > a
+	{
+	}
+div#single-lower-section > div#single-lower-parts > a:hover
+	{
+	}
+div#single-lower-section > div#single-tags
+	{
+		display: none;
+	}
+div#single-lower-section > div#single-tags > a
+	{
+	}
+div#single-lower-section > div#single-tags > a:hover
+	{
+	}

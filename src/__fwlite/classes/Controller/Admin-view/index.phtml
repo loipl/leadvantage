@@ -1,0 +1,45 @@
+<div class="head"><h2>Administration</h2></div>
+
+<ul style="padding: 8px 30px; border: 1px solid #ccc;">
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Dashboard',    'Admin Dashboard'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Reporting',          'Admin Reporting',   array('action' => 'adminReport')); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Tips',         'Admin Tips'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Apierrors',    'API Error Log'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Catchup',      'Catchup Jobs'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Uploadfile',   'Batch Uploaded Files'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Dictionaries', 'Dictionaries'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Engine',       'Engine Control Panel'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Export',       'Export Feeds'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Fieldtypes',   'Field Types'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin',              'Flush APC Opcode Cache', array('action' => 'flushOpcodeCache')); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin',              'Import Geoip Data', array('action' => 'importGeoIp')); ?></li>
+<!--<li>&raquo; <?php // echo App::linkFor('Controller_Admin',              '<b>Import Unit Test Data Into Current DB</b>',   array('action' => 'importTestData')); ?></li>-->
+<li>&raquo; <?php echo App::linkFor('Controller_Admin',              'Import ZIP Data',   array('action' => 'importZip')); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Industries',   'Industries'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin',              'Magic Cookies',   array('action' => 'magicCookies')); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Response',     'Partner Response Times'); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin',              'Repost Backlog', array('action' => 'repostBacklog')); ?></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Messages',     'System Messages'); ?></li>
+<li>&raquo; <a href="<?php echo Config::$wordpressUrl; ?>wp-admin/users.php">Users Admin</a></li>
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Userlevels',   'User Levels'); ?></li>
+<!--<li>&raquo; <?php // echo App::linkFor('Controller_Admin_Subaccounts',  'Sub-accounts'); ?></li>-->
+<li>&raquo; <?php echo App::linkFor('Controller_Admin_Validation',   'Validation Tools'); ?></li>
+</ul>
+<br>
+<form method="post" action="<?php echo App::getFrontController()->urlFor($this, array('action' => 'impersonate')); ?>">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>">
+Login as user <select name="username" style="margin-left: 8px;">
+    <option value=""></option>
+<?php
+foreach ($usernames as $uid => $uname) {
+    $s = escapeAttrVal(trim(strstr($uname, ' ', true)));
+    if (!$s) {
+        $s = escapeAttrVal($uname);
+    }
+    echo "<option value=\"$s\">" . escapeHtml($uname) . " #$uid</option>\n";
+}
+
+?>
+</select>
+<button style="height: 28px; margin-left: 5px; background-color: #1d353f; color: #fff; font-weight: bold;" type="submit" >Login</button>
+</form>

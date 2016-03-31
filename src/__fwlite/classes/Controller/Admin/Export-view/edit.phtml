@@ -1,0 +1,6 @@
+<?php
+
+$url = 'http://' . $_SERVER['HTTP_HOST'] . '/exporting/?key=' . urlencode($data['key']);
+echo "URL for this feed:<br><b><a href=\"$url\">$url</a></b>";
+
+require_once dirname(__FILE__) . '/_form.phtml';

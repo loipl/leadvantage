@@ -1,0 +1,54 @@
+<style>
+
+#response thead tr th {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#response tbody tr td {
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: right;
+}
+
+#response tbody tr:hover {
+	background-color: yellow;
+}
+
+#response tbody tr td.name {
+    text-align: left;
+}
+
+</style>
+
+<a href="<?php echo App::getFrontController()->urlFor($this, array('action' => 'perPartner')); ?>">Per Partner Stats</a><br><br>
+
+<table id="response">
+    <thead>
+        <tr>
+            <th>Domain</th>
+            <th>Average Response Time</th>
+            <th>Response Count</th>
+            <th>Timeout Count</th>
+        </tr>
+    </thead>
+
+    <tbody>
+<?php
+foreach ($domains as $domain => $row) {
+    $avg = number_format($row['avg'], 4);
+
+    echo "
+        <tr>
+            <td class=\"name\">$domain</td>
+            <td>$avg</td>
+            <td>$row[sum_rc]</td>
+            <td>$row[sum_ti]</td>
+        </tr>";
+}
+?>
+
+    </tbody>
+</table>
+<?php
+

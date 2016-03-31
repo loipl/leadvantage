@@ -1,0 +1,13 @@
+/*
+Theme Name: BuddyPress Lead Wrench child theme 
+Description: Lead Wrench for BuddyPress.
+Version: 1.0
+Template: bp-default
+Tags: buddypress, two-column, grey, dark
+*/
+#nav {
+   margin: 35px 20px 0 0;
+}
+#nav li a {
+   background-image: url(/wp/wp-content/themes/bp-leadwrench/images/60pc_lightgreen.png)
+}

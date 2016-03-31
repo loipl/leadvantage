@@ -1,0 +1,206 @@
+<style>
+<!--
+#shadow-settings-table {
+    width: 400px;
+}
+
+div.bottom table td input {
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+-->
+</style>
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> Edit Shadow Settings
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+
+<form id="edit-campaign-form" style="margin: 0;" method="POST">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+
+
+
+				<div class="settings">
+
+					<h3>Campaign Settings &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (shadow of "<?php echo escapeHtml($sourceCampaign['name']); ?>")</h3>
+
+					<div class="setup">
+
+						<div class="leftinfo">
+
+							<p class="top"><span>Campaign Name: <?php Helper_Tooltip::toolTipFromWP('what-is-campaign-name'); ?></span><br>
+	                        <?php echo $pf->getHtmlForNamedElementFull('name', array('class' => 'full-width')); ?></p>
+							<p><span>Notes: (Optional) <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-notes'); ?></span><br>
+							<?php echo $pf->getHtmlForNamedElementFull('notes', array('class' => 'full-width')); ?></p>
+
+						</div><!--leftinfo-->
+
+						<div class="rightinfo">
+						    <p><span>Campaign status <?php Helper_Tooltip::toolTipFromWP('what-is-the-campaign-status'); ?></span><br>
+						    <?php echo $pf->getHtmlForNamedElementFull('is_active', array('style' => 'width: 200px;')); ?></p>
+
+						</div><!--rightinfo-->
+
+						<div class="clear"></div>
+					</div><!--setup-->
+
+				</div><!--settings-->
+				<div class="settings">
+
+					<div class="options" id="advanced-settings-div">
+
+						<div class="top">
+
+							<p><span>Repost: <?php Helper_Tooltip::toolTipFromWP('what-is-the-repost-toggle'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('should_repost'); ?></p>
+
+							<p><span>Every (hours) <?php Helper_Tooltip::toolTipFromWP('what-is-repost-every-hours'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('repost_hours'); ?></p>
+
+							<p><span>Maximum <?php Helper_Tooltip::toolTipFromWP('what-is-repost-maximum'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('repost_max'); ?></p>
+
+							<p><span>Partners Per <?php Helper_Tooltip::toolTipFromWP('what-is-leads-per'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('leads_per', array('id' => 'leads-per')); ?></p>
+
+							<div class="clear"></div>
+						</div><!--top-->
+
+						<div class="bottom">
+
+							<p><span>Maximum delivery retries per partner <?php Helper_Tooltip::toolTipFromWP('what-is-maximum-delivery-retries-per-partner'); ?></span>
+							<?php echo $pf->getHtmlForNamedElementFull('partner_retries', array('id' => 'partner-retries')); ?> <span>(maximum 5)</span></p>
+
+            	<table style="width: 340px; border: 0;">
+            	<tr>
+                	<td style="border: 0;"><input type="radio" name="shadow_type" id="shadow_type_skim" style="border: 0; height: 16px;" value="skim"<?php
+                	$frm = $pf->getForm(); if ($frm->shadow_type == 'skim') echo " checked=\"checked\""; ?>><label for="shadow_type_skim">Skim</label></td>
+                	<td style="text-align: right; padding: 1px 4px 1px 10px; border: 0;">Percentage:</td>
+                	<td style="border: 0;"><?php echo $pf->getHtmlForNamedElementFull('skim_percentage', array('size' => 1, 'maxlength' => 3, 'style' => 'margin: 1px;')); ?></td>
+                </tr>
+                <tr>
+            	<td style="border: 0;"><input type="radio" name="shadow_type" id="shadow_type_parasite" style="border: 0; height: 16px;" value="parasite"<?php
+            	$frm = $pf->getForm(); if ($frm->shadow_type == 'parasite') echo " checked=\"checked\""; ?>><label for="shadow_type_parasite">Parasite</label></td>
+            	<td style="text-align: right; padding: 1px 4px 1px 10px; border: 0;">Shadow Delay (Hours):</td>
+            	<td style="border: 0;"><?php echo $pf->getHtmlForNamedElementFull('shadow_delay_hours', array('size' => 1, 'maxlength' => 3, 'style' => 'margin: 1px;')); ?></td>
+            	</tr>
+            	</table>
+							<p class="last"><label><?php echo $pf->getHtmlForNamedElementFull('capalp'); ?> <span>Count 'Always' delivery partners against 'Partners Per' <?php Helper_Tooltip::toolTipFromWP('count-always-yes-partners-against-leads-per'); ?></span></label></p>
+
+						</div><!--bottom-->
+
+						<div id="throttle-settings" class="top">
+
+							<p><span>Throttle <?php Helper_Tooltip::toolTipFromWP('what-is-oob-throttle-value'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('throttle_value', array('style' => 'width: 80px;')); ?></p>
+
+							<p style="width: 150px;"><span>Throttle Type <?php Helper_Tooltip::toolTipFromWP('what-is-oob-throttle-type'); ?></span><br />
+							<?php echo $pf->getHtmlForNamedElementFull('throttle_type'); ?></p>
+
+							<div class="clear"></div>
+						</div><!--top-->
+
+						<div class="clear"></div>
+					</div><!--options-->
+
+				</div>
+
+<div class="pingtree-form" style="margin-top: 30px;">
+
+<button type="submit" id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />Save</button>
+<button type="submit" name="redir" value="fields" id="editFields" ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<button type="submit" name="redir" value="delivery" id="editDelivery"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/package.png" />Edit Delivery</button>
+<button type="submit" name="redir" value="filters" id="editRule" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/arrow_branch.png" />Edit Rules</button>
+
+<button type="button" id="cancelButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+
+</form>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	shouldRepostChanged();
+
+	$('#should-repost').click(shouldRepostChanged);
+	$('#should-repost').change(shouldRepostChanged);
+
+	$('#advanced-settings-toggle-link').click(function(e) {e.preventDefault(); $('#advanced-settings-div').toggle();});
+
+	$('#success-url, #failure-url').blur(function() {
+		var v = $(this).val();
+		if (v && v.indexOf('://') == -1) {
+			$(this).val('http://' + v);
+		};
+	});
+
+	$('#is-oob-checkbox').click(oobCheckboxClicked);
+
+	$('input[name="shadow_type"]').click(updateSkimPercentageEnabledState);
+
+	oobCheckboxClicked();
+	updateSkimPercentageEnabledState();
+
+	$('#throttle-value').keyup(throttleValueChanged);
+	$('#throttle-value').change(throttleValueChanged);
+	throttleValueChanged();
+});
+
+function updateSkimPercentageEnabledState() {
+	if ($('#shadow_type_skim').attr('checked')) {
+		$('#skim-percentage').removeAttr('disabled');
+		$('#shadow-delay-hours').attr('disabled', 'disabled');
+		$('#shadow-delay-hours').css('background-color', '#ccc');
+		$('#skim-percentage').css('background-color', '#fff');
+		$('#throttle-settings').hide();
+	} else {
+		$('#skim-percentage').attr('disabled', 'disabled');
+		$('#shadow-delay-hours').removeAttr('disabled');
+		$('#skim-percentage').css('background-color', '#ccc');
+		$('#shadow-delay-hours').css('background-color', '#fff');
+		$('#throttle-settings').show();
+	}
+};
+
+function shouldRepostChanged() {
+	var v = parseInt($('#should-repost').val());
+	if (v == 0) {
+		$('#repost-hours-div, #repost-max-div').addClass('disabledDiv');
+		$('#repost-hours, #repost-max').attr('disabled', 'disabled');
+	} else {
+		$('#repost-hours-div, #repost-max-div').removeClass('disabledDiv');
+		$('#repost-hours, #repost-max').removeAttr('disabled');
+	}
+};
+
+function oobCheckboxClicked() {
+	if ($('#is-oob-checkbox').attr('checked')) {
+		$('#span-success-url').hide();
+	} else {
+		$('#span-success-url').show();
+	}
+};
+
+function throttleValueChanged() {
+	var v = $('#throttle-value').val();
+	if (v == '0') {
+		$('#throttle-type').attr('disabled', 'disabled');
+	} else {
+		$('#throttle-type').removeAttr('disabled');
+	}
+};
+
+<?php
+
+Helper_Tooltip::jscript();
+
+?>
+</script>

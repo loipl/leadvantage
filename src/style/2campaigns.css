@@ -1,0 +1,317 @@
+/* ----- CSS ----- */
+#content .setup {
+	width: 658px;
+	padding: 10px;
+	background-color: #F0F0F0;
+	border: 1px solid #BCBDBD;
+}
+
+#content .setup .leftinfo {
+	width: 247px;
+	float: left;
+}
+
+#content .setup .leftinfo .top {
+	padding-bottom: 10px;
+}
+
+#content .setup .leftinfo span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 30px;
+	margin-bottom: 5px;
+}
+
+#content .setup .leftinfo span.form_error {
+	color: red;
+}
+
+#content .setup .leftinfo input {
+	padding-left: 5px;
+	width: 240px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+	border: 1px solid #BCBDBD;
+}
+
+#content .setup .leftinfo textarea {
+	padding: 5px;
+	background-color: #FFFFFF;
+	border: 1px solid #BCBDBD;
+	width: 235px;
+	height: 110px;
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content .setup .rightinfo {
+	width: 377px;
+	float: left;
+	padding-left: 20px;
+}
+
+#content .setup .rightinfo p {
+	padding-bottom: 13px;
+}
+
+#content .setup .rightinfo select {
+	padding-left: 5px;
+	width: 100px;
+	border: 1px solid #BCBDBD;
+}
+
+#content .setup .rightinfo span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 30px;
+	margin-bottom: 5px;
+}
+
+#content .setup .rightinfo span.form_error {
+    color: red;
+}
+
+#content .setup .rightinfo input {
+	width: 370px;
+	padding-left: 5px;
+	height: 28px;
+	line-height: 28px;
+	border: 1px solid #BCBDBD;
+}
+
+#content .settings ul {
+	float: left;
+}
+
+#content .settings ul li {
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+#content .settings ul li a {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+	height: 37px;
+	line-height: 37px;
+	background-color: #1D353F;
+	padding: 0 20px;
+	margin-right: 10px;
+}
+
+#content .settings ul li a:hover {
+	background-color: #F6841F;
+}
+
+#content .settings .options {
+	width: 658px;
+	padding: 10px;
+	margin-bottom: 15px;
+	background-color: #F0F0F0;
+	border: 1px solid #BCBDBD;
+}
+
+#content .settings .options .top {
+	padding-bottom: 15px;
+}
+
+#content .settings .options .top p {
+	width: 120px;
+	float: left;
+	margin-right: 5px;
+}
+
+#content .settings .options .top span {
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	line-height: 26px;
+}
+
+#content .settings .options .top span.form_error {
+    color: red;
+}
+
+#content .settings .options .top select {
+	width: 100px;
+	padding-left: 5px;
+/*	height: 28px;*/
+	border: 1px solid #BCBDBD;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content .settings .options .top input {
+	width: 100px;
+	padding-left: 5px;
+	height: 26px;
+	border: 1px solid #BCBDBD;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content .settings .options .bottom p {
+	padding-bottom: 10px;
+	line-height: 30px;
+}
+
+#content .settings .options .bottom span {
+	font-size: 14px;
+	color: #000000;
+	line-height: 30px;
+	display: inline;
+}
+
+#content .settings .options .bottom span.form_error {
+    color: red;
+    font-weight: bold;
+}
+
+#content .settings .options .bottom input {
+	width: 25px;
+	padding-left: 5px;
+	height: 26px;
+	border: 1px solid #BCBDBD;
+	line-height: 28px;
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content .settings .options .bottom .last {
+	padding-bottom: 2px;
+	line-height: 17px !important;
+}
+
+#content .settings .options .bottom .last span {
+	line-height: 17px;
+}
+
+#content .settings .options .bottom .last input {
+	width: 13px;
+	height: 13px;
+}
+
+#content table {
+	width: 630px;
+	border: 1px solid #BFC0C0;
+	margin-bottom: 10px;
+}
+
+#content table .top {
+	background-color: #344A53;
+	color: #FFFFFF;
+}
+
+#content table .top td {
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+	letter-spacing: 1px;
+}
+
+#content table tr td {
+	font-size: 14px;
+	color: #000;
+	height: 30px;
+	padding-left: 10px;
+	border-left: 1px solid #D1D3D6;
+	vertical-align: middle;
+}
+
+#content table .first {
+	width: 80px;
+	border-left: none;
+}
+
+#content table .second {
+	width: 320px;
+}
+
+#content table .third {
+	width: 160px;
+}
+
+#content table .last {
+	width: 27px;
+	text-align: center;
+	margin-left: -4px;
+}
+
+#content table .top td {
+	height: 30px;
+	color: #FFFFFF;
+}
+
+#content table .grey td {
+	background-color: #F0F0F0;
+	height: 30px;
+}
+
+#content table .white td {
+	background-color: #FFFFFF;
+	height: 30px;
+}
+
+#content table .second a {
+	font-size: 14px;
+	color: #2E2D2E;
+}
+
+#content table .second .erlink {
+	padding-left: 20px;
+	background-image: url(../images/error-link.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+#content table .third select {
+	width: 140px;
+	padding-left: 5px;
+}
+
+#content table .last a {
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 8px auto;
+	padding-right: 11px;
+}
+
+#oob-throttle-settings {
+    padding-left: 20px;
+    margin-bottom: 1px;
+    display: none;
+}
+
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}
+#content select:disabled {
+    background-color: gainsboro;
+}
+
+#content .settings .options .top input#bid-response-value {
+    width: 80px;
+}
+#content .settings input, #content .settings select, #content .settings textarea,
+#content #delivery-form select{
+    border-radius: 4px;
+}
+#content .settings select {
+    height:32px;
+}

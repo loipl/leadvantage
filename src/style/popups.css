@@ -1,0 +1,243 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+Title : Style
+Author : jaranen
+URL : www.fiksie.com
+
+Description : css file
+
+Created :
+Modified : -
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+/* global reset */
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,
+pre,a,abbr,acronym,address,big,cite,code,del,dfn,img,ins,kbd,
+q,samp,small,strike,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+:focus{outline:0;}
+ol,ul{list-style:none;}
+table{border-collapse:separate;border-spacing:0;}
+caption,th,td{text-align:left;font-weight:normal;}
+blockquote:before,blockquote:after,
+q:before,q:after{content:"";}
+blockquote,q{quotes:"" "";}
+
+/* end of global reset */
+
+/* ----- CSS ----- */
+
+body {
+background-image:url(../images/popup-body-bcg.png);
+background-repeat:repeat;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ----- ID'S & CLASSES----- */
+
+#wrapper { 
+width:1200px; 
+margin: 0 auto;
+}
+#container {
+width:1200px;
+margin-top:190px;
+}
+#content-popup {
+width:540px;
+height:170px;
+margin:0 auto;
+background-color:#EFEFEF;
+}
+#content-popup .headline2 {
+padding:0 10px;
+width:520px;
+height:39px;
+background-color:#F6841F;
+float:left;
+}	
+#content-popup .headline2 h6 {
+width:500px;
+display:block;
+height:39px;
+float:left;
+color:#FFFFFF;
+font-size:16px;
+font-weight:bold;
+line-height:39px;
+}
+#content-popup .headline2 a {
+display:block;
+width:17px;
+height:17px;
+float:right;
+margin-top:12px;
+}
+#content-popup .bottompart {
+padding:10px;
+width:520px;
+float:left;
+}
+#content-popup .bottompart p {
+padding-bottom:10px;
+}
+#content-popup .bottompart input {
+width:510px;
+padding-left:10px;
+height:40px;
+line-height:40px;
+background-color:#FFFFFF;
+border:1px solid #BCBDBD;
+color:#FE0303;
+font-size:14px;
+font-weight:bold;
+}
+#content-popup .bottompart ul li {
+float:left;
+list-style-type:none;
+}
+#content-popup .bottompart ul li a {
+display:block;
+height:40px;
+line-height:40px;
+padding:0 20px;
+background-color:#F6841F;
+color:#FFFFFF;
+text-decoration:none;
+font-size:16px;
+margin-right:10px;
+font-weight:bold;
+list-style-type:none;
+}
+#content-popup .bottompart ul .yes a {
+background-color:#1D353F;
+}
+#content-popup2 {
+width:890px;
+height:275px;
+margin:0 auto;
+background-color:#EFEFEF;
+}
+#content-popup2 .headline2 {
+padding:0 10px;
+width:870px;
+height:39px;
+background-color:#F6841F;
+line-height:39px;
+float:left;
+}	
+#content-popup2 .headline2 h6 {
+color:#FFFFFF;
+font-size:16px;
+font-weight:bold;
+text-transform:uppercase;
+float:left;
+}
+#content-popup2 .headline2 a {
+display:block;
+width:17px;
+height:17px;
+float:right;
+margin-top:12px;
+}
+#content-popup2 .bottompart {
+padding:10px;
+width:870px;
+float:left;
+}
+#content-popup2 .bottompart table {
+width:870px;
+border:1px solid #BCBDBD;
+margin-bottom:15px;
+}
+#content-popup2 .bottompart table tr {
+height:40px;
+line-height:40px;
+}
+#content-popup2 .bottompart table .top {
+background-color:#344A53;
+font-weight:bold;
+color:#FFFFFF;
+font-size:18px;
+}
+#content-popup2 .bottompart table td {
+padding-left:10px;
+width:170px;
+border-right:1px solid #BBBFC4;
+}
+#content-popup2 .bottompart table .third {
+width:450px;
+}
+#content-popup2 .bottompart table .last {
+width:50px;
+vertical-align:middle;
+margin-left:-7px;
+padding-right:8px;
+}
+#content-popup2 .bottompart table .last a {
+margin-left:13px;
+}
+#content-popup2 .bottompart table td input {
+height:28px;
+width:130px;
+padding-left:5px;
+background-color:#FFFFFF;
+border:1px solid #BBBFC4;
+font-size:14px;
+line-height:30px;
+margin-top:4px;
+}
+#content-popup2 .bottompart table select {
+height:28px;
+width:130px;
+padding-left:5px;
+background-color:#FFFFFF;
+border:1px solid #BBBFC4;
+font-size:14px;
+line-height:30px;
+margin-top:3px;
+color:#2E2D2E;
+}
+#content-popup2 .bottompart table .third input {
+width:420px;
+color:#2E2D2E;
+}
+#content-popup2 .bottompart .addcondition {
+margin-bottom:15px;
+}
+#content-popup2 .bottompart .addcondition a {
+display:block;
+line-height:40px;
+height:40px;
+width:150px;
+border:1px solid #C2C3C3;
+text-align:center;
+color:#000000;
+font-weight:bold;
+font-size:14px;
+background-color:#F0F0F0;
+}
+#content-popup2 .bottompart ul li {
+float:left;
+list-style-type:none;
+}
+#content-popup2 .bottompart ul li a {
+display:block;
+height:40px;
+line-height:40px;
+padding:0 20px;
+background-color:#F6841F;
+color:#FFFFFF;
+text-decoration:none;
+font-size:16px;
+margin-right:10px;
+font-weight:bold;
+}
+#content-popup2 .bottompart ul .yes a {
+background-color:#1D353F;
+}
+/* ----- SPECIAL CLASSES ----- */
+
+.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}

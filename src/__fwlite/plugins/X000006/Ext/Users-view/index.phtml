@@ -1,0 +1,53 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 3px;
+}
+
+</style>
+
+<table>
+  <thead>
+<?php 
+/* @var $this X000001_Controller_Users */
+/* @var $headerLinks Util_HeaderLinks */
+echo ($headerLinks->tableHeader());
+
+?>
+  </thead>
+
+<?php 
+
+foreach ($list as $row) {
+    echo "
+  <tr>
+    <td>{$row['username']}</td>
+    <td>{$row['email']}</td>
+    <td>{$row['name']}</td>
+    <td>" . ($row['is_admin'] ? "Yes" : "No") . "</td>
+    <td>{$row['created_at']}</td>
+    <td>" . ($row['email_verified'] ? "Yes" : "No") . "</td>
+    <td>" . ($row['enabled'] ? "Yes" : "No") . "</td>
+    <td>" . 
+        App::linkFor($this, 'Edit',   array('action' => 'edit'),   array('id' => $row['id'])) .  ' | ' .
+        App::linkFor($this, 'Delete', array('action' => 'delete'), array('id' => $row['id'])) .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?>
+<?php echo App::linkFor($this, 'Add User...', array('action' => 'add')); ?>

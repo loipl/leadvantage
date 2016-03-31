@@ -1,0 +1,78 @@
+<style>
+
+#dict-values td {
+	padding: 0 6px;
+}
+
+#dict-values th {
+	padding: 0 6px;
+	font-weight: bold
+}
+
+
+#values-page a {
+	text-decoration: none;
+}
+#values-page a span {
+	text-decoration: underline;
+}
+
+</style>
+<div id="values-page">
+<div class="head"><h2>Dictionary Values</h2></div>
+
+<table id="dict-values" class="data-table">
+	<thead>
+		<tr>
+			<th>Key</th>
+<?php
+$columnKeys = array();
+foreach ($columns as $row) {
+    $columnKeys[] = (int)$row['id'];
+    echo "			<th>" . escapeHtml($row['name']) . "</th>\n";
+}
+?>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+
+	<tbody>
+<?php
+
+foreach ($list as $row) {
+    echo "<tr>
+    <td>" . escapeHtml($row['key_value']) . "</td>\n";
+    foreach ($columnKeys as $cid) {
+        echo "    <td>" . (isset($row['values'][$cid]) ? escapeHtml($row['values'][$cid]) : '&nbsp;') . "</td>\n";
+    }
+    echo "    <td>" . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <span>Edit</span>',   array('action' => 'editValue'),   array('id' => $id, 'val_id' => $row['id'])) . "</td>
+    <td>" . App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <span>Delete</span>', array('action' => 'deleteValue'), array('id' => $id, 'val_id' => $row['id'])) . "</td>
+</tr>";
+}
+
+?>
+	</tbody>
+</table><br>
+
+<?php
+if (isset($count, $perPage) && ($count > $perPage)) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div><br>';
+}
+
+echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/add.png" style="margin-bottom: 2px;" /> <span>Add Value...</span>', array('action' => 'addValue'), array('id' => $id)) . ' &nbsp; ';
+echo App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table.png" style="margin-bottom: 2px;" /> <span>Columns</span>', array('action' => 'columns'), array('id' => $id));
+
+?>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$('#add-value-link').click(function(e) {
+		e.preventDefault();
+	});
+});
+
+</script>

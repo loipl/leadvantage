@@ -1,0 +1,333 @@
+/* ----- CSS ----- */
+#content .head {
+	padding-bottom: 30px;
+}
+
+#content .head h2 {
+	font-size: 38px;
+	color: #2E2D2E;
+	font-weight: bold;
+	line-height: 38px;
+}
+
+#content .head p {
+	color: #064A5A;
+	font-size: 16px;
+}
+
+#content .head p .date {
+	color: #000000;
+}
+
+#content .campaign {
+	padding-bottom: 25px;
+}
+
+#content .campaign h3 {
+	font-size: 22px;
+	padding-bottom: 15px;
+	font-weight: bold;
+	color: #2E2D2E;
+}
+
+#content .campaign .score {
+	width: 561px;
+	float: left;
+	border: 1px solid #BCBDBD;
+	background-color: #F8F8F8;
+	padding: 12px 12px 0 12px;
+	position: relative;
+}
+
+#content .campaign .score .pointer {
+	position: absolute;
+	top: 177px;
+	right: -29px;
+	z-index: 5;
+}
+
+#content .campaign .activity {
+	padding-bottom: 10px;
+}
+
+#content .campaign .activity h5 {
+	font-weight: bold;
+	color: #344A53;
+	font-size: 14px;
+	line-height: 18px;
+	width: 300px;
+	float: left;
+}
+
+#content .campaign .activity span {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    padding: 0 4px;
+}
+
+#content .campaign .activity span span {
+    padding: 0 6px;
+    line-height: 10px;
+    font-size: 10px;
+}
+
+#content .campaign .total .number p span.accepted {
+	background-color: #f6851f;
+}
+
+#content .campaign .total .number p span.rejected {
+	background-color: #f00;
+}
+
+#content .campaign .total .number p span.delivery {
+	background-color: #293f4a;
+}
+
+#content .campaign .graph {
+	width: 530px;
+	padding: 10px;
+	border: 1px solid #C2C3C3;
+	margin-bottom: 10px;
+	background-color: #FFFFFF;
+}
+
+#content .campaign .total {
+	width: 585px;
+	height: 49px;
+	background-image: url(../images/total-activity-bcg.jpg);
+	background-repeat: repeat-x;
+	margin-left: -12px;
+}
+
+#content .campaign .total .number {
+	width: 185px;
+	height: 49px;
+	float: left;
+	text-align: center;
+	line-height: 49px;
+}
+
+#content .campaign .total .number p {
+	font-size: 14px;
+	font-weight: bold;
+	color: #344A53;
+}
+
+#content .campaign .total .number p span {
+	color: #2E2D2E;
+	font-weight: bold;
+}
+
+#content .campaign .stats {
+	width: 510px;
+	float: right;
+	border: 1px solid #BCBDBD;
+}
+
+#content .campaign .stats .top {
+	border-bottom: 1px solid #BCBDBD;
+	margin-bottom: 10px;
+}
+
+#content .campaign .stats .top h4 {
+	padding-left: 15px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 50px;
+	background-color: #F9FAFA;
+	color: #344A53;
+}
+
+#content .campaign .stats .days {
+	width: 483px;
+	border: 1px solid #BCBDBD;
+	margin: 10px auto;
+}
+
+#content .campaign .stats .days .top {
+	background-color: #344A53;
+}
+
+#content .campaign .stats .days tr {
+	background-color: #FFFFFF;
+}
+
+#content .campaign .stats .days tr td {
+	font-size: 14px;
+	color: #000000;
+	text-align: center;
+	font-weight: normal;
+}
+
+#content .campaign .stats .days tr.datarow td.first {
+    text-align: left;
+    text-indent: 17px;
+}
+
+#content .campaign .stats .days tr td.first {
+	border-left: 0;
+}
+
+#content .campaign .stats .days .grey {
+	background-color: #F0F0F0;
+	border-bottom: 1px solid #BCBDBD;
+}
+
+#content .campaign .stats .days .top td {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 32px;
+	color: #FFFFFF;
+}
+
+#content .campaign .stats td {
+	width: 95px;
+	height: 32px;
+	line-height: 32px;
+	float: left;
+	border-left: 1px solid #C6C9CD;
+	text-align: center;
+}
+
+#content .campaign .stats td.first {
+	text-align: left;
+}
+
+#content .campaign .stats .partners {
+	width: 483px;
+	border: 1px solid #BCBDBD;
+	margin: 10px auto;
+}
+
+#content .campaign .stats .partners .first, #content .campaign .stats .partners td.first {
+	width: 265px;
+	height: 32px;
+	padding-left: 10px;
+	border: none;
+	text-align: left;
+	text-indent: 10px;
+	overflow: hidden;
+}
+
+#content .campaign .stats .partners .top {
+	background-color: #344A53;
+}
+
+#content .grey {
+	background-color: #F0F0F0;
+}
+
+#content .campaign .stats .partners .top td {
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+#content .campaign .stats .partners tr td {
+	border-left: 1px solid #C6C9CD;
+	float: left;
+	font-weight: normal;
+	font-size: 14px;
+}
+
+#content .campaign .stats .details {
+	text-align: right;
+	text-transform: uppercase;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#content .campaign .stats .details a {
+	text-decoration: none;
+	color: #FFFFFF;
+	display: block;
+	line-height: 40px;
+	height: 40px;
+	width: 200px;
+	text-align: center;
+	background-color: #F6841F;
+	float: right;
+	margin: 0 13px 10px 0;
+}
+
+#content .message {
+	padding-bottom: 10px;
+}
+
+#content .message h2 {
+	padding-left: 70px;
+	padding-bottom: 20px;
+}
+
+#content .message .person {
+	padding: 0 0 20px 50px;
+}
+
+#content .message .person .leftpart {
+	width: 250px;
+	float: left;
+}
+
+#content .message .person .leftpart img {
+	float: left;
+	margin-right: 15px;
+}
+
+#content .message .person .leftpart .name {
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 20px;
+	line-height: 18px;
+	color: #344A53;
+}
+
+#content .message .person .leftpart .title {
+	font-size: 14px;
+	font-weight: bold;
+	color: #2E2D2E;
+}
+
+#content .message .person .rightpart {
+	padding: 20px 10px;
+	width: 680px;
+	background-color: #F6841F;
+	position: relative;
+	float: left;
+}
+
+#content .message .person .rightpart blockquote {
+	padding-left: 32px;
+	background-image: url(../images/blockquote-bcg.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+#content .message .person .rightpart p {
+	font-size: 31px;
+	letter-spacing: 1px;
+	color: #FFFFFF;
+	padding-right: 20px;
+	font-family: Georgia, "Times New Roman", Times, sans-serif;
+	font-weight: normal;
+	font-style: italic;
+	background-image: url(../images/block-p-bcg.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+#content .message .person .rightpart .array {
+	position: absolute;
+	top: 20px;
+	left: -37px;
+	z-index: 3;
+}
+/* ----- SPECIAL CLASSES ----- */
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0
+}

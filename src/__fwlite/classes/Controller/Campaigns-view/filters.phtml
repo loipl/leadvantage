@@ -1,0 +1,809 @@
+<style>
+<!--
+input.dummy-hidden {
+
+}
+.custom-combobox {
+    width: 148px;
+    height: 26px !important;
+    position: relative;
+    display: inline-block;
+    background: white !important;
+    padding-bottom: 2px;
+}
+.custom-combobox-input,.ui-menu-item {
+    width:120px;
+    height: 24px !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
+    font: -webkit-small-control;
+    background: none !important;
+    -webkit-border-radius: 0px;
+    padding-left: 5px;
+}
+
+.custom-combobox-toggle {
+    width: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    height: 26px !important;
+    background: none;
+}
+
+.custom-autocomplete-category {
+    font-weight: bold;
+}
+
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;   /* prevent horizontal scrollbar */
+    overflow-x: hidden; /* add padding to account for vertical scrollbar */
+    z-index:1000 !important;
+}
+
+#content table#campaign-filters-table select {
+  width: 180px;
+  height: 26px;
+  padding: 3px 3px;
+  border-radius: 4px
+}
+
+#content table .custom-combobox a:hover {
+  border-color: rgb(204, 204, 204);
+}
+
+#content table .custom-combobox input {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-right: none;
+  width:140px;
+}
+
+#content table .custom-combobox a .ui-button-icon-primary.ui-icon-triangle-1-s {
+  background-position: 0px 0px;
+  background-image: url(../css/ui-lightness/images/custom-combo-box.png);
+}
+
+#content table#campaign-filters-table .custom-combobox a {
+  border-left: none;
+  background-color: white;
+}
+
+#content table#campaign-filters-table input.value {
+  background-color: #fff;
+  height: 24px;
+  width: 170px;
+  border-radius: 4px;
+  padding-left: 10px;
+}
+
+#content table#campaign-filters-table .first {
+    width: 80px;
+}
+#content table#campaign-filters-table .lastcan {
+    width: 25px;
+}
+
+#content table#campaign-filters-table .active {
+  padding-left: 18px;
+  background-image: url(../images/active-span-bcg.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+#content table#campaign-filters-table .inactive {
+  padding-left: 18px;
+  background-image: url(../images/span-inactive.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  font-size: 14px;
+  font-weight: normal;
+}
+#content table td.first span {
+  cursor: pointer;
+}
+
+#campaign-filters-table .lastcan img {
+  cursor: pointer;
+}
+
+#content table#campaign-filters-table {
+    width: 980px;
+}
+
+#content table#campaign-filters-table td {
+  width: 197px;
+}
+
+-->
+</style>
+<div class="head">
+	<h2>Campaigns</h2>
+	<div class="breadcrumb">
+		<p>
+			<a href="/campaigns/">Campaigns &gt;</a> <a href="/campaigns/edit.html?id=<?php echo $data['id']?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Rules
+		</p>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<h1 id="js-warning">This page requires JavaScript!</h1>
+<script type="text/javascript">
+$('#js-warning').remove();
+(function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function () {
+        console.log(this);
+            this.wrapper = $("<span>")
+                .addClass("custom-combobox")
+                .insertAfter(this.element)
+                .attr('id', this.element[0].id+'_combobox');
+            this.element.hide();
+            this._createAutocomplete();
+            this._createShowAllButton();
+        },
+      
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.autocomplete( "instance" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+    
+    // check os
+    if (navigator.platform.toLowerCase().indexOf('mac') > -1) {
+        $('body').addClass('ios');
+    }
+  })( jQuery );
+ 
+</script>
+
+
+<form style="margin: 0;" method="POST" id="main-fields-form">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<table id="campaign-filters-table" cellpadding="0" cellspacing="0">
+<tbody>
+	<tr class="top">
+		<td style="width:80px;">Status</td>
+		<td>Action</td>
+		<td>Field Type</td>
+		<td>Condition</td>
+		<td>Value</td>
+		<td style="width:25px;"></td>
+	</tr>
+        <?php if (empty($filters)): ?>
+            <tr class="noti">
+                <td colspan="6" style="text-align: center; height:30px;">No Rules Defined - <a href="#" id="add-new-camapaign-filter-notice">Add New Rule</a></td>
+            </tr>
+        <?php endif; ?>
+ 
+</tbody>
+</table>
+
+<div class="addfilter">
+	<p>
+            <a id="add-new-campaign-filter" href="#"><img src="/img/icons/add.png" style="margin-bottom: -2px;"/> Add Rule</a>
+        </p>
+	<div class="clear"></div>
+</div><!--addfield-->
+
+<div class="pingtree-form" style="margin-top: 30px;">
+<button type="submit" id="submitButton"><img style="margin-top: -4px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />SAVE</button>
+<button type="submit" name="redir" value="edit"     id="editSettings" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png" />Edit Settings</button>
+<button type="submit" name="redir" value="fields"     id="editFields" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<button type="submit" name="redir" value="delivery" id="editDelivery" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/package.png" />Edit Delivery</button>
+<button type="button" id="cancelButton" ><img style="margin-top: -2px; width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png" />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+
+var newCounter = 1;
+var checkDirty = true;
+
+var originalState = <?php echo json_encode(array_values($filters)); ?>;
+var filterActions = <?php echo json_encode($filterActions); ?>;
+var filterMatches = <?php echo json_encode($filterMatches); ?>;
+var FILTER_MATCH_REGEX = <?php echo Model_PartnerFilter::FILTER_MATCH_REGEX; ?>;
+var FILTER_NOT_MATCH_REGEX = -<?php echo Model_PartnerFilter::FILTER_MATCH_REGEX; ?>;
+
+<?php 
+if (!$data['shadow_of']) {
+?>
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+	checkDirty = true;
+});
+<?php } ?>
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {checkDirty = false; document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;});
+
+	for(var i = 0; i < originalState.length; i++) {
+            var arr = originalState[i];
+            var fieldTypeValue = arr.field_type_id ? arr.field_type_id : arr.system_field;
+            addCampaignFilter(arr.id, parseInt(arr.is_active), arr.filter_action, fieldTypeValue, arr.match_type, arr.match_value, 0);
+	}
+        updateTRColors();
+
+	$('#add-new-campaign-filter').click(function(e) {
+            <?php if ($data['shadow_of']) echo 'return;'; ?>
+
+            $('tr.noti').remove();
+            e.preventDefault();
+            addCampaignFilter(newCounter++, 1, '1', '', '1', '', 1);
+            updateTRColors();
+	});
+        
+	$('#main-fields-form').submit(function(e) {
+		checkDirty = false;
+                var isValid = true;
+                $('#campaign-filters-table tbody tr').each(function(){
+                    if( !$(this).hasClass('top') && !$(this).hasClass('noti') && isValid && !validateRow($(this))) {
+                        isValid = false;
+                    }
+                });
+                
+                if (!isValid) {
+                    e.preventDefault();
+                }
+	});
+
+<?php
+
+Helper_Tooltip::jscript();
+
+?>
+$('#add-field-from-url-dialog').dialog({
+    title: 'Get fields from your own submission form',
+    minHeight:250,
+    minWidth:600,
+    autoOpen:false
+});        
+$('#add-new-campaign-field-from-form').click(function(){
+    $('#add-field-from-url-dialog').dialog("open");
+});       
+$('#add-field-from-url-cancel-button').click(function(){
+    $('#add-field-from-url-dialog').dialog("close");
+});       
+$('#add-field-from-url-accept-button').click(function(){
+    var existingFields = getExistingField();
+    $('#add-field-from-url-forms input').each(function(){
+        if (!$(this).is(":checked")) {
+            return;
+        }
+        var index = $(this).val();
+        if (typeof forms[index] !== 'undefined') {
+            $(forms[index]).find('input').each(function(){
+                var name = $(this).attr('name');
+                if (typeof name !== 'undefined' && name != '' && existingFields.indexOf(name) === -1) {
+                    addCampaignField(newCounter++, name, '', 0, 0, 1, 0, 0);
+                    existingFields.push(name);
+                }             
+            });
+            $(forms[index]).find('select').each(function(){
+                var name = $(this).attr('name');
+                if (typeof name !== 'undefined' && name != '' && existingFields.indexOf(name) === -1) {
+                    addCampaignField(newCounter++, name, '', 0, 0, 1, 0, 0);
+                    existingFields.push(name);
+                }             
+            });
+            fieldListChanged();
+        }
+    });
+    $('#add-field-from-url-dialog').dialog("close");
+});       
+
+$('#add-field-from-url-get-form-button').click(function(){
+    var url = $('#add-field-from-url-url').val();
+    if (url == '') {
+        return;
+    }
+    var __nonce = $('input[name=__nonce]').val();
+    $.post('ajaxGetFormFromUrl.html', {url:url,__nonce:__nonce}, function(data){
+        forms = $(data).find('form');
+        if (forms.length == 0) {
+            $('#add-field-from-url-forms').html('Cannot find any form');
+        } else {
+            $('#add-field-from-url-forms').html('');
+        }
+        for (var i = 0; i < forms.length; i++) {
+            var formName = $(forms[i]).attr('name') || $(forms[i]).attr('action') || 'form ' + (i + 1);
+            var inputHtml = '<div><input type="checkbox" value="' + i + '" checked>' + formName + '</div>';
+            $('#add-field-from-url-forms').append(inputHtml);
+        }
+        
+        $('#add-field-from-url-button-zone').show();
+    });
+    
+});
+        
+});
+
+$('#add-new-camapaign-filter-notice').click(function(){
+    $('#add-new-campaign-filter').click();
+});
+
+<?php if ($data['shadow_of']) { ?>
+
+function shadowOverrideClicked(cb) {
+	var arr = cb.attr('id').split('-');
+	if (arr.length != 3) {
+		alert('wtf?!');
+	}
+	var fid = arr[1];
+	var origState = arr[2];
+	var checked = cb.attr('checked') ? 1 : 0;
+	var url = <?php echo "'" . App::getFrontController()->urlFor($this, array('action' => 'ajaxToggleShadowOverride')) . "'"; ?>;
+	cb.after('<span>...</span>');
+	$.post(url, {'__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'" ?>, 'id' : <?php echo $data['id']; ?>, 'source_id' : <?php echo $data['shadow_of']; ?>, 'fid' : fid, 'validate' : checked}, function(response) {
+		if (response == 'OK') {
+			cb.next().html('');
+			cb.attr('id', arr[0] + '-' + arr[1] + '-' +  checked);
+		} else {
+			alert(response);
+			if (origState) {
+				cb.attr('checked', 'checked');
+			} else {
+				cb.removeAttr('checked');
+			}
+		};
+	});
+}
+
+<?php } ?>
+
+function addCampaignFilter(id, isActive, action, fieldType, filter_match, value, isNew) {
+	var nameSuffix = (isNew ? '[new]' : '[old]') + '[' + id + ']';
+        var identifier = (isNew ? 'new' : 'old') + id;
+        
+        var html = "\n\t<tr>\n\t\t<td class=\"first\">";
+        html += '<input type="hidden" id="is-active' + nameSuffix + '" name="is_active' + nameSuffix + '"' + (isActive ? ' value="1"' : ' value="0"') + '>';
+        html += '<span class="' + (isActive ? 'active' : 'inactive') + '">' + (isActive ? 'Active' : 'Inactive') + "</span></td>\n";
+
+        html += "\t\t<td>" + getActionsSelect(nameSuffix) + "</td>\n\n";
+        html += "\t\t<td><span class=\"if\"> If </span>" + getFieldTypesSelect(identifier, nameSuffix) + "</td>\n\n";
+        html += "\t\t<td>" + getFilterMatchesSelect(nameSuffix) + "</td>\n\n";
+        
+        html += '\t\t<td><input class="value" name="value' + nameSuffix + '" value="' + value +'"></td>\n\n';
+        
+        html += '<td class="lastcan" style="vertical-align: middle;">' + 
+            '<img src="/img/icons/cross.png" title="Delete this rule" onclick="deleteRow($(this));">'
+            '</td>'
+        html += '</tr>'
+	$('#campaign-filters-table tbody').append(html);
+        
+        $('#campaign-filters-table tbody tr:last .action').val(action);
+        $('#campaign-filters-table tbody tr:last .field_type').val(fieldType);
+        $('#campaign-filters-table tbody tr:last .match').val(filter_match);
+        $('#campaign-filters-table tbody tr:last td.first span').click(toggleActiveState);
+        
+        <?php if (!$data['shadow_of']): ?>
+            $('#combobox-'+identifier).combobox();
+        <?php else: ?>
+            $('#combobox-'+identifier).css('width', '148px');
+            $('#campaign-filters-table tbody tr:last input').attr('disabled', 'disabled');
+            $('#campaign-filters-table tbody tr:last select').attr('disabled', 'disabled');
+            $('#campaign-filters-table tbody tr:last button').attr('disabled', 'disabled');
+        <?php endif; ?>
+        
+	return true;
+}
+
+function getActionsSelect(nameSuffix) {
+    var result = '<select class="action" name="action' + nameSuffix +'">';
+    <?php foreach($filterActions as $key => $value) {?>
+        result += '<option value="' + <?php echo $key ?> + '">' + "<?php echo $value ?>" + '</option>'; 
+    <?php } ?>
+    result += '</select>';
+    return result;
+}
+
+function getFilterMatchesSelect(nameSuffix) {
+    var result = '<select class="match" name="match' + nameSuffix +'">';
+    <?php foreach($filterMatches as $key => $value) {?>
+        result += '<option value="' + <?php echo $key ?> + '">' + "<?php echo $value ?>" + '</option>'; 
+    <?php } ?>
+    result += '</select>';
+    return result;
+}
+
+function validateRow($row) {
+    if ($row.find('.match').val() == FILTER_MATCH_REGEX || $row.find('.match').val() == FILTER_NOT_MATCH_REGEX) {
+        var regex = $row.find('.value').val();
+        if (!isValidRegex(regex)) {
+            alert (regex + ' is not a valid REGEX');
+            return false;
+        }
+    }
+    return true;
+}
+
+function toggleActiveState() {
+        <?php if ($data['shadow_of']) echo 'return;'; ?>
+	var el = $(this).parent().find('input[type="hidden"]');
+	if (el.val() == '0') {
+		el.val('1');
+		$(this).removeClass('inactive');
+		$(this).addClass('active');
+		$(this).text('Active');
+	} else {
+		el.val('0');
+		$(this).removeClass('active');
+		$(this).addClass('inactive');
+		$(this).text('Inactive');
+	}
+
+};
+
+function getFieldTypesSelect(id, nameSuffix) {
+    var result = '<select id="combobox-' + id + '" class="field_type" name="field_type' + nameSuffix +'">';
+    result += '<optgroup label="Campaign Fields">';
+    <?php foreach($fieldTypes as $key => $value) {?>
+        result += '<option value="' + <?php echo $key ?> + '">' + "<?php echo $value ?>" + '</option>'; 
+    <?php } ?>
+        
+    result += '</optgroup><option value="0"></option><optgroup label="Inferred Fields">';
+    result += "\n\n";
+    
+    result += '<?php
+    $token = array_unique(array_merge($systemFields,$extTokens));
+    sort($token);
+    foreach ($token as $sf) {
+        echo "<option value=\"$sf\">[$sf]</option>";
+    }
+    ?>';
+    
+    result += '</select>';
+    return result;
+}
+
+
+function deleteRow(field) {
+	<?php if ($data['shadow_of']) echo 'return;'; ?>
+
+	if (confirm('Delete this Rule?')) {
+		field.parent().parent().remove();
+		fieldListChanged();
+	}
+}
+
+
+function pageStateChanged() {
+    var trs = $('#campaign-filters-table tbody tr').not('.top,.noti');
+	if (trs.length != originalState.length) {
+		return true;
+	}
+	var changed = false; var i = 0;
+	trs.each(function() {
+            if (changed) {
+                return;
+            }
+            var arr = originalState[i++];
+            
+            var field_type = $(this).find('select.field_type');
+            if (field_type.val() != arr.field_type_id) {
+                changed = true;
+                return;
+            }
+            
+            var matchType = $(this).find('select.match');
+            if (matchType.val() != arr.match_type) {
+                changed = true;
+                return;
+            }
+
+            var matchValue = $(this).find('input.value');
+            if (matchValue.val() != arr.match_value) {
+                changed = true;
+                return;
+            }  
+            
+            var active = ($(this).find('input[name^="is_active"]').val() == '1') ? 1 : 0;
+            if (active != arr.is_active) {
+                    changed = true;
+                    return;
+            }
+	});
+	return changed;
+}
+
+function updateTRColors() {
+	var odd = false;
+	$('#campaign-filters-table tr').each(function() {
+		if ($(this).hasClass("top") || $(this).hasClass("noti") || $(this).hasClass("static_row")) {
+			return;
+		}
+		odd = !odd;
+		$(this).removeClass('grey');
+		$(this).removeClass('white');
+		$(this).addClass(odd ? 'grey' : 'white');
+	});
+}
+
+
+
+function getExistingFilters() {
+    var result = [];
+    $('#campaign-filters-table').each(function(data) {
+        result.push($(this).val());
+    })
+    return result;
+}
+
+// combo box
+(function( $ ) {
+    $.widget( "custom.combobox", {
+        _create: function() {
+            this.wrapper = $( "<span>" )
+                .addClass( "custom-combobox" )
+                .insertAfter( this.element );
+            this.element.hide();
+            this._createAutocomplete();
+            this._createShowAllButton();
+        },
+        _createAutocomplete: function() {
+            var selected = this.element.find( ":selected" ),
+                value = selected.val() ? selected.text() : "";
+            this.input = $( "<input>" )
+                .appendTo( this.wrapper )
+                .val( value )
+                .attr( "title", "" )
+                .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy( this, "_source" )
+                })
+                .tooltip({
+                    tooltipClass: "ui-state-highlight"
+                });
+            this._on( this.input, {
+                autocompleteselect: function( event, ui ) {
+                    ui.item.option.selected = true;
+                    this._trigger( "select", event, {
+                        item: ui.item.option
+                    });
+                },
+                autocompletechange: "_removeIfInvalid"
+            });
+
+            this.input.data("uiAutocomplete")._renderMenu = function(ul, items) {
+                var self = this,
+                    currentCategory = "";
+                $.each(items, function(index, item) {
+                    if (item.category != currentCategory) {
+                        if (item.category) {
+                            ul.append("<li class='custom-autocomplete-category'>" + item.category + "</li>");
+                        }
+                        currentCategory = item.category;
+                    }
+                    self._renderItemData(ul, item);
+                });
+            };
+        },
+        _createShowAllButton: function() {
+            var input = this.input,
+                wasOpen = false;
+            $( "<a>" )
+                .attr( "tabIndex", -1 )
+                .tooltip()
+                .appendTo( this.wrapper )
+                .button({
+                    icons: {
+                        primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                })
+                .removeClass( "ui-corner-all" )
+                .addClass( "custom-combobox-toggle ui-corner-right" )
+                .mousedown(function() {
+                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                })
+                .click(function() {
+                    input.focus();
+
+        	    // Close if already visible
+                    if ( wasOpen ) {
+                        return;
+                    }
+
+		    // Pass empty string as value to search for, displaying all results
+                    input.autocomplete( "search", "" );
+                });
+        },
+        _source: function( request, response ) {
+            var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+            response( this.element.find( "option" ).map(function() {
+                var text = $( this ).text();
+                if ( this.value && ( !request.term || matcher.test(text) ) )
+                    return {
+                        label: text,
+                        value: text,
+                        option: this,
+                        category: $(this).closest("optgroup").attr("label")
+                    };
+            }) );
+        },
+	
+        _removeIfInvalid: function( event, ui ) {
+
+	    // Selected an item, nothing to do
+            if ( ui.item ) {
+                return;
+            }
+
+	    // Search for a match (case-insensitive)
+            var value = this.input.val(),
+                valueLowerCase = value.toLowerCase(),
+                valid = false;
+            this.element.find( "option" ).each(function() {
+                if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                    this.selected = valid = true;
+                    return false;
+                }
+            });
+
+            // Found a match, nothing to do
+            if ( valid ) {
+                return;
+            }
+
+            // Remove invalid value
+            this.input
+                .val( "" )
+                .tooltip( "open" );
+            this.element.val( "" );
+            this._delay(function() {
+                this.input.tooltip( "close" ).attr( "title", "" );
+            }, 2500 );
+            this.input.data( "ui-autocomplete" ).term = "";
+        },
+        _destroy: function() {
+            this.wrapper.remove();
+            this.element.show();
+        }
+    });
+    
+    // check os
+    if (navigator.platform.toLowerCase().indexOf('mac') > -1) {
+        $('body').addClass('ios');
+    }
+  })( jQuery );
+  
+function isValidRegex(regex) {
+    var isValid;
+    
+    var match = regex.match(new RegExp('^/(.*?)/([gimy]*)$'));
+    
+    if (match === null) {
+        return false;
+    }
+    
+    try { 
+        var regex = new RegExp(match[1], match[2]);
+        isValid = true;
+    } catch(e) {
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+</script>

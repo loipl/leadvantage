@@ -1,0 +1,370 @@
+<style>
+
+#timezone-dialog {
+    display: none;
+}
+
+#timezone-picker {
+    cursor: pointer;
+    color: #333;
+    text-decoration: underline;
+}
+
+div.graph-img {
+    height: 300px;
+    width: 530px;
+}
+
+div.graph-img div {
+    font-size: 30px;
+    text-align: center;
+}
+
+.fail-percentage {
+    color: #FF0000;
+}
+
+.success-percentage {
+    color: #008000;
+}
+
+.accepted {
+    color: #f6851f;
+}
+
+.rejected {
+    color: #f00;
+}
+</style>
+
+<div class="head">
+
+	<h2>Dashboard</h2>
+<?php
+
+if (Config::$timeZone != Session::getSession()->timeZone) {
+    date_default_timezone_set(Session::getSession()->timeZone);
+}
+?>
+	Current time: <span class="date"><?php echo date('m/d/Y H:i')?>
+	<span id="timezone-picker" title="Click to change the timezone"><?php
+	echo date('T');
+	if (Config::$timeZone != Session::getSession()->timeZone) {
+	    date_default_timezone_set(Config::$timeZone);
+	}
+?></span></span>
+
+</div><!--head-->
+
+<?php
+$first = array();
+$tail = array();
+foreach ($campaigns as $campaign) {
+    $tStats = $cStats[$campaign['id']];
+    if (($tStats['30']['a'] + (isset($tStats['30']['d']) ? $tStats['30']['d'] : 0)) > 0) {
+        $first[] = $campaign;
+    } else {
+        $tail[] = $campaign;
+    }
+}
+foreach ($tail as $c) {
+    $first[] = $c;
+}
+$campaigns = $first;
+
+foreach ($campaigns as $campaign) {
+$tStats = $cStats[$campaign['id']];
+
+    ?>
+<div class="campaign">
+<h3>Campaign: <?php echo escapeHtml($campaign['name']); ?></h3>
+
+    <div class="score">
+
+	<div class="activity">
+		<h5>Activity for last 24 hours</h5>
+		<p>&nbsp;
+		</p>
+
+	</div><!--activity-->
+
+	<div class="graph">
+
+		<!-- <img style="width: 530px; height: 300px;" src="activityGraph.html?campaign_id=<?php echo $campaign['id']; ?>"/> -->
+		<div class="graph-img" id="graph-img-<?php echo $campaign['id']; ?>"><div><?php
+		$cs = $graphStats[$campaign['id']];
+		if ((array_sum($cs['inc-0']) + array_sum($cs['inc-1']) + array_sum($cs['out-1'])) == 0) {
+		    echo '<div style="padding-top: 130px;">No Data Available</div>';
+		} else {
+		    echo '<div style="padding-top: 130px;">Pending...</div>';
+		}
+		?></div></div>
+
+
+	</div><!--graph-->
+	<div class="total">
+
+        <div class="number">
+            <p><span class="accepted">&nbsp;&nbsp;&nbsp;</span> Accepted: <span><?php echo number_format($tStats['accepted'])?></span></p>
+        </div><!--number-->
+
+        <div class="number">
+            <p><span class="rejected">&nbsp;&nbsp;&nbsp;</span> Rejected: <span><?php echo number_format($tStats['rejected'])?></span></p>
+        </div><!--number-->
+
+		<div class="number">
+			<p><span class="delivery">&nbsp;&nbsp;&nbsp;</span> Delivered: <span><?php echo number_format($tStats['delivered'])?></span></p>
+		</div><!--number-->
+
+		<div class="clear"></div>
+	</div><!--total-->
+
+	<img class="pointer" src="/images/pointer-right.jpg"/>
+	<div class="clear"></div>
+    </div><!-- score -->
+
+	<div class="stats">
+		<div class="top">
+			<h4>Campaign Summary: <?php echo escapeHtml($campaign['name']); ?></h4>
+		</div><!--top-->
+
+		<table class="partners" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr class="top">
+					<td class="first">Partner (avg response time)</td>
+					<td>Success</td>
+					<td>Decline</td>
+				</tr>
+
+<?php
+
+$pd = $tStats['pd'];
+$pdata = array();
+foreach ($pd as $pid => $row) {
+    if (isset($partners[$pid])) {
+        $pdata[$partners[$pid]] = $row;
+    }
+}
+
+$c = 'white';
+foreach ($pdata as $pName => $row) {
+    $pFullName = escapeHtml($pName);
+    $pName = substr(escapeHtml($pName), 0, 28);
+    $succCount = isset($row[1]) ? $row[1] : 0;
+    $failCount = isset($row[0]) ? $row[0] : 0;
+    $succ = number_format($succCount);
+    $fail = number_format($failCount);
+    $timeout = number_format(isset($row[2]) ? $row[2] : 0);
+    $restime = round(isset($row[3]) ? $row[3] : 0, 2);
+   
+    $sum = (int) $succCount + (int) $failCount;
+
+    if ($sum !== 0) {
+        $successPercentage = round ((float )$succCount/$sum * 100);
+        $failPercentage = round ((float)$failCount/$sum * 100);
+        $succ .= ' <span class="success-percentage">('. (string)$successPercentage. '%)</span>';
+        $fail .= ' <span class="fail-percentage">('. (string) $failPercentage. '%)</span>';
+    }
+    
+    echo "
+				<tr class=\"$c\">
+					<td class=\"first\" title=\"$pFullName\">$pName (".$restime."s)</td>
+					<td>$succ</td>
+					<td>$fail</td>
+				</tr>";
+    $c = ($c == 'grey') ? 'white' : 'grey';
+}
+
+if ($pdata) {
+?>
+				<tr class="<?php echo $c; ?>">
+					<td class="first">&nbsp;</td>
+					<td>&nbsp;</td>
+                    <td>&nbsp;</td>
+				</tr>
+<?php } else {?>
+				<tr class="<?php echo $c; ?>">
+					<td class="first" colspan="3" style="padding-left: 200px;">No Data</td>
+				</tr>
+<?php } ?>
+			</tbody>
+		</table>
+
+        <table class="days" cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr class="top">
+                <td class="first"></td>
+                <td>Today</td>
+                <td>Yesterday</td>
+                <td>7 Days</td>
+                <td>30 Days</td>
+            </tr>
+            <tr class="datarow">
+                <td class="first" style="color: #f6851f;">Accepted</td>
+                <td><?php echo number_format($tStats['t']['a']); ?></td>
+                <td><?php echo number_format($tStats['y']['a']); ?></td>
+                <td><?php echo number_format($tStats['7']['a']); ?></td>
+                <td><?php echo number_format($tStats['30']['a']); ?></td>
+            </tr>
+            <tr class="grey datarow">
+                <td class="first" style="color: #f00;">Rejected</td>
+                <td><?php echo number_format($tStats['t']['r']); ?></td>
+                <td><?php echo number_format($tStats['y']['r']); ?></td>
+                <td><?php echo number_format($tStats['7']['r']); ?></td>
+                <td><?php echo number_format($tStats['30']['r']); ?></td>
+            </tr>
+            <tr>
+                <td class="first">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="details"><a href="/reporting/?from=<?php echo urlencode(date('m/d/Y')); ?>&to=<?php echo urlencode(date('m/d/Y')); ?>&cid=<?php echo $campaign['id']; ?>&cst=0&pid=0&sst=0">SEE DETAILS</a></p>
+
+		<div class="clear"></div>
+    </div><!-- stats -->
+<div class="clear"></div>
+</div>
+
+
+
+<?php }
+
+if (false) {
+
+?>
+	<div class="message">
+
+		<h2><img src="/images/message-haedline.png"/></h2>
+
+		<div class="person">
+
+			<div class="leftpart">
+<?php if (rand(0, 1) == 1) { ?>
+				<img src="/images/jason.jpg"/>
+				<p class="name">Jason Hart</p>
+				<p class="title">Co-Founder</p>
+<?php } else { ?>
+				<img src="/images/mike.jpg"/>
+				<p class="name">Mike Vifquain</p>
+				<p class="title">Co-Founder</p>
+<?php } ?>
+			</div><!--leftpart-->
+
+			<div class="rightpart">
+
+				<blockquote><p><?php echo $adminTip; ?></p></blockquote>
+				<img class="array" src="/images/array-to-quote.jpg"/>
+
+			</div><!--rightpart-->
+
+			<div class="clear"></div>
+		</div><!--person-->
+
+	</div><!--message-->
+
+<?php } ?>
+
+
+<div id="timezone-dialog">
+    <select id="tz-picker-select">
+<?php
+
+foreach (Controller_Dashboard::listTimeZones() as $arr) {
+    if (is_array($arr)) {
+        echo "<option value=\"$arr[0]\">$arr[1]</option>\n";
+    } else {
+        echo "<option disabled=\"disabled\"></option>\n";
+    }
+}
+
+?>
+    </select>
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+google.load("visualization", "1", {packages:["corechart"]});
+
+$(document).ready(function() {
+	$('#timezone-picker').click(function() {timezonePicker($(this));});
+	drawAllCharts();
+});
+
+
+function timezonePicker(elem) {
+	$('#timezone-dialog').dialog({
+		'title'   : 'Select Your Time Zone',
+		'modal'   : true,
+		'width'   : 350,
+		'open'    : function() {
+			$('#tz-picker-select').find('option[value="<?php echo Session::getSession()->timeZone; ?>"]:first').attr('selected', 'selected');
+		},
+		'buttons' : {
+			'OK'     : function() {setUsersTimeZone();},
+			'Cancel' : function() {$('#timezone-dialog').dialog('destroy');}
+		}
+	});
+};
+
+function setUsersTimeZone() {
+	var tz = $('#tz-picker-select').val();
+	if (tz == '') {
+		alert('Please pick your time zone');
+		return;
+	}
+	$.post('/reporting/setTimeZone.html', {'tz' : tz, '__nonce' : <?php echo "'" . Session::getSession()->getNonce() . "'"; ?>}, function(response) {
+		if (response != 'OK') {
+			alert(response);
+		} else {
+		    $('#timezone-dialog').dialog('destroy');
+			window.location.reload(true);
+		}
+	});
+};
+
+function drawAllCharts() {
+    var options = {
+      backgroundColor: '#fff',
+      lineWidth: 1,
+      chartArea: {width: '100%', height: '93%', top: 0},
+      titlePosition: 'none',
+      colors: ['#f6851f', 'red', '#293f4a'],
+      axisTitlesPosition: 'in',
+      hAxis: {textPosition: 'out', textStyle: {fontSize: 10}},
+      vAxis: {textPosition: 'in',  textStyle: {fontSize: 10}, minValue: 0},
+      legend: {
+          position: 'none'
+      }
+    };
+
+    <?php
+
+    foreach ($graphStats as $cid => $gs) {
+        if ((array_sum($gs['inc-1']) + array_sum($gs['inc-0']) + array_sum($gs['out-1'])) == 0) {
+            continue;
+        }
+        echo "\n\t\tvar data = google.visualization.arrayToDataTable([
+          ['Hour', 'Accepted', 'Rejected', 'Delivered']";
+        foreach ($gs['inc-1'] as $k => $v) {
+            $k2 = trim($k);
+            echo ",
+          ['$k2', $v, {$gs['inc-0'][$k]}, {$gs['out-1'][$k]}]";
+        }
+        echo "
+          ]);";
+        // echo '/*'; var_export($gs); echo '*/';
+        echo "
+        var chart = new google.visualization.LineChart(document.getElementById('graph-img-$cid'));
+        chart.draw(data, options);\n";
+    }
+
+    ?>
+}
+
+</script>

@@ -1,0 +1,797 @@
+<style>
+
+#campaign-selection {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    padding: 0;
+    width: 650px;
+}
+
+#campaign-selection td {
+    padding: 1px 2px;
+}
+
+#campaign-selection th {
+    padding: 2px;
+    text-align: center;
+}
+
+#campaign-selection tbody tr:hover {
+    background-color: #ddd;
+}
+
+#campaign-selection thead tr {
+    background-color: #dadce1;
+}
+
+#campaign-selection tbody tr.odd {
+    background-color: #eee;
+}
+
+.form_table input {
+    padding: 1px;
+    height: 20px;
+}
+
+div.dialog-div {
+    display: none;
+}
+
+#dlg-countries-picker label {
+    margin-right: 10px;
+}
+
+#dlg-countries-picker label.checked {
+    color: red;
+}
+
+#td-countries-list, #td-columns-list {
+    padding-top: 3px;
+    cursor: pointer;
+    color: blue;
+    font-size: 14px;
+}
+
+#dlg-columns-field-types div {
+    margin-top: 20px;
+}
+
+#dlg-columns-field-types div.disabled label {
+    color: #bbb;
+}
+
+</style>
+
+<table style="margin: 10px auto;" align="center">
+<tr>
+<td style="padding-right: 20px;">
+<form style="margin: 0;" action="" method="post">
+<?php
+/* @var $pf PageFragment_FormAuto */
+echo '<input type="hidden" name="__nonce" value="' . Session::getSession()->getNonce() . '">
+';
+echo $pf->getHtmlForNamedElementFull('sources') . "\n";
+echo $pf->getHtmlForNamedElementFull('system_fields') . "\n";
+echo $pf->getHtmlForNamedElementFull('field_types') . "\n";
+echo $pf->getHtmlForNamedElementFull('country_default_include') . "\n";
+echo $pf->getHtmlForNamedElementFull('countries') . "\n";
+
+?>
+<table class="form_table" cellspacing="0" width="400">
+	<thead>
+		<tr>
+			<th colspan="2" align="center"><h2>Add Export Feed</h2>
+			</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td class="label">Name:</td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('name'); ?></td>
+		</tr>
+		<tr>
+			<td class="label"></td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('is_active'); ?></td>
+		</tr>
+		<tr>
+			<td class="label">Days To Show:</td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('default_days'); ?></td>
+		</tr>
+		<tr>
+			<td class="label">Fields:</td>
+			<td id="td-columns-list"></td>
+		</tr>
+		<tr>
+			<td class="label">Countries:</td>
+			<td id="td-countries-list"></td>
+		</tr>
+		<tr>
+			<td class="label">TLDs:</td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('tld_default_include'); ?></td>
+		</tr>
+		<tr>
+			<td class="label">TLD List:</td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('tld_list'); ?></td>
+		</tr>
+		<tr>
+			<td class="label">Notes:</td>
+			<td><?php echo $pf->getHtmlForNamedElementFull('notes'); ?></td>
+		</tr>
+		<tr>
+			<td class="label"></td>
+			<td><button type="submit" name=""><?php echo $pf->buttonTitle; ?></button></td>
+		</tr>
+	</tbody>
+</table>
+</form>
+</td>
+<td style="padding-left: 20px; padding-right: 10px; border-left: 3px solid #eee;">
+<h3 style="border-bottom: 4px solid #f33; font-size: 20px; padding-top: 8px; padding-bottom: 4px; padding-left: 12px; margin-bottom: 19px;">Assign Sources</h3>
+<select id="campaign-picker">
+<option value="" id="campaign-picker-empty"></option>
+<?php
+
+foreach ($campaignsAssoc as $userId => $campaigns) {
+    if (!$campaigns) {
+        continue;
+    }
+    if (empty($usernamesAssoc[$userId])) {
+        continue;
+    }
+    echo "<optgroup label=\"" . escapeAttrVal($usernamesAssoc[$userId]) . "\">";
+    echo "<option value=\"$userId-0\" style=\"color: navy; \">** All campaigns ***</option>\n";
+    foreach ($campaigns as $c) {
+        echo "<option value=\"$userId-$c[id]\">" . escapeHtml($c['name']) . "</option>\n";
+    }
+    echo "</optgroup>\n";
+}
+
+?>
+</select>
+<table cellpadding="0" cellspacing="0" id="campaign-selection">
+	<thead>
+	    <tr>
+	        <th>User</th>
+	        <th>Campaign</th>
+	        <th>Delay</th>
+	        <th>IP</th>
+	        <th>Referer</th>
+	        <th style="width: 24px;">&nbsp;</th>
+	    </tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<a href="javascript:removeAll();">Clear</a>
+</td>
+</tr>
+</table>
+
+<style type="text/css">
+.form_table input.f, .form_table select, .form_table textarea {
+	width: 100%;
+}
+</style>
+
+<script type="text/javascript">
+
+var campaignsAssoc = {<?php
+
+$addComa = false;
+foreach ($campaignsAssoc as $userId => $campaigns) {
+    foreach ($campaigns as $c) {
+        if ($addComa) {
+            echo ",\n";
+        } else {
+            $addComa = true;
+            echo "\n";
+        }
+        echo "\t'c$c[id]'\t: '" . escapeJSVal($c['name']) . "'";
+    }
+}
+if ($addComa) {
+    echo "\n";
+}
+
+?>};
+
+var usernamesAssoc = {<?php
+
+$addComa = false;
+foreach ($usernamesAssoc as $uid => $uname) {
+    if ($addComa) {
+        echo ",\n";
+    } else {
+        echo "\n";
+        $addComa = true;
+    }
+    echo "\t'u$uid'\t: '" . escapeJSVal($uname) . "'";
+}
+if ($addComa) {
+    echo "\n";
+}
+?>};
+
+var campaignOwners = {<?php
+
+$addComa = false;
+foreach ($campaignsAssoc as $userId => $campaigns) {
+    foreach ($campaigns as $c) {
+        if ($addComa) {
+            echo ",\n";
+        } else {
+            $addComa = true;
+            echo "\n";
+        }
+        echo "\t'c$c[id]'\t: $c[user_id]";
+    }
+}
+if ($addComa) {
+    echo "\n";
+}
+?>};
+
+var fieldTypes = {<?php
+
+$addComa = false;
+foreach ($fieldTypes as $fid => $fname) {
+    if ($addComa) {
+        echo ",\n";
+    } else {
+        echo "\n";
+        $addComa = true;
+    }
+    echo "\t'f$fid'\t: '" . escapeJSVal($fname) . "'";
+}
+if ($addComa) {
+    echo "\n";
+}
+?>};
+
+var sources = <?php echo "'" . $sources . "'"; ?>;
+
+var countriesAssoc = {<?php
+$addComa = false;
+foreach ($countriesAssoc as $abbr => $countryName) {
+    echo ($addComa ? ',' : '') . "\n$abbr : '" . escapeJSVal(utf8_encode($countryName)) . "'";
+    $addComa = true;
+}
+?>
+
+};
+
+$(document).ready(function() {
+    $('#export-feed-name').focus();
+
+    if (sources) {
+        var existing = sources.split(' ');
+        for (var i = 0; i < existing.length; i++) {
+        	addToDiv(existing[i]);
+        };
+    };
+
+    $('#td-countries-list').click(pickCountriesList);
+    $('#dlg-countries-picker label input').change(toggleCountryCbColor).click(toggleCountryCbColor);
+    $('#dlg-columns-all-ftypes').click(updateFieldTypesCheckboxes).change(updateFieldTypesCheckboxes);
+
+    $('#td-columns-list').click(pickColumnsList);
+    $('#campaign-picker').click(cpClicked).change(cpClicked);
+
+    updateCountriesTd();
+    updateColumnsTd();
+});
+
+function pickColumnsList() {
+	$('#dlg-columns-picker').dialog({
+		'title': 'Pick Fields',
+		'open':  function() {
+			var v = $('#system-fields').val().split(',');
+			$('#dlg-columns-sys-fields input[type="checkbox"]').removeAttr('checked');
+			for(var i = 0; i < v.length; i++) {
+				$('#dlg-columns-sys-fields input[value="sys-' + v[i] + '"]').attr('checked', 'checked');
+			};
+			if ($('#field-types').val() == '*') {
+				$('#dlg-columns-all-ftypes').attr('checked', 'checked');
+			} else {
+				$('#dlg-columns-all-ftypes').removeAttr('checked');
+				$('#dlg-columns-field-types div input').removeAttr('checked');
+				$('#dlg-columns-field-types div input').removeAttr('disabled');
+				var ftypes = $('#field-types').val().split(',');
+				for (var i = 0; i < ftypes.length; i++) {
+					$('#dlg-columns-field-types div input[value="ft-' + ftypes[i] + '"]').attr('checked', 'checked');
+				};
+			};
+			updateFieldTypesCheckboxes();
+		},
+		'buttons' : {
+			'OK' :     updateHiddenColumnFields,
+			'Cancel' : function() {$('#dlg-columns-picker').dialog('destroy');}
+		}
+	});
+};
+
+function updateHiddenColumnFields() {
+	var sysFields = $('#dlg-columns-sys-fields input[type="checkbox"]');
+	var s = '';
+	sysFields.each(function() {
+		if ($(this).attr('checked')) {
+			var fn = $(this).attr('value').substr(4);
+			s += (s ? ',' : '') + fn;
+		}
+	});
+	var f = '';
+	if ($('#dlg-columns-all-ftypes').attr('checked')) {
+		f = '*';
+	} else {
+		$('#dlg-columns-field-types div input[type="checkbox"]').each(function() {
+			if ($(this).attr('checked')) {
+				f += (f ? ',' : '') + $(this).val().substr(3);
+			}
+		});
+	}
+	if ((f == '') && (s == '')) {
+		alert('Please pick some fields');
+		return;
+	}
+	$('#system-fields').val(s);
+	$('#field-types').val(f);
+	updateColumnsTd();
+	$('#dlg-columns-picker').dialog('destroy');
+};
+
+function updateFieldTypesCheckboxes() {
+	if ($('#dlg-columns-all-ftypes').attr('checked')) {
+    	$('#dlg-columns-field-types div input').attr('checked', 'checked').attr('disabled', 'disabled');
+    	$('#dlg-columns-field-types div').addClass('disabled');
+	} else {
+    	$('#dlg-columns-field-types div input').removeAttr('disabled');
+    	$('#dlg-columns-field-types div').removeClass('disabled');
+	};
+};
+
+function updateColumnsTd() {
+	var s = $('#system-fields').val();
+	s = s.replace(/,/gi, ', ');
+	var f = $('#field-types').val();
+	if (f == '*') {
+		s += '<br><br>** All Field Types **';
+	} else {
+		var arr = f.split(',');
+		var c = '';
+		for (var i = 0; i < arr.length; i++) {
+			if (arr[i] != '') {
+				c += (c ? ', ' : '') + fieldTypes['f' + arr[i]];
+			};
+		};
+		s += "<br><br>" + c;
+	};
+	 $('#td-columns-list').html(s);
+};
+
+function pickCountriesList() {
+	$('#dlg-countries-picker').dialog({
+		'title': 'Pick Countries',
+		'open':  function() {
+			$('#dlg-countries-cdi').val($('#country-default-include').val());
+			var fld = $('#countries-list').val().split('-');
+		    $('#dlg-countries-picker input[type="checkbox"]').removeAttr('checked');
+		    $('#dlg-countries-picker input[type="checkbox"]').parent().removeClass('checked');
+			for (var i = 0; i < fld.length; i++) {
+				$('#dlg-countries-picker input[value="' + fld[i] + '"]').attr('checked', 'checked');
+				$('#dlg-countries-picker input[value="' + fld[i] + '"]').parent().addClass('checked');
+			};
+		},
+		'width' : '1000px',
+		'buttons': {
+			'OK' :     updateHiddenCountryFields,
+			'Cancel' : function() {$('#dlg-countries-picker').dialog('destroy');}
+		}
+	});
+};
+
+function toggleCountryCbColor() {
+	var c = $(this).attr('checked') ? true : false;
+	if (c) {
+	    $(this).parent().addClass('checked');
+	} else {
+	    $(this).parent().removeClass('checked');
+	}
+};
+
+function updateHiddenCountryFields() {
+	var s = '';
+	$('#dlg-countries-picker input[type="checkbox"]').each(function() {
+		if ($(this).attr('checked')) {
+		    s += ((s == '') ? '' : '-') + $(this).val();
+		};
+	});
+	var include = $('#dlg-countries-cdi').val() == '1';
+	if (!include && (s == '')) {
+		alert('Please pick some countries, or choose "All Countries Except These"');
+		return;
+	}
+	$('#countries-list').val(s);
+	$('#country-default-include').val(include ? '1' : '0');
+	updateCountriesTd();
+	$('#dlg-countries-picker').dialog('destroy');
+};
+
+function updateCountriesTd() {
+	var include = $('#country-default-include').val() == '1';
+	var clist   = $('#countries-list').val().split('-');
+	var s = '';
+	if (include) {
+		s = 'All Countries';
+	} else {
+		if ((clist.length == 1) && (clist[0] == '')) {
+		    s = 'None!';
+		} else {
+		    s = 'Only ';
+		};
+	};
+	if ((clist.length > 0) && (clist[0] != '')) {
+		if (include) {
+			s += ' except ';
+		}
+		var remaining = clist.length;
+		for(var i = 0; i < clist.length; i++) {
+			var k = clist[i];
+			s += countriesAssoc[k];
+			if (remaining == 2) {
+				if (clist.length >= 2) {
+					s += ' and ';
+				} else {
+					s += (clist.length == 1) ? '' : ', ';
+				};
+			} else if (remaining > 2) {
+				s += ', ';
+			}
+			remaining--;
+		};
+	};
+	$('#td-countries-list').text(s);
+};
+
+function cpClicked() {
+	var t = $('#campaign-picker');
+	var s = t.val();
+	if (s == '') {
+		return;
+	}
+	$('#campaign-picker-empty').attr('selected', 'selected');
+	addToSources(s);
+}
+
+function addToSources(s) {
+	var hv = $('#ef-sources').val();
+	var existing = hv.split(" ");
+	var newData = s.split('-');
+	for (var i = 0; i < existing.length; i++) {
+		var oldData = existing[i].split('-');
+		if ((oldData[0] == newData[0]) && (oldData[1] == newData[1])) {
+			return;
+		};
+	}
+	if (hv != '') {
+		hv += ' ';
+	}
+	hv += s + '-0-0-0';
+	$('#ef-sources').val(hv);
+	addToDiv(s);
+};
+
+function addToDiv(line) {
+    var arr = line.split('-');
+    var s = arr[0];
+	var id = parseInt(s);
+    var cid = (typeof(arr[1]) == 'undefined') ? 0 : parseInt(arr[1]);
+	var cs = $('#campaign-selection tbody');
+	var n = usernamesAssoc['u' + id];
+	if (typeof(n) == 'undefined') {
+		return;
+	}
+	var html = "\n\t<tr id=\"tr-" + id + '-' + cid + "\">\n\t\t<td>" + $('<div />').text(n).html() + "</td>\n";
+	var cName = '';
+	if (cid) {
+		cName = campaignsAssoc['c' + cid];
+		html += "\t\t" + '<td><a href="/campaigns/edit.html?id=' + cid + '">' + $('<div/>').text(cName).html() + "</a></td>\n";
+	} else {
+		html += "\t\t<td>All</td>\n";
+	}
+	html += "\t\t" + '<td><input size="3" type="text" id="delay-' + id + '-' + cid + '" value="';
+	html += ((typeof(arr[2]) == 'undefined') ? 0 : parseInt(arr[2])) + '">' + "</td>\n";
+
+	html += "\t\t<td>\n\t\t\t<select id=\"ip-" + id + '-' + cid + "\">\n\t\t\t\t<option value=\"0\"></option>\n";
+	var ftId = (typeof(arr[3]) == 'undefined') ? 0 : parseInt(arr[3]);
+	for(var k in fieldTypes) {
+		var k2 = parseInt(k.substr(1));
+		var opt = "\t\t\t\t<option value=\"" + k2 + "\"" + ((k2 == ftId) ? ' selected="selected"' : '') + ">" + $('<div/>').text(fieldTypes[k]).html() + "</option>\n";
+		html += opt;
+	}
+	html += "\t\t\t</select></td>\n";
+
+	html += "\t\t<td>\n\t\t\t<select id=\"ref-" + id + '-' + cid + "\">\n\t\t\t\t<option value=\"0\"></option>\n";
+	ftId = (typeof(arr[4]) == 'undefined') ? 0 : parseInt(arr[4]);
+	for(var k in fieldTypes) {
+		var k2 = parseInt(k.substr(1));
+		var opt = "\t\t\t\t<option value=\"" + k2 + "\"" + ((k2 == ftId) ? ' selected="selected"' : '') + ">" + $('<div/>').text(fieldTypes[k]).html() + "</option>\n";
+		html += opt;
+	}
+	html += "\t\t\t</select></td>\n";
+
+	html += "\t\t<td style=\"vertical-align: middle; text-align: center; width: 24px;\"><a title=\"Delete\" href=\"javascript:deleteSection('tr-" + id + '-' + cid + "', 'User &quot;" +
+	addcslashes(n) + (cName ? '&quot;, campaign &quot;' + addcslashes(cName) : '') + "&quot;');\"><img src=\"/img/icons/delete.png\"/></a></td>\n";
+
+	html += "\t</tr>\n\n\t";
+	cs.append(html);
+	var lastRow = cs.find('tr:last');
+	lastRow.find('input').keyup(function() {updateHidden(lastRow);});
+	lastRow.find('select').change(function() {updateHidden(lastRow);}).click(function() {updateHidden(lastRow);});
+
+	updateTrColors();
+};
+
+function updateTrColors() {
+	var b = false;
+	$('#campaign-selection tbody tr').each(function() {
+		$(this).removeClass('odd');
+		if (b) {
+			$(this).addClass('odd');
+		}
+		b = !b;
+	});
+}
+
+function updateHidden(lastRow) {
+	var start = lastRow.attr('id').substr(3) + '-';
+	var hv = $('#ef-sources').val();
+	var existing = hv.split(" ");
+	var res = '';
+	for (var i = 0; i < existing.length; i++) {
+		if (res) {
+			res += ' ';
+		}
+		if (existing[i].indexOf(start) == 0) {
+			var data = res.split('-');
+			var delay = parseInt(lastRow.find('input').val());
+			delay = isNaN(delay) ? 0 : delay;
+			if (delay < 0) {
+				delay = 0;
+			}
+			data[2] = delay;
+			data[3] = lastRow.find('select[id^="ip"]').val();
+			data[4] = lastRow.find('select[id^="ref"]').val();
+			res += start + data[2] + '-' + data[3] + '-' + data[4];
+		} else {
+			res += existing[i];
+		};
+	}
+	$('#ef-sources').val(res);
+	// alert($('#ef-sources').val());
+};
+
+function deleteSection(s, n) {
+	//alert($('#ef-sources').val());
+    if (!confirm("Remove '" + n + "' ?")) {
+        return;
+    };
+    $('#' + s).remove();
+	var hv = $('#ef-sources').val();
+	var existing = hv.split(" ");
+	var res = '';
+	for (var i = 0; i < existing.length; i++) {
+		var arr = existing[i].split('-');
+		var eid = parseInt(arr[0]);
+		var ecid = (typeof(arr[1]) == 'undefined') ? 0 : parseInt(arr[1]);
+		var es = eid + '-' + ecid;
+		if (es != s.substr(3)) {
+			res += (res ? ' ' : '') + existing[i];
+		};
+	};
+	$('#ef-sources').val(res);
+	updateTrColors();
+	//alert($('#ef-sources').val());
+};
+
+function removeAll() {
+	if (confirm('Clear all?')) {
+		$('#ef-sources').val('');
+		$('#campaign-selection tbody').html('');
+	};;
+};
+
+function addcslashes (str) {
+	charlist = "'\"";
+    // http://kevin.vanzonneveld.net
+    // +   original by: Brett Zamir (http://brett-zamir.me)
+    // %  note 1: We show double backslashes in the return value example code below because a JavaScript string will not
+    // %  note 1: render them as backslashes otherwise
+    // *     example 1: addcslashes('foo[ ]', 'A..z'); // Escape all ASCII within capital A to lower z range, including square brackets
+    // *     returns 1: "\\f\\o\\o\\[ \\]"
+    // *     example 2: addcslashes("zoo['.']", 'z..A'); // Only escape z, period, and A here since not a lower-to-higher range
+    // *     returns 2: "\\zoo['\\.']"
+    // *     example 3: addcslashes("@a\u0000\u0010\u00A9", "\0..\37!@\177..\377") == '\\@a\\000\\020\\302\\251'); // Escape as octals those specified and less than 32 (0x20) or greater than 126 (0x7E), but not otherwise
+    // *     returns 3: true
+    // *     example 4: addcslashes("\u0020\u007E", "\40..\175") == '\\ ~'); // Those between 32 (0x20 or 040) and 126 (0x7E or 0176) decimal value will be backslashed if specified (not octalized)
+    // *     returns 4: true
+    // *     example 5: addcslashes("\r\u0007\n", '\0..\37'); // Recognize C escape sequences if specified
+    // *     returns 5: "\\r\\a\\n"
+    // *     example 6: addcslashes("\r\u0007\n", '\0'); // Do not recognize C escape sequences if not specified
+    // *     returns 7: "\r\u0007\n"
+    var target = '',
+        chrs = [],
+        i = 0,
+        j = 0,
+        c = '',
+        next = '',
+        rangeBegin = '',
+        rangeEnd = '',
+        chr = '',
+        begin = 0,
+        end = 0,
+        octalLength = 0,
+        postOctalPos = 0,
+        cca = 0,
+        escHexGrp = [],
+        encoded = '',
+        percentHex = /%([\dA-Fa-f]+)/g;
+    var _pad = function (n, c) {
+        if ((n = n + '').length < c) {
+            return new Array(++c - n.length).join('0') + n;
+        }
+        return n;
+    };
+
+    for (i = 0; i < charlist.length; i++) {
+        c = charlist.charAt(i);
+        next = charlist.charAt(i + 1);
+        if (c === '\\' && next && (/\d/).test(next)) { // Octal
+            rangeBegin = charlist.slice(i + 1).match(/^\d+/)[0];
+            octalLength = rangeBegin.length;
+            postOctalPos = i + octalLength + 1;
+            if (charlist.charAt(postOctalPos) + charlist.charAt(postOctalPos + 1) === '..') { // Octal begins range
+                begin = rangeBegin.charCodeAt(0);
+                if ((/\\\d/).test(charlist.charAt(postOctalPos + 2) + charlist.charAt(postOctalPos + 3))) { // Range ends with octal
+                    rangeEnd = charlist.slice(postOctalPos + 3).match(/^\d+/)[0];
+                    i += 1; // Skip range end backslash
+                } else if (charlist.charAt(postOctalPos + 2)) { // Range ends with character
+                    rangeEnd = charlist.charAt(postOctalPos + 2);
+                } else {
+                    throw 'Range with no end point';
+                }
+                end = rangeEnd.charCodeAt(0);
+                if (end > begin) { // Treat as a range
+                    for (j = begin; j <= end; j++) {
+                        chrs.push(String.fromCharCode(j));
+                    }
+                } else { // Supposed to treat period, begin and end as individual characters only, not a range
+                    chrs.push('.', rangeBegin, rangeEnd);
+                }
+                i += rangeEnd.length + 2; // Skip dots and range end (already skipped range end backslash if present)
+            } else { // Octal is by itself
+                chr = String.fromCharCode(parseInt(rangeBegin, 8));
+                chrs.push(chr);
+            }
+            i += octalLength; // Skip range begin
+        } else if (next + charlist.charAt(i + 2) === '..') { // Character begins range
+            rangeBegin = c;
+            begin = rangeBegin.charCodeAt(0);
+            if ((/\\\d/).test(charlist.charAt(i + 3) + charlist.charAt(i + 4))) { // Range ends with octal
+                rangeEnd = charlist.slice(i + 4).match(/^\d+/)[0];
+                i += 1; // Skip range end backslash
+            } else if (charlist.charAt(i + 3)) { // Range ends with character
+                rangeEnd = charlist.charAt(i + 3);
+            } else {
+                throw 'Range with no end point';
+            }
+            end = rangeEnd.charCodeAt(0);
+            if (end > begin) { // Treat as a range
+                for (j = begin; j <= end; j++) {
+                    chrs.push(String.fromCharCode(j));
+                }
+            } else { // Supposed to treat period, begin and end as individual characters only, not a range
+                chrs.push('.', rangeBegin, rangeEnd);
+            }
+            i += rangeEnd.length + 2; // Skip dots and range end (already skipped range end backslash if present)
+        } else { // Character is by itself
+            chrs.push(c);
+        }
+    }
+
+    for (i = 0; i < str.length; i++) {
+        c = str.charAt(i);
+        if (chrs.indexOf(c) !== -1) {
+            target += '\\';
+            cca = c.charCodeAt(0);
+            if (cca < 32 || cca > 126) { // Needs special escaping
+                switch (c) {
+                case '\n':
+                    target += 'n';
+                    break;
+                case '\t':
+                    target += 't';
+                    break;
+                case '\u000D':
+                    target += 'r';
+                    break;
+                case '\u0007':
+                    target += 'a';
+                    break;
+                case '\v':
+                    target += 'v';
+                    break;
+                case '\b':
+                    target += 'b';
+                    break;
+                case '\f':
+                    target += 'f';
+                    break;
+                default:
+                    //target += _pad(cca.toString(8), 3);break; // Sufficient for UTF-16
+                    encoded = encodeURIComponent(c);
+
+                    // 3-length-padded UTF-8 octets
+                    if ((escHexGrp = percentHex.exec(encoded)) !== null) {
+                        target += _pad(parseInt(escHexGrp[1], 16).toString(8), 3); // already added a slash above
+                    }
+                    while ((escHexGrp = percentHex.exec(encoded)) !== null) {
+                        target += '\\' + _pad(parseInt(escHexGrp[1], 16).toString(8), 3);
+                    }
+                    break;
+                }
+            } else { // Perform regular backslashed escaping
+                target += c;
+            }
+        } else { // Just add the character unescaped
+            target += c;
+        }
+    }
+    return target;
+}
+
+
+</script>
+
+<div class="dialog-div" id="dlg-countries-picker">
+<select id="dlg-countries-cdi">
+<option value="1">All Countries Except These</option>
+<option value="0">Only These Countries</option>
+</select><br><br>
+<?php foreach ($countriesAssoc as $abbr => $countryName) {
+    echo "<label><input type=\"checkbox\" value=\"$abbr\">" . escapeHtml($countryName) . "</label>";
+};
+?>
+</div>
+<div class="dialog-div" id="dlg-columns-picker">
+	<table>
+		<thead>
+			<tr>
+				<th>System Fields</th>
+				<th>Field Types</th>
+			</tr>
+		</thead>
+		<tbody>
+		    <tr>
+		        <td id="dlg-columns-sys-fields"><?php
+
+		        foreach (Helper_Export::$allSysFeedColumns as $s) {
+		            echo "<label><input type=\"checkbox\" value=\"sys-$s\">$s</label><br>";
+		        }
+		        //
+
+		        ?></td>
+		        <td id="dlg-columns-field-types">
+		        <label><input type="checkbox" id="dlg-columns-all-ftypes" value="*">All Field Types</label><div>
+		        <?php
+
+		        foreach ($fieldTypes as $fid => $fname) {
+		            echo "<label><input type=\"checkbox\" value=\"ft-$fid\">$fname</label><br>";
+		        }
+
+		        ?></div>
+		        </td>
+		    </tr>
+		</tbody>
+	</table>
+</div>

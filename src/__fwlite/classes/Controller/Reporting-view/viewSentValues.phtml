@@ -1,0 +1,73 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>
+<div class="head">
+	<h2>Reports</h2>
+	<div class="breadcrumb">
+		<p><?php
+		$arr = array('iid' => $incId);
+		if (!empty($_GET['hide_repost'])) {
+		    $arr['hide_repost'] = 1;
+		}
+		if (isset($_GET['o']['muid'])) {
+		    $arr['uid'] = $_GET['o']['muid'];
+		}
+		echo App::linkFor($this, 'Associated Transactions', array('action' => 'index'), $arr); ?>&gt; Values Delivered To Partner</p>
+	</div><!--breadcrumb-->
+	<div class="breadcrumb"><?php
+	echo $this->getDidPrevNext(str_replace('.phtml', '.html', basename(__FILE__)), !empty($_GET['iar']), isset($_GET['delivery_id']) ? $_GET['delivery_id'] : '', !empty($_GET['hide_repost']),
+	            (isset($_GET['o']) && is_array($_GET['o'])) ? $_GET['o'] : array(),
+                (isset($_GET['dids'])) ? explode('-', $_GET['dids']) : array());
+
+	?></div>
+</div><!--head-->
+
+<div class="transaction">
+	<table cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr class="top">
+			<td>Field Name</td>
+			<td>Value</td>
+		</tr>
+
+<?php
+$odd = false;
+foreach ($values as $k => $v) {
+    $odd = !$odd;
+    $c = $odd ? 'white' : 'grey';
+    echo "<tr class=\"$c\"><td>";
+    echo escapeHtml($k);
+    echo "</td><td>";
+    if (is_array($v)) {
+        echo '<pre>';
+        echo escapeHtml(var_export($v, true));
+        echo '</pre>';
+    }  else {
+        echo escapeHtml($v);
+    }
+    echo "</td></tr>\n";
+}
+
+if (!empty($templateSent)) {
+    $odd = !$odd;
+    $c = $odd ? 'white' : 'grey';
+    if ($hideTemplateSent) {
+        $array = explode(" ", $templateSent);
+        $url = !empty($array[0]) ? $array[0] : '';
+        $template = !empty($array[1]) ? $array[1] : '';
+        
+        echo "<tr class=\"$c\" id= 'Content_sent' style='display:none;'>
+                <td>" . escapeHtml($url) . "</td>\n\n
+                <td>" . escapeHtml($template) . "</td></tr>\n\n";
+    } else {
+        echo "<tr class=\"$c\">
+                <td style=\"font-weight: bold;\">Content Sent:</td><td><pre style=\"font-family: monospace; font-size: 12px; white-space: normal;\">" . escapeHtml($templateSent) . "</pre></td></tr>\n\n";
+    }
+}
+?>
+	</tbody>
+</table>
+</div>

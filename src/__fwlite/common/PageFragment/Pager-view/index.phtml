@@ -1,0 +1,11 @@
+<?php
+
+$links = $this->getLinks();
+for ($i = 0, $l = sizeof($links) - 1; $i <= $l; $i++) {
+    $arr = $links[$i];
+    if (sizeof($arr) == 2) {
+        echo ' ' . $this->linkForPage($arr[0], $arr[1], $i == $l) . ' ';
+    } elseif (sizeof($arr) == 1) {
+        echo ' ... ';
+    }
+}

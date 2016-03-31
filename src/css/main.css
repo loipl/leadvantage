@@ -1,0 +1,318 @@
+/* reset.css */
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,dialog,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,meter,nav,object,ol,output,p,pre,progress,q,rp,rt,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video,xmp{border:0;margin:0;padding:0;font-size:100%}html,body{height:100%}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}b,strong{font-weight:bold}img{color:transparent;font-size:0;vertical-align:middle;-ms-interpolation-mode:bicubic}ol,ul{list-style:none}li{display:list-item}table{border-collapse:collapse;border-spacing:0}th,td,caption{font-weight:normal;vertical-align:top;text-align:left}q{quotes:none}q:before,q:after{content:'';content:none}sub,sup,small{font-size:75%}sub,sup{line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}svg{overflow:hidden}
+
+
+.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}
+
+/* text.css */
+body{font:13px/1.5 Arial,'Helvetica Neue',Helvetica,'Liberation Sans',FreeSans,sans-serif}pre,code{font-family:'DejaVu Sans Mono',Menlo,Consolas,monospace}hr{border:0 #ccc solid;border-top-width:1px;clear:both;height:0}h1{font-size:25px}h2{font-size:23px}h3{font-size:21px}h4{font-size:19px}h5{font-size:17px}h6{font-size:15px}ol{list-style:decimal}ul{list-style:disc}li{margin-left:30px}p,dl,hr,h1,h2,h3,h4,h5,h6,ol,ul,pre,table,address,fieldset,figure{margin-bottom:20px}
+/*
+ *******************************************************************************
+ *                                                                             *
+ *                              PAGE STYLES                                    *
+ *                                                                             *
+ *******************************************************************************
+ */
+
+a {
+	color: #333;
+	text-decoration: underline;
+}
+
+#container {
+	margin: 0;
+}
+
+#header-logo {
+    background-color: #fff;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 8px;
+}
+
+#header {
+    background-color: #06404d;
+	height: 35px;
+	padding-top: 5px;
+	padding-left: 8px;
+	min-width: 800px;
+}
+
+#header .tab {
+	background-color: #83a0a6;
+	height: 27px;
+	width: 120px;
+	padding-top: 8px;
+	margin: 0 5px 0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	text-align: center;
+	font-weight: bold;
+	float: left;
+}
+
+#header a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+#header .active {
+	background-color: #fff;
+}
+
+#header .active a {
+	color: #444;
+}
+
+
+#content {
+	margin: 0 auto;
+    background-color: #fff;
+    padding: 13px;
+}
+
+#content h1.page-title {
+	margin: 5px 0px 15px;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+#page-footer {
+	padding: 20px 10px;
+    text-align: center;
+    background-color: #eee;
+}
+#page-footer div.r {
+	text-align: right;
+}
+
+.pager {
+	padding-top: 3px;
+}
+
+.pager span, .pager a {
+    border: 2px solid #ccc;
+    padding: 2px 3px;
+    font-weight: bold;
+}
+
+.pager span {
+	color: #aaa;
+}
+
+.pager a {
+	color: navy;
+	text-decoration: none;
+}
+
+.pager div {
+    font-weight: bold;
+    color: navy;
+    margin-left: 5px;
+}
+
+.data-table {
+	
+}
+
+.data-table th {
+	font-weight: bold;
+}
+
+.pingtree-form {
+    
+}
+
+.pingtree-form input, .pingtree-form textarea, .pingtree-form select {
+	border: 1px solid #ccc;
+	padding: 4px;
+	margin-bottom: 9px;
+}
+
+.pingtree-form select {
+	padding: 3px;
+}
+
+.pingtree-form button {
+	border: 3px solid #ccc;
+	border-radius: 5px;
+	background-color: #fff;
+	padding: 6px 14px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.pingtree-form .form_error {
+	color: red;
+}
+
+#export-report-as-csv-div {
+    float: right;
+    padding-top: 30px;
+}
+
+#top-error-message {
+}
+
+#user-notifications {
+	width: 100%;
+	/*
+	background-color: beige;
+	border: 1px solid red;
+    border-radius: 3px;
+    */
+}
+
+#user-notifications table {
+	margin: 0;
+	width: 100%;
+	margin-bottom: 3px;
+}
+
+#user-notifications div {
+    padding: 2px 2px 2px 28px;
+    width: 100%;
+}
+
+#user-notifications div.warn {
+    background-image: url("/img/icons/error.png");
+    background-repeat: no-repeat;
+    background-position: 5px;
+    font-weight: bold;
+}
+
+#user-notifications div.info {
+    background-image: url("/img/icons/information.png");
+    background-repeat: no-repeat;
+    background-position: 5px;
+}
+
+#user-notifications td {
+    vertical-align: top;
+    padding: 2px 7px;
+}
+
+td.user-notifications-td {
+	text-align: right;
+}
+
+#user-notifications-info {
+	border: 1px solid #bbb;
+	background-color: #eee;
+}
+
+#user-notifications-warning {
+	border: 1px solid #daa520;
+	background-color: #ffffe0;
+}
+
+#user-notifications-error {
+	border: 1px solid #f00;
+	background-color: #ebb;
+}
+
+input.no-border {
+	border: 0;
+}
+
+img.tooltip-img {
+	width: 16px;
+	height: 16px;
+	margin-left: 6px;
+	margin-bottom: 4px;
+}
+
+/*
+ *******************************************************************************
+ *                                                                             *
+ *                              FORM STYLES                                    *
+ *                                                                             *
+ *******************************************************************************
+ */
+
+table.form_table {
+    margin: 30px auto;
+}
+
+table.form_table input, table.form_table select, table.form_table textarea {
+    border: 1px solid #ccc;
+    padding: 2px 3px;
+}
+
+table.form_table button {
+    border: 3px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 6px 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+}
+
+table.form_table button:hover {
+	color: #008;
+}
+
+table.form_table th h2 {
+    font-size: 20px;
+    font-weight: normal;
+    padding: 8px 12px 2px;
+    margin: 0 0 18px;
+    display: block;
+    color: #222;
+}
+
+table.form_table th h2 div.subtitle {
+    font-size: 12px;
+    color: #777;
+    font-weight: normal;
+    margin: 10px 3px;
+    text-align: left;
+}
+
+table.form_table td {
+    margin: 0;
+    padding: 1px 3px;
+}
+
+table.form_table td.label {
+    vertical-align: top;
+    text-align: right;
+    padding: 3px 5px 0 3px;
+    width: 20px;
+    white-space: nowrap;
+}
+
+table.form_table .soft_border {
+    border: 1px solid #ccc;
+    padding: 1px 2px;
+}
+
+table.form_table .full_width {
+    width: 100%;
+}
+
+table.form_table .checkbox {
+    margin: 0 3px 0 0 ;
+    vertical-align: middle;
+}
+
+table.form_table span.form_error {
+    color: red;
+    display: block;
+    margin: 1px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+table.form_table div.form_hint {
+    padding-left: 10px; color: #777;
+    padding-top: 2px;
+    padding-bottom: 7px;
+    font-size: 11px;
+}

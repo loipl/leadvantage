@@ -1,0 +1,145 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: fullsingle.x.php.
+*/
+div#fullsingle-wrapper /* Parent: div#body-content-container. */
+	{
+		z-index: 0;
+		position: relative;
+	}
+div#fullsingle-wrapper > div#fullsingle-inner-wrapper-a
+	{
+	}
+div#fullsingle-wrapper > div#fullsingle-inner-wrapper-a > div#fullsingle-inner-wrapper-b
+	{
+	}
+div#fullsingle-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+div#fullsingle-upper-section /* Parent: ^ container. */
+	{
+		position: relative;
+		margin: 0 0 25px 0;
+	}
+div#fullsingle-upper-section > div#fullsingle-share-save
+	{
+		top: 10px;
+		right: 0;
+		position: absolute;
+	}
+div#fullsingle-upper-section > div#fullsingle-share-save > a > img
+	{
+		width: 256px;
+		height: 24px;
+	}
+div#fullsingle-upper-section > div#fullsingle-edit
+	{
+		top: 12px;
+		right: 265px;
+		font-size: 80%;
+		position: absolute;
+	}
+div#fullsingle-upper-section > div#fullsingle-edit > a
+	{
+		text-decoration: none;
+		font-family: 'Georgia', serif;
+	}
+div#fullsingle-upper-section > div#fullsingle-edit > a:hover
+	{
+	}
+div#fullsingle-upper-section > div#fullsingle-time
+	{
+		right: 0;
+		top: 63px;
+		font-size: 110%;
+		position: absolute;
+		font-family: 'e-Titles-Bold', 'Trebuchet MS', 'Arial', 'Helvetica', sans-serif;
+	}
+div#fullsingle-upper-section > div#fullsingle-title
+	{
+		max-width: 70%;
+	}
+div#fullsingle-upper-section > div#fullsingle-title > h1
+	{
+		margin: 0;
+	}
+div#fullsingle-upper-section > div#fullsingle-title > div
+	{
+		color: #666666;
+		font-style: italic;
+		margin: 5px 0 0 0;
+	}
+div#fullsingle-upper-section > div#fullsingle-cats
+	{
+		font-size: 90%;
+		max-width: 70%;
+		margin: 10px 0 0 0;
+		font-style: italic;
+	}
+div#fullsingle-upper-section > div#fullsingle-cats > a
+	{
+	}
+div#fullsingle-upper-section > div#fullsingle-cats > a:hover
+	{
+	}
+div#fullsingle-upper-section > div#fullsingle-author
+	{
+		display: none;
+	}
+div#fullsingle-upper-section > div#fullsingle-author > a
+	{
+	}
+div#fullsingle-upper-section > div#fullsingle-author > a:hover
+	{
+	}
+div#fullsingle-middle-section
+	{
+	}
+div#fullsingle-middle-section > div#fullsingle-content
+	{
+	}
+div#fullsingle-middle-section > div#fullsingle-content > *:first-child,
+div#fullsingle-middle-section > div#fullsingle-content > *.alignleft:first-child + *,
+div#fullsingle-middle-section > div#fullsingle-content > *.alignright:first-child + *
+	{
+		margin-top: 0;
+	}
+div#fullsingle-middle-section > div#fullsingle-content a
+	{
+	}
+div#fullsingle-middle-section > div#fullsingle-content a:hover
+	{
+	}
+div#fullsingle-lower-section
+	{
+		clear: both;
+	}
+div#fullsingle-lower-section > div#fullsingle-lower-parts
+	{
+	/* Parts styled by common.css.
+		Override here as needed. */
+	}
+div#fullsingle-lower-section > div#fullsingle-lower-parts > a
+	{
+	}
+div#fullsingle-lower-section > div#fullsingle-lower-parts > a:hover
+	{
+	}
+div#fullsingle-lower-section > div#fullsingle-tags
+	{
+		display: none;
+	}
+div#fullsingle-lower-section > div#fullsingle-tags > a
+	{
+	}
+div#fullsingle-lower-section > div#fullsingle-tags > a:hover
+	{
+	}

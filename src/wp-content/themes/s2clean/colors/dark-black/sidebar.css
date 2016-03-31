@@ -1,0 +1,196 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+These CSS selectors are for: sidebar.php.
+*/
+div#sidebar-wrapper /* Parent: div#body-content-container. */
+	{
+		z-index: 0;
+		float: right;
+		position: relative;
+		width: 300px; /* Divisible by 2, 3, 4. */
+	}
+div#sidebar-wrapper > div#sidebar-inner-wrapper-a
+	{
+	}
+div#sidebar-wrapper > div#sidebar-inner-wrapper-a > div#sidebar-inner-wrapper-b
+	{
+	}
+div#sidebar-container /* Parent: ^ inner-wrapper-b. */
+	{
+	}
+ul#sidebar /* Parent: ^ container. */
+	{
+		margin: 0;
+		padding: 0;
+		font-size: 90%;
+		list-style-type: none;
+		list-style-image: none;
+	}
+ul#sidebar a
+	{
+	}
+ul#sidebar a:hover
+	{
+	}
+ul#sidebar > li.widget
+	{
+		margin: 0 0 20px 0;
+	}
+ul#sidebar > li.widget:after
+	{
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		clear: both;
+		content: '.';
+		visibility: hidden;
+		display: block;
+	}
+html.msie-lt-8 ul#sidebar > li.widget
+	{
+		zoom: 1;
+	}
+ul#sidebar > li.widget:last-child
+	{
+		margin-bottom: 0;
+	}
+ul#sidebar > li.widget > h2
+	{
+		height: 38px;
+		color: #000000;
+		font-size: 140%;
+		text-align: center;
+		margin: 0 0 20px 0;
+		padding: 17px 0 0 0;
+		background: url('<?php echo $i; ?>/sidebar-widget-h2-bg.png') no-repeat center center;
+	}
+ul#sidebar > li.widget > h2 > a
+	{
+		color: #000000;
+		text-decoration: none;
+	}
+ul#sidebar > li.widget > h2 img
+	{
+		display: none;
+	}
+ul#sidebar > li.widget > p,
+ul#sidebar > li.widget > div > p
+	{
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+ul#sidebar > li.widget ul
+	{
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+ul#sidebar > li.widget > ul
+	{
+		margin: 0 0 0 8px;
+	}
+ul#sidebar > li.widget ul ul
+	{
+		margin: 0 0 0 5px;
+	}
+ul#sidebar > li.widget ul li
+	{
+		padding: 0 0 0 20px;
+		background: url('<?php echo $i; ?>/sidebar-list-style-image.png') no-repeat left 3px;
+	}
+ul#sidebar > li.widget.widget_text
+	{
+	}
+ul#sidebar > li.widget.widget_tag_cloud
+	{
+		text-align: center;
+	}
+ul#sidebar > li.widget.widget_tag_cloud > a
+	{
+		text-decoration: none;
+		padding: 2px 5px 2px 5px;
+	}
+ul#sidebar > li.widget.widget_tag_cloud > a:hover
+	{
+		text-decoration: underline;
+	}
+ul#sidebar > li.widget.widget_archive > select
+	{
+		width: 100%;
+	}
+ul#sidebar > li.widget.widget_categories > select
+	{
+		width: 100%;
+	}
+ul#sidebar > li.widget.widget_recent_comments ul li
+	{
+	}
+ul#sidebar > li.widget.widget_calendar > div > table
+	{
+		border: 0px;
+		width: 100%;
+		margin: 0 auto 0 auto;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > caption
+	{
+		text-align: center;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > thead
+	{
+		text-align: center;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tbody
+	{
+		text-align: center;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tbody a
+	{
+		color: #000000;
+		background: #CCCCCC;
+		text-decoration: none;
+		padding: 2px 5px 2px 5px;
+		border: 1px solid #000000;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tbody a:hover
+	{
+		background: #FFFFFF;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tbody td
+	{
+		width: 14.2%;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tfoot > tr > td:first-child
+	{
+		text-align: left;
+	}
+ul#sidebar > li.widget.widget_calendar > div > table > tfoot > tr > td:last-child
+	{
+		text-align: right;
+	}
+ul#sidebar > li.widget.widget_search > form /* Give search form some margin. */
+	{
+		margin: 0 5px 0 5px;
+	}
+ul#sidebar > li.widget.widget_search > form > div > input[type = "text"]
+	{
+		width: 65%;
+		float: left;
+		margin: 0 0 0 3px;
+	}
+ul#sidebar > li.widget.widget_search > form > div > input[type = "submit"]
+	{
+		width: 25%;
+		float: right;
+		margin: 0 3px 0 0;
+	}

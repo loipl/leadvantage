@@ -1,0 +1,50 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+</style>
+<div class="head"><h2>Sub-accounts</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Main account</th>
+    <th>Sub account</th>
+    <th>View reporting</th>
+  </tr>
+  </thead>
+
+<?php
+
+/* @var $this Controller_Admin_Userlevels */
+
+foreach ($subAccounts as $row) {
+    echo "
+  <tr>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['username']) . "</td>
+    <td nowrap=\"nowrap\">" . escapeHtml($row['sub_account_username']) . "</td>
+    <td nowrap=\"nowrap\">" . ($row['revoke_reporting_access'] ? 'No' : 'Yes') . "</td>
+    <td nowrap=\"nowrap\">" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>', array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?><br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add Sub-account...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>

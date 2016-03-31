@@ -1,0 +1,46 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+
+</style>
+
+<div class="head"><h2>Dictionaries</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr><th>Name</th></tr>
+  </thead>
+
+<?php
+
+foreach ($list as $row) {
+    echo "
+  <tr>
+    <td>" . escapeHtml($row['name']) . "</td>
+    <td>" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table.png" style="margin-bottom: 2px;" /> <u>Columns</u>',     array('action' => 'columns'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/table_edit.png" style="margin-bottom: 2px;" /> <u>Values</u>',     array('action' => 'values'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<?php
+if ($count > $perPage) {
+    echo '<div class="pager">';
+    Pager::showPager($count, $perPage);
+    echo '</div>';
+}
+
+?>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add Dictionary...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>

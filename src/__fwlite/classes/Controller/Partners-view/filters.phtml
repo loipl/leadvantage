@@ -1,0 +1,658 @@
+<style>
+
+option.missing {
+	color: #aaa;
+}
+
+#content .rules .lastcan {
+	width: 22px;
+	height: 30px;
+	float: none;
+	padding-left: 8px;
+	padding-top: 1px;
+	vertical-align: middle;
+}
+
+
+#content table .grey td, #content table .white td {
+	height: 30px;
+}
+
+#content table td.first {
+    vertical-align: middle;
+}
+
+#content table td.first span {
+    cursor: pointer;
+}
+
+div.rule-argument {
+    padding-top: 2px;
+    padding-bottom: 8px;
+}
+
+.rule-argument-value {
+    text-align: center;
+    width: 172px !important;
+}
+
+
+.show-argument-value {
+    margin-top: 8px;
+}
+
+.custom-combobox {
+    width: 177px;
+    height: 26px !important;
+    position: relative;
+    display: inline-block;
+    background: white !important;
+    padding-bottom: 2px;
+}
+.custom-combobox-input,.ui-menu-item {
+    width:80px;
+    height: 24px !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
+    font: -webkit-small-control;
+    background: none !important;
+    -webkit-border-radius: 0px;
+    padding-left: 5px;
+}
+
+.custom-combobox-toggle {
+    width: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 0;
+    height: 26px !important;
+    background: none !important;
+    right: 0;
+    margin-right: 0;
+}
+
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;   /* prevent horizontal scrollbar */
+    overflow-x: hidden; /* add padding to account for vertical scrollbar */
+    z-index:1000 !important;
+}
+
+.custom-autocomplete-category {
+    font-weight: bold;
+}
+</style>
+
+    <div class="head" id="filter-screen">
+        <h2>Partners</h2>
+
+        <div class="breadcrumb">
+
+            <div style="float:left">
+                <p><a href="/partners/">Partners &gt;</a> <a href="/partners/edit.html?id=<?php echo $data['id']; ?>"><?php echo escapeHtml($data['name']); ?> &gt;</a> Edit Delivery Rules</p>
+            </div>
+            <?php if ($data['partner_type'] == Model_Partner::PARTNER_TYPE_PING_POST): ?>
+                <div id="ping-post-tab" class="pingtree-form">
+                    <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+                        <ul>
+                            <li id="pingTab" class="current">PING</li>
+                            <li id="postTab">POST</li>
+                        </ul>
+                    <?php else: ?>
+                        <ul>
+                            <li id="pingTab">PING</li>
+                            <li id="postTab" class="current">POST</li>
+                        </ul>
+                    <?php endif; ?>
+
+                    <div class="clear"></div>
+                </div><!--breadcrumb-->
+            <?php endif; ?>
+            <div class="clear"></div>
+    </div><!--head-->
+
+
+
+<form style="margin: 0;" method="POST" id="main-fields-form">
+<input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>" />
+<div class="rules">
+	<table id="delivery-filters-table">
+		<tbody>
+                    <tr class="top">
+                        <td style="width:80px;">Status</td>
+                        <td>Action</td>
+                        <td>Field Type</td>
+                        <td>Condition</td>
+                        <td>Value</td>
+                        <td style="width:22px;"></td>
+                    </tr>
+                    <?php if (empty($filters)): ?>
+                        <tr class="noti">
+                            <td colspan="6" style="font-weight:normal; text-align: center; height:30px;">No Rules Defined - <a href="#" id="add-new-filter-notice">Add New Rule</a></td>
+                        </tr>
+                    <?php endif; ?>
+		</tbody>
+	</table>
+	<div class="clear"></div>
+</div>
+<!-- rules -->
+
+<div class="clear"></div>
+<div class="addfield">
+	<p><a href="#" id="add-new-filter"><img src="/img/icons/add.png" style="margin-bottom: -2px;" /> Add Rule</a></p>
+	<div class="clear"></div>
+</div><!--addfield-->
+
+
+<div class="pingtree-form">
+<button type="submit" id="submitButton"><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/disk.png" />SAVE</button>
+<button type="submit" name="redir" value="edit"    id="editSettings" ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/pencil.png"       />Edit Settings</button>
+<button type="submit" name="redir" value="fields"  id="editFields"   ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/table_edit.png" />Edit Fields</button>
+<?php if ($data['ping_post_type'] != Model_Partner::PING_POST_TYPE_PING): ?>
+<button type="submit" name="redir" value="caps"  id="editCaps"   ><img style="width: 11px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cap.gif" />Edit Caps</button>
+<?php endif; ?>
+<?php
+
+if (
+        ($data['posting_type'] == Model_Partner::POST_TYPE_EMAIL) || 
+        ($data['posting_type'] == Model_Partner::POST_TYPE_XML) || 
+        ($data['posting_type'] == Model_Partner::POST_TYPE_JSON) ||
+        ($data['posting_type'] == Model_Partner::POST_TYPE_XML_FIELD)
+    ) {?>
+    <button type="submit" name="redir" value="template" id="editTemplate"  ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/page_edit.png" />Edit Template</button>
+
+<?php } ?>
+<button type="button" id="cancelButton" ><img style="width: 16px; height: 16px; margin-right: 8px;" src="<?php echo Config::$urlBase?>img/icons/cross.png"        />Cancel</button>
+</div>
+</form>
+
+<script type="text/javascript">
+
+var newCounter = 1;
+var checkDirty = true;
+var newDeliveryRuleStart = 1000;
+var originalState = [<?php
+$arr = array();
+foreach ($filters as $row) {
+    $ftId = is_null($row['field_type_id']) ? 'null' : $row['field_type_id'];
+    $arr[] = "[{$row['id']}, {$row['filter_action']}, $ftId, '" . escapeJSVal($row['system_field']) . "', {$row['match_type']}, '" .
+    escapeJSVal($row['match_value']) . "', '" . escapeJSVal($row['argument']) . "', $row[is_active]]";
+}
+echo implode(",", $arr);
+?>];
+
+var FILTER_MATCH_REGEX = <?php echo Model_PartnerFilter::FILTER_MATCH_REGEX; ?>;
+var FILTER_NOT_MATCH_REGEX = -<?php echo Model_PartnerFilter::FILTER_MATCH_REGEX; ?>;
+
+var filterActions = [<?php
+    $addComa = false;
+    $firstActionId = 0;
+    foreach ($filterActions as $k => $v) {
+        if ($addComa) {
+            echo ', ';
+        } else {
+            $firstActionId = $k;
+            $addComa = true;
+        }
+        echo "[$k, '" . escapeAttrVal($v) . "']";
+    }
+?>];
+
+var filterMatches = [<?php
+    $addComa = false;
+    $firstMatchId = 0;
+    foreach ($filterMatches as $k => $v) {
+        if ($addComa) {
+            echo ', ';
+        } else {
+            $firstMatchId = $k;
+            $addComa = true;
+        }
+        echo "[$k, '" . escapeAttrVal($v) . "']";
+    }
+?>];
+                
+var allFtypes = <?php echo json_encode($allFtypes); ?>;
+var ftypes = <?php echo json_encode($ftypes); ?>;
+
+<?php $allFtypesKey = array_keys($allFtypes); ?>
+var allFtypesKey = <?php echo json_encode($allFtypesKey) ?>;
+
+$(window).bind('beforeunload', function() {
+	if (checkDirty && pageStateChanged()) {
+		return 'Your changes are not saved - are you sure you wish to leave this page?';
+	}
+	checkDirty = true;
+});
+
+$(document).ready(function() {
+	$('#cancelButton').click(function() {
+		checkDirty = false;
+		document.location.href=<?php echo "'" . App::getFrontController()->urlFor($this) . "'"; ?>;
+	});
+
+	$('#add-new-filter').click(function(e) {
+                $('tr.noti').remove();
+		e.preventDefault();
+		addNewBlankFilter();
+	});
+
+	$('#main-fields-form').submit(function(e) {checkDirty = false; return checkRules(e);});
+
+	for(var i = 0; i < originalState.length; i++) {
+		var arr = originalState[i];
+		addDeliveryFilter(0, arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], i);
+	};
+        
+        $('#pingTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+
+            $('#main-fields-form').append('<input type="hidden" name="redir" value="ping">');
+            $('#main-fields-form').submit();
+        });
+
+        $('#postTab').click(function() {
+            if ($(this).hasClass('current')) {
+                return false;
+            }
+
+            $('#main-fields-form').append('<input type="hidden" name="redir" value="post">');
+            $('#main-fields-form').submit();
+        });
+        
+        $('#add-new-filter-notice').click(function(){
+            $('#add-new-filter').click();
+        });
+
+        <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
+            $(".filter-action option[value='2']").remove();
+        <?php endif; ?>
+});
+
+function addNewBlankFilter() {
+        newDeliveryRuleStart ++;
+	addDeliveryFilter(1, newCounter++, <?php echo $firstActionId; ?>, 0, '', <?php echo $firstMatchId; ?>, '', '', 1, newDeliveryRuleStart);
+};
+
+function addDeliveryFilter(isNew, id, action, fieldTypeId, sysField, matchType, value, argument, isActive, index) {
+	var nameSuffix = (isNew ? '[new]' : '[old]') + '[' + id + ']';
+	var html = "\n\t<tr>\n\t\t<td class=\"first\">";
+	html += '<input type="hidden" id="is-active' + nameSuffix + '" name="is_active' + nameSuffix + '"' + (isActive ? ' value="1"' : ' value="0"') + '>';
+	html += '<span class="' + (isActive ? 'active' : 'inactive') + '">' + (isActive ? 'Active' : 'Inactive') + "</span></td>\n";
+
+
+	html += "\t\t" + '<td><select name="action' + nameSuffix + '"';
+        if (action != <?php echo Model_PartnerFilter::FILTER_ACTION_DONT_DELIVER ?>) {
+		html += ' class="filter-action show-argument-value"';
+	} else {
+                html += ' class ="filter-action"';
+        }
+        html += ">" + getSelectOptions(filterActions, action) + "</select>";
+        
+	html += '<div class="rule-argument"' ;
+	if (action == <?php echo Model_PartnerFilter::FILTER_ACTION_DONT_DELIVER ?>) {
+		html += ' style="display: none"';
+	};
+	html += '><input type="text" class="rule-argument-value" name="argument' + nameSuffix + '">';
+	html += "</div></td>\n\n";
+
+	html += "\t\t" + '<td><span class="if">If</span>';
+	html += '<select id = "combobox-'+index+'" name="ftype' + nameSuffix + '">';
+        html += '<optgroup label="Campaign Fields">';
+        for (var i in allFtypesKey) {
+            var fieldKey = allFtypesKey[i];
+            if (typeof ftypes[fieldKey] !== 'undefined') {
+                html += '<option value="' + fieldKey + '">' + '[' + ftypes[fieldKey] + ']' + '</option>';
+            } else if (fieldKey == fieldTypeId && typeof allFtypes[fieldKey] !== 'undefined') {
+                html += '<option value="' + fieldKey + '" class="missing" title="This field is not present in any of your campaigns">' 
+                     + '[' + allFtypes[fieldKey] + '] (missing)' + '</option>';
+            }
+        }
+        html += '</optgroup><option value="0"></option><optgroup label="Inferred Fields">';
+    html += "\n\n";
+    html += '<?php
+    $token = array_unique(array_merge($systemFields,$extTokens));
+    sort($token);
+    foreach ($token as $sf) {
+        echo "<option value=\"$sf\">[$sf]</option>";
+    }
+    ?>';
+    html += '<option value="0"></option>';
+    html += "</select></td>\n";
+
+    html += "\t\t" + '<td><select name="match' + nameSuffix + '">' + getSelectOptions(filterMatches, matchType) + "</select></td>\n";
+    html += "\t\t" + '<td><input  name="value' + nameSuffix + '">' + "</td>\n";
+	html += '<td class="lastcan"><img src="/img/icons/cross.png" title="Delete this field" onclick="deleteRow($(this));"></td></tr>';
+	$('#delivery-filters-table tbody').append(html);
+
+	var tr = $('#delivery-filters-table tbody tr:last');
+	tr.find('select[name^="action"]').val(action);
+	tr.find('input[name^="argument"]').val(argument);
+	if (fieldTypeId != null) {
+		tr.find('select[name^="ftype"]').val(fieldTypeId);
+	} else {
+		tr.find('select[name^="ftype"]').val(sysField);
+	}
+	tr.find('select[name^="match"]').val(matchType);
+	tr.find('input[name^="value"]').val(value);
+
+	tr.find('select[name^="action"]').click(function () {actionChanged($(this));});
+
+	tr.find('td.first span').click(toggleActiveState);
+	updateOddEvenTRs();
+        $('#combobox-'+index).combobox(); 
+};
+
+function toggleActiveState() {
+	var el = $(this).parent().find('input[type="hidden"]');
+	if (el.val() == '0') {
+		el.val('1');
+		$(this).removeClass('inactive');
+		$(this).addClass('active');
+		$(this).text('Active');
+	} else {
+		el.val('0');
+		$(this).removeClass('active');
+		$(this).addClass('inactive');
+		$(this).text('Inactive');
+	}
+
+};
+
+function updateOddEvenTRs() {
+	var isOdd = false;
+	var empty = true;
+	$('#delivery-filters-table tr').not('.top,.noti').each(function() {
+		empty = false;
+		$(this).removeClass('white');
+		$(this).removeClass('grey');
+		$(this).addClass(isOdd ? 'white' : 'grey');
+		isOdd = !isOdd;
+	});
+
+};
+
+function pageStateChanged() {
+	var trs = $('#delivery-filters-table tbody tr').not('.top,.noti');
+	if (trs.size() != originalState.length) {
+		return true;
+	}
+	var changed = false; var i = 0;
+	trs.each(function() {
+		if (changed) {
+			return;
+		}
+		var arr = originalState[i++];
+		var sac = $(this).find('select[name^="action"]');
+		if (sac.attr('name') != 'action[old][' + arr[0] + ']') {
+			changed = true;
+			return;
+		}
+		if (sac.val() != (arr[1] + '')) {
+			changed = true;
+			return;
+		}
+		if (sac.val() != '<?php echo Model_PartnerFilter::FILTER_ACTION_DONT_DELIVER ?>') {
+			if ($.trim($(this).find('input[name^="argument"]').val()) != $.trim(arr[6])) {
+				changed = true;
+				return;
+			}
+		}
+		if (($(this).find('select[name^="ftype"]').val() != (arr[2] + '')) && $(this).find('select[name^="ftype"]').val() != (arr[3])) {
+			changed = true;
+			return;
+		}
+		if ($(this).find('select[name^="match"]').val() != (arr[4] + '')) {
+			changed = true;
+			return;
+		}
+		if ($.trim($(this).find('input[name^="value"]').val()) != $.trim(arr[5])) {
+			changed = true;
+			return;
+		}
+		var active = ($(this).find('input[name^="is_active"]').val() == '1') ? 1 : 0;
+		if (active != arr[7]) {
+			changed = true;
+			return;
+		}
+	});
+	return changed;
+};
+
+function deleteRow(field) {
+	if (confirm('Delete this rule?')) {
+		field.parent().parent().remove();
+		updateOddEvenTRs();
+	}
+};
+
+function getSelectOptions(options, id) {
+	var ret = '';
+	for (var i = 0; i < options.length; i++) {
+		var arr = options[i];
+		// var s = (arr[0] == id) ? ' selected="selected"' : '';
+		ret += '<option value="' + arr[0] + '">' + arr[1] + "</option>\n";
+	}
+	return ret;
+};
+
+function actionChanged(dropdown) {
+	var val = parseInt(dropdown.val()) != <?php echo Model_PartnerFilter::FILTER_ACTION_DONT_DELIVER; ?>;
+
+	var eb = dropdown.parent().find('div.rule-argument');
+	if (val) {
+            dropdown.addClass('show-argument-value');
+            eb.show();
+        } else {
+            dropdown.removeClass('show-argument-value');
+            eb.hide() 
+        }
+};
+
+function checkRules(e) {
+    var trs = $('#delivery-filters-table tbody tr').not('.top,.noti');
+    var OK = true;
+    trs.each(function() {
+        if (!OK) {
+            return;
+        }
+        
+        var matcher = $(this).find('select[name^="match"]').val();
+        if ((matcher == <?php echo Model_PartnerFilter::FILTER_MATCH_STRLEN; ?>) || (matcher == -<?php echo Model_PartnerFilter::FILTER_MATCH_STRLEN; ?>)) {
+            var value = $.trim($(this).find('input[name^="value"]').val());
+            var arr = value.match(/^[0-9]{1,}$/);
+            if (arr == null) {
+                alert('Value must be numeric');
+                $(this).find('input[name^="value"]').focus();
+                OK = false;
+                return;
+            }
+        } else if (matcher == FILTER_MATCH_REGEX || matcher == FILTER_NOT_MATCH_REGEX) {
+            var regex = $.trim($(this).find('input[name^="value"]').val());
+            if (!isValidRegex(regex)) {
+                alert (regex + ' is not a valid REGEX');
+                $(this).find('input[name^="value"]').focus();
+                OK = false;
+                return;
+            }
+        }
+        
+        var ftype = $(this).find('select[name^="ftype"]');
+        if (ftype.val() == '0') {
+            OK = false;
+            alert('Please select a field type');
+            ftype.focus();
+            return;
+        };
+    });
+
+    if (!OK) {
+            e.preventDefault();
+    }
+    return OK;
+};
+
+// combo box
+(function( $ ) {
+    $.widget( "custom.combobox", {
+        _create: function() {
+            this.wrapper = $( "<span>" )
+                .addClass( "custom-combobox" )
+                .insertAfter( this.element );
+            this.element.hide();
+            this._createAutocomplete();
+            this._createShowAllButton();
+        },
+        _createAutocomplete: function() {
+            var selected = this.element.find( ":selected" ),
+                value = selected.val() ? selected.text() : "";
+            this.input = $( "<input>" )
+                .appendTo( this.wrapper )
+                .val( value )
+                .attr( "title", "" )
+                .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy( this, "_source" )
+                })
+                .tooltip({
+                    tooltipClass: "ui-state-highlight"
+                });
+            this._on( this.input, {
+                autocompleteselect: function( event, ui ) {
+                    ui.item.option.selected = true;
+                    this._trigger( "select", event, {
+                        item: ui.item.option
+                    });
+                },
+                autocompletechange: "_removeIfInvalid"
+            });
+
+            this.input.data("uiAutocomplete")._renderMenu = function(ul, items) {
+                var self = this,
+                    currentCategory = "";
+                $.each(items, function(index, item) {
+                    if (item.category != currentCategory) {
+                        if (item.category) {
+                            ul.append("<li class='custom-autocomplete-category'>" + item.category + "</li>");
+                        }
+                        currentCategory = item.category;
+                    }
+                    self._renderItemData(ul, item);
+                });
+            };
+        },
+        _createShowAllButton: function() {
+            var input = this.input,
+                wasOpen = false;
+            $( "<a>" )
+                .attr( "tabIndex", -1 )
+                .tooltip()
+                .appendTo( this.wrapper )
+                .button({
+                    icons: {
+                        primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                })
+                .removeClass( "ui-corner-all" )
+                .addClass( "custom-combobox-toggle ui-corner-right" )
+                .mousedown(function() {
+                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                })
+                .click(function() {
+                    input.focus();
+
+        	    // Close if already visible
+                    if ( wasOpen ) {
+                        return;
+                    }
+
+		    // Pass empty string as value to search for, displaying all results
+                    input.autocomplete( "search", "" );
+                });
+        },
+        _source: function( request, response ) {
+            var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+            response( this.element.find( "option" ).map(function() {
+                var text = $( this ).text();
+                if ( this.value && ( !request.term || matcher.test(text) ) )
+                    return {
+                        label: text,
+                        value: text,
+                        option: this,
+                        category: $(this).closest("optgroup").attr("label")
+                    };
+            }) );
+        },
+	
+        _removeIfInvalid: function( event, ui ) {
+
+	    // Selected an item, nothing to do
+            if ( ui.item ) {
+                return;
+            }
+
+	    // Search for a match (case-insensitive)
+            var value = this.input.val(),
+                valueLowerCase = value.toLowerCase(),
+                valid = false;
+            this.element.find( "option" ).each(function() {
+                if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                    this.selected = valid = true;
+                    return false;
+                }
+            });
+
+            // Found a match, nothing to do
+            if ( valid ) {
+                return;
+            }
+
+            // Remove invalid value
+            this.input
+                .val( "" )
+                .tooltip( "open" );
+            this.element.val( "" );
+            this._delay(function() {
+                this.input.tooltip( "close" ).attr( "title", "" );
+            }, 2500 );
+            this.input.data( "ui-autocomplete" ).term = "";
+        },
+        _destroy: function() {
+            this.wrapper.remove();
+            this.element.show();
+        }
+    });
+    
+    // check os
+    if (navigator.platform.toLowerCase().indexOf('mac') > -1) {
+        $('body').addClass('ios');
+    }
+  })( jQuery );
+  
+  function isValidRegex(regex) {
+    var isValid;
+    
+    var match = regex.match(new RegExp('^/(.*?)/([gimy]*)$'));
+    
+    if (match === null) {
+        return false;
+    }
+    
+    try { 
+        var regex = new RegExp(match[1], match[2]);
+        isValid = true;
+    } catch(e) {
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+  
+</script>

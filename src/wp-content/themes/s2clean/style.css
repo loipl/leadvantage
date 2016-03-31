@@ -1,0 +1,51 @@
+/*
+Copyright: © 2009 WebSharks, Inc. ( coded in the USA )
+<mailto:support@websharks-inc.com> <http://www.websharks-inc.com/>
+
+Released under the terms of the GNU General Public License.
+You should have received a copy of the GNU General Public License,
+along with this software. In the main directory, see: /licensing/
+If not, see: <http://www.gnu.org/licenses/>.
+*/
+/*
+Version: 110813
+Stable tag: 110813
+Framework: WS-T-110523
+
+SSL Compatible: yes
+WordPress Compatible: yes
+WP Multisite Compatible: yes
+Multisite Blog Farm Compatible: yes
+
+Tested up to: 3.2.1
+Requires at least: 3.2
+Requires: WordPress® 3.2+, PHP 5.2.3+
+
+Copyright: © 2009 WebSharks, Inc.
+License: GNU General Public License
+Contributors: WebSharks, PriMoThemes
+Author URI: http://www.primothemes.com/
+Author: PriMoThemes.com / WebSharks, Inc.
+Donate link: http://www.primothemes.com/donate/
+
+Theme Name: WS / s2Clean
+Forum URI: http://www.primothemes.com/forums/viewforum.php?f=34
+Privacy URI: http://www.primothemes.com/about/privacy-policy/
+Theme URI: http://www.primothemes.com/post/product/s2clean-theme-for-wordpress/
+Description: Theme by PriMoThemes.com / WebSharks, Inc. All source files are included.
+Color Variations: default, dark-black, dark-blue, dark-green, dark-orange, dark-purple, dark-red, dark-tan, lite-tan, light-purple
+Tags: supports wordpress standards, websharks framework, single size thumbnail display, options panel included, supports threaded comments, supports gravatars, multiple widget ready bars, supports plugin compatibility, w3c validated code, integrated with addthis api, includes extensive documentation, single navigation menu, single navigation subsets, super tags widget installed, ad codes widget installed, ad squares widget installed, includes fullpage template, includes contact form, includes backonly template, includes archives template, includes links template, highly extensible, light, clean, white, gray, tan, one-column, two-columns, right-sidebar, fixed-width, custom-header, custom-colors, custom-background, custom-menus, theme-options, threaded-comments, sticky-post
+*/
+/*
+-- Quick Tips: -------------------------------------------------------
+
+	Please check the /colors/ directory for the style sheets
+	that control the appearance of this theme.
+
+	Please do NOT place Custom CSS / Styles into this file.
+	
+	Instead, use: `Theme Options Panel -> Custom CSS / Styles`.
+	Or see: [theme-folder]/colors/custom/custom-css-sample.css
+
+----------------------------------------------------------------------
+*/

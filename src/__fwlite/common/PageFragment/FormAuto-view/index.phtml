@@ -1,0 +1,59 @@
+<?php
+
+/* @var $this PageFragment_FormAuto */
+echo "<form style=\"margin: 0;\" action=\"" . $this->form->getAction() . "\" method=\"" . $this->form->getMethod() . "\"";
+if ($this->form->getHasFileUpload()) {
+    echo ' enctype="multipart/form-data"';
+}
+echo ">\n";
+echo "<input type=\"hidden\" name=\"__nonce\" value=\"" . escapeAttrVal(Session::getSession()->getNonce()) . "\"" . ($this->xhtml ? ' />' : '>') . "\n";
+foreach ($this->form->getElements() as $elem) {
+    if ($elem['* type'] == 'hidden') {
+        echo $this->getHtmlFor($elem) . "\n";
+    }
+}
+echo "<table";
+foreach ($this->tableAttributes as $k => $v) {
+    echo " $k=\"" . htmlspecialchars($v) . '"';
+}
+echo ">\n";
+if ($this->title) {
+    echo "\t<thead>\n\t\t<tr>\n\t\t\t<th colspan=\"2\" align=\"center\"><h2>$this->title";
+    if ($this->subTitle) {
+        echo "<br><div class=\"subtitle\">$this->subTitle</div>";
+    }
+    echo "</h2>\n\t\t\t</th>\n\t\t</tr>\n\t</thead>\n\n";
+}
+echo "\t<tbody>\n";
+foreach ($this->form->getElements() as $elem) {
+    if ($elem['* type'] == 'hidden') {
+        continue;
+    }
+    $name = isset($elem['name']) ? $elem['name'] : '';
+    if (is_callable(array($this, 'getRowFor' . ucfirst($elem['* type'])))) {
+        echo $this->{'getRowFor' . ucfirst($elem['* type'])}($elem);
+        continue;
+    }
+    if ($elem['* type'] == 'blank') {
+        echo "\t\t<tr>\t\t\t<td colspan=\"2\">&nbsp;</td>\n\t\t</tr>\n";
+        continue;
+    }
+    $showLabel = !in_array($elem['* type'], array('submit', 'checkbox', 'radio', 'button', 'html'));
+    if ($elem['* type'] == 'html') {
+        $tr = isset($elem['* trattrs']) ? $elem['* trattrs'] : '';
+        $td = isset($elem['* tdattrs']) ? $elem['* tdattrs'] : '';
+        echo "\t\t<tr$tr>\n\t\t\t<td colspan=\"2\"$td>" . $elem['* label'] . "</td>\n\t\t</tr>\n";
+    } else {
+        echo "\t\t<tr>\n\t\t\t<td class=\"label\">" . ($showLabel ? escapeHtml("{$elem['* label']}:") : '') . "</td>\n";
+        echo "\t\t\t<td>" . $this->getHtmlFor($elem);
+        if (!empty($elem['* hint'])) {
+            echo "<div class=\"form_hint\">{$elem['* hint']}</div>\n";
+        }
+        $s = $this->form->getFieldErrorsImploded($name, "<br>");
+        if ($s) {
+            echo "<span class=\"form_error\">$s</span>\n";
+        }
+        echo "</td>\n\t\t</tr>\n";
+    }
+}
+echo "\t</tbody>\n</table>\n</form>\n";
