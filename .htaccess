@@ -1,0 +1,76 @@
+<FilesMatch "(wp-config\.php)|(bb-config\.php)|(\.htaccess)|(\.svn)|(readme\.html)|(readme.txt)">
+order allow,deny
+deny from all
+</FilesMatch>
+
+# prevent access to .svn files
+RedirectMatch 404 /\\.svn(/|$)
+
+# compress text, html, javascript, css, xml:
+<IfModule mod_deflate.c>
+SetOutputFilter DEFLATE
+# Dont compress
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+#Dealing with proxy servers
+<IfModule mod_headers.c>
+Header append Vary User-Agent
+</IfModule>
+</IfModule>
+
+RewriteEngine On
+RewriteBase /
+
+# Redirect non-www to www
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteCond %{HTTP_HOST} !^api\.
+RewriteCond %{HTTP_HOST} leadwrench\.com$
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Block the include-only files.
+RewriteRule ^wp-admin/includes/ - [F,L]
+RewriteRule !^wp-includes/ - [S=3]
+RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
+RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L]
+RewriteRule ^wp-includes/theme-compat/ - [F,L]
+
+# Disable trace and track
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK) 
+RewriteRule .* - [F]
+
+# Limit indexing of directories
+Options All +Indexes
+
+# Disable the server signature
+ServerSignature Off
+
+# Limit file uploads to 10mb
+LimitRequestBody 10240000
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+# BEGIN s2Member GZIP exclusions
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteBase /
+        RewriteCond %{QUERY_STRING} (?:^|\?|&)s2member_file_download\=.+
+        RewriteRule .* - [E=no-gzip:1]
+</IfModule>
+# END s2Member GZIP exclusions
+
+php_value apc.enabled 1
+php_value apc.shm_size 128M
