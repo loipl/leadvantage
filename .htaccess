@@ -19,12 +19,12 @@ Header append Vary User-Agent
 </IfModule>
 
 RewriteEngine On
-RewriteBase /
+RewriteBase /~leadvantage/
 
 # Redirect non-www to www
 RewriteCond %{HTTP_HOST} !^www\.
 RewriteCond %{HTTP_HOST} !^api\.
-RewriteCond %{HTTP_HOST} leadwrench\.com$
+RewriteCond %{HTTP_HOST} 184.107.228.106/~leadvantage/$
 RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
 # Block the include-only files.
@@ -54,7 +54,7 @@ Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type,
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /
+RewriteBase /~leadvantage/
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -71,6 +71,3 @@ RewriteRule . /index.php [L]
         RewriteRule .* - [E=no-gzip:1]
 </IfModule>
 # END s2Member GZIP exclusions
-
-php_value apc.enabled 1
-php_value apc.shm_size 128M

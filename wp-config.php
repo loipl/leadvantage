@@ -1,5 +1,5 @@
 <?php
-define( 'WPCACHEHOME', 'C:\xampp\htdocs\leadwrench\trunk\pingtree-new\src\wp-content\plugins\wp-super-cache/' ); //Added by WP-Cache Manager
+define( 'WPCACHEHOME', '/home/leadvantage/public_html/wp-content/plugins/wp-super-cache/' ); //Added by WP-Cache Manager
 define("MEMBERSHIP_LEVELS", 7);
 /**
  * The base configurations of the WordPress.
