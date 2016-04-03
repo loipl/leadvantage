@@ -93,16 +93,16 @@ register_shutdown_function('pingtree_shutdown');
 function isPingtree() {
     $s = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
     $isPingtree =
-    ((strpos($s, '/dashboard/') === 0) ||
-    (strpos($s, '/admin/') === 0) ||
-    (strpos($s, '/campaigns/') === 0) ||
-    (strpos($s, '/partners/') === 0) ||
-    (strpos($s, '/subaccount/') === 0) ||
-    (strpos($s, '/postback/') === 0) ||
-    (strpos($s, '/reporting/') === 0) ||
-    (strpos($s, '/api/') === 0) ||
-    (strpos($s, '/exporting/') === 0) ||
-    (strpos($s, '/cron/') === 0)) &&
+    ((strpos($s, '/dashboard/') !== false) ||
+    (strpos($s, '/admin/') !== false) ||
+    (strpos($s, '/campaigns/') !== false) ||
+    (strpos($s, '/partners/') !== false) ||
+    (strpos($s, '/subaccount/') !== false) ||
+    (strpos($s, '/postback/') !== false) ||
+    (strpos($s, '/reporting/') !== false) ||
+    (strpos($s, '/api/') !== false) ||
+    (strpos($s, '/exporting/') !== false) ||
+    (strpos($s, '/cron/') !== false)) &&
     ($s != '/');
     return $isPingtree;
 }
