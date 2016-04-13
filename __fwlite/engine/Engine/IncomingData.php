@@ -103,7 +103,7 @@ class Engine_IncomingData {
 
         $this->removeDummyEmail();
         
-        $this->checkDuplicate();           
+//        $this->checkDuplicate();           
         $this->engine->report(Engine::ACTION_GATHERED, $this->errors);
     }
     //--------------------------------------------------------------------------
