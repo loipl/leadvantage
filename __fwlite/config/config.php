@@ -18,8 +18,8 @@ Config::$smtpFromName  = '';
 Config::$smtpFromEmail = '';
 Config::$smtpSecure    = '';
 
-DB::$db   = new DB('184.107.228.106', 'leadvant_lms', 'tomtom123', 'leadvant_pingtree');
-DB::$wpDb = new DB('184.107.228.106', 'leadvant_lms', 'tomtom123', 'leadvant_leadwrench');
+DB::$db   = new DB('localhost', 'root', '', 'pingtree');
+DB::$wpDb = new DB('localhost', 'root', '', 'leadwrench');
 
 Config::$wordpressPath = CFG_ROOT_DIR;
 Config::$wordpressUrl  = '/';
@@ -48,5 +48,6 @@ Config::$timeZone       = 'America/Los_Angeles';
 // Config::$errorLogDir    = '/home/httpd/html/leadwrench.com/bogdan/';
 
 Config::$serverIPAddresses = array(
-    '184.107.228.106'
+    '199.182.105.226',
+    '199.182.105.227'
 );

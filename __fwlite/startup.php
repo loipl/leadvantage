@@ -53,6 +53,7 @@ class App extends App_Base {
         'Controller_Admin_Response'     => 'classes/Controller/Admin/Response.php',
         'Controller_Admin_Scavenge'     => 'classes/Controller/Admin/Scavenge.php',
         'Controller_Admin_Tips'         => 'classes/Controller/Admin/Tips.php',
+        'Controller_Admin_DataList'    => 'classes/Controller/Admin/DataList.php',
         'Controller_Admin_Userlevels'   => 'classes/Controller/Admin/Userlevels.php',
         'Controller_Admin_Validation'   => 'classes/Controller/Admin/Validation.php',
         'Controller_Api'                => 'classes/Controller/Api.php',
