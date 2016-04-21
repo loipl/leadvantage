@@ -140,6 +140,8 @@ class App extends App_Base {
         'Model_NotificationKeyed'       => 'classes/Model/NotificationKeyed.php',
         'Model_Partner'                 => 'classes/Model/Partner.php',
         'Model_PartnerField'            => 'classes/Model/PartnerField.php',
+        'Model_DataList'                => 'classes/Model/DataList.php',
+        'Model_DataListValue'           => 'classes/Model/DataListValue.php',
         'Model_PartnerFilter'           => 'classes/Model/PartnerFilter.php',
         'Model_PartnerSettings'         => 'classes/Model/PartnerSettings.php',
         'Model_PartnerTemplate'         => 'classes/Model/PartnerTemplate.php',
@@ -1026,6 +1028,24 @@ class SingletonRegistry extends SingletonRegistry_Base {
     }
     //--------------------------------------------------------------------------
 
+    
+    /**
+     * @return Model_PartnerField
+     */
+    public static function getModelDataList() {
+        return self::getSingleInstance('Model_DataList');
+    }
+    //--------------------------------------------------------------------------
+    
+    
+    /**
+     * @return Model_PartnerField
+     */
+    public static function getModelDataListValue() {
+        return self::getSingleInstance('Model_DataListValue');
+    }
+    //--------------------------------------------------------------------------
+    
 
     /**
      * @return Model_PartnerFilter
