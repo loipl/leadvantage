@@ -1,0 +1,44 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+.form_table input {
+                width: 100%;
+            }
+
+</style>
+
+<div class="head"><h2>Data List</h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+  </tr>
+  </thead>
+
+<?php
+foreach ($dataLists as $row) {
+    echo "
+  <tr>
+    <td>" . escapeHtml($row['id']) . "</td>
+    <td>" . escapeHtml($row['name']) . "</td>
+    <td nowrap=\"nowrap\">" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="top: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="top: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+        App::linkFor($this, ' <u>List Value</u>',     array('action' => 'listValue'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="top: 2px;" /> <span style="text-decoration: underline;">Add Datalist...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>
