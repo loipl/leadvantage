@@ -66,7 +66,7 @@ if (Session::getSession()->impersonate) {
 
 ?></li>
 						<!-- <li><a href="/wp-admin/profile.php">My Account</a></li> -->
-						<li class="help"><a href="mailto:support@leadwrench.com">Help</a></li>
+						<li class="help"><a href="mailto:mitesh@ecrux.com">Help</a></li>
 						<li><a href="<?php echo App::getFrontController()->urlFor('Dashboard', array('action' => 'logout')); ?>">Logout</a></li>
 					</ul>
 
