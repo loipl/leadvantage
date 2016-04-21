@@ -9,15 +9,19 @@ class Controller_Admin_DataList extends CrudControllerWithCM {
 
 
     public function __construct() {
-        echo '1234';die;
-        $this->model = SingletonRegistry::getSingleInstance('Model_AdminTip');
+        $this->model = SingletonRegistry::getSingleInstance('Model_DataList');
 
         parent::__construct();
         $this->defaultOrderBy = 'content';
-        $this->itemName       = 'Tip';
+        $this->itemName       = 'List';
     }
     //--------------------------------------------------------------------------
 
+    public function indexAction() {
+        $dataLists = $this->model->listAll();
+        $this->out['dataLists'] = $dataLists;
+        parent::indexAction();
+    }
 
     protected function addFormFields($action = '') {
         $this->form->add('text', 'name', 'Name', array('* trim' => 1, '* required' => 1, 'maxlength' => 255));

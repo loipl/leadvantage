@@ -19,31 +19,26 @@ td {
 <table style="margin-bottom: 20px;" class="data-table">
   <thead>
   <tr>
+    <th>Id</th>
     <th>Name</th>
   </tr>
   </thead>
 
 <?php
-
-foreach ($list as $row) {
+foreach ($dataLists as $row) {
     echo "
   <tr>
+    <td>" . escapeHtml($row['id']) . "</td>
     <td>" . escapeHtml($row['name']) . "</td>
     <td nowrap=\"nowrap\">" .
-        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="margin-bottom: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
-        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="margin-bottom: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/pencil.png" style="top: 2px;" /> <u>Edit</u>',      array('action' => 'edit'),    array('id' => $row['id']), 'style="text-decoration: none; ; margin-left: 30px;"') .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="top: 2px;" /> <u>Delete</u>',     array('action' => 'delete'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+        App::linkFor($this, ' <u>List Value</u>',     array('action' => 'listValue'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
     "</td>
   </tr>";
 }
 
 ?>
 </table>
-<?php
-if ($count > $perPage) {
-    echo '<div class="pager">';
-    Pager::showPager($count, $perPage);
-    echo '</div>';
-}
-
-?><br>
-<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="margin-bottom: 2px;" /> <span style="text-decoration: underline;">Add Tip...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>
+<br>
+<?php echo App::linkFor($this, '<img src="/img/icons/add.png" style="top: 2px;" /> <span style="text-decoration: underline;">Add Datalist...</span>', array('action' => 'add'), array(), 'style="text-decoration: none;"'); ?>
