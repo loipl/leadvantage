@@ -1,0 +1,75 @@
+<style>
+
+th {
+	padding: 0 3px;
+	text-align: center;
+}
+
+td {
+	padding: 0 10px;
+}
+.form_table input {
+                width: 100%;
+            }
+
+</style>
+
+<div class="head"><h2><?php echo $dataList['name'] ?></h2></div>
+
+<table style="margin-bottom: 20px;" class="data-table">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Value</th>
+  </tr>
+  </thead>
+
+<?php
+foreach ($dataListValues as $row) {
+    echo "
+  <tr>
+    <td>" . escapeHtml($row['id']) . "</td>
+    <td>" . escapeHtml($row['value']) . "</td>
+    <td nowrap=\"nowrap\">" .
+        App::linkFor($this, '<img src="' . Config::$urlBase . 'img/icons/delete.png" style="top: 2px;" /> <u>Delete</u>',     array('action' => 'deleteValue'),  array('id' => $row['id']), 'style="text-decoration: none; margin-left: 30px;"') .
+    "</td>
+  </tr>";
+}
+
+?>
+</table>
+<br>
+<div style="font-size: 20px; font-weight: bold;margin-bottom: 30px;"><h2>Add Value To List</h2></div>
+<div class="form-control">
+    <div style="width:200px; float: left; font-weight: bold">CSV File</div>
+    <div style="float: left;">
+        <form action="uploadCsv.html" id="submit-csv-form" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>">
+            <input type="file" name="csv_file" id="csv_file">
+        </form>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#csv_file').change(function() {
+            $('#submit-csv-form').submit();
+        });
+        $('#submit-csv-form').ajaxForm(function(data) {    
+            try {
+                var decodedData = JSON.parse(data);
+                if (decodedData.status === '1') {
+                    var columns = data.columns;
+                    console.log(columns);
+                } else {
+                    //alert(decodedData.message || "Sorry, something went wrong. Please try again.");
+                    console.log(data);
+                }
+            } catch (e) {
+                console.log(data);
+            }
+            
+        }); 
+    });
+</script>

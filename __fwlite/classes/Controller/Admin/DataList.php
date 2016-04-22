@@ -37,4 +37,59 @@ class Controller_Admin_DataList extends CrudControllerWithCM {
         }
     }
     //--------------------------------------------------------------------------
+    
+    public function listValueAction() {
+        $dataListModel = SingletonRegistry::getSingleInstance('Model_DataListValue');
+        $id = filter_input(INPUT_GET, 'id');
+        
+        $dataList = $this->model->get($id);
+        $dataListValues = $dataListModel->listAllWhere(array('data_list_id' => $id));
+        
+        $this->out['dataListValues'] = $dataListValues;
+        $this->out['dataList'] = $dataList;
+        
+    }
+    //--------------------------------------------------------------------------
+    
+    public function uploadCsvAction() {
+        App::getFrontController()->setUsePageTemplate(false);
+        $response = array('status' => '0');
+        if ( isset($_FILES["csv_file"])) {
+            if ($_FILES["csv_file"]["error"] > 0) {
+                $response['message'] = "File error, number " . $_FILES["file"]["error"];
+            } else {
+                $tmpName   = $_FILES["csv_file"]["tmp_name"];
+                $filename = $_FILES["csv_file"]["name"];
+                $destination = CFG_ROOT_DIR . 'uploads';
+                $filenameWithPath = $destination . DIRECTORY_SEPARATOR . $filename;
+                
+                move_uploaded_file($tmpName, $filenameWithPath);
+                $this->changeToCsvStandardFormat($filenameWithPath);
+                
+                $file   = fopen($filenameWithPath, "r");
+                $header = fgetcsv($file);
+                fclose($file);
+                
+                $response['status'] = 1;
+                $response['columns'] = $header;
+            }
+        } else {
+            $response['message'] = "No file selected";
+        }
+        
+        echo json_encode($response);
+    }
+    
+    public function changeToCsvStandardFormat($filename) {
+        try {
+            $content            = file_get_contents($filename);
+//            $content            = str_replace(array('"', '\''), array('', ''), $content);
+            $content            = preg_replace('/\t/', ',', $content);
+            $content            = preg_replace("/\r\n?/", "\r\n", $content);
+            file_put_contents($filename, $content);
+        } catch (Exception $ex) {
+            
+        }
+        
+    }
 }

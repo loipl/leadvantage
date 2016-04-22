@@ -1,6 +1,6 @@
 <?php
 
-class Model_DataList extends CrudModelCaching {
+class Model_DataListValue extends CrudModelCaching {
     
     protected $db;
 
