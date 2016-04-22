@@ -12,6 +12,16 @@ class Model_DataListValue extends CrudModelCaching {
         parent::__construct($db, $this->t_data_list_value);
 
     }
+    
+    public function insertMultiple($id, $valueList) {
+        $sql = "INSERT INTO `data_list_value`(`data_list_id`, `value`) VALUES ";
+        
+        foreach ($valueList as $value) {
+            $sql .= '(' . $id . ',\'' . mysql_real_escape_string($value) . '\'),';
+        }
+        $sql = rtrim($sql, ',');
+        return $this->db->query($sql);
+    }
     //--------------------------------------------------------------------------
 }
 

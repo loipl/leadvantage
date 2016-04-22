@@ -50,6 +50,24 @@ foreach ($dataListValues as $row) {
     </div>
     <div style="clear: both;"></div>
 </div>
+<form action="pickColumnAndSave.html?id=<?php echo $_GET['id']; ?>" id="pick-column-and-save" method="POST" enctype="multipart/form-data" style="display:none;">
+    <div class="form-control">
+        <div style="width:200px; float: left; font-weight: bold; margin-top: 20px;">Pick Column</div>
+        <div style="float: left;">
+            <input type="hidden" name="__nonce" value="<?php echo Session::getSession()->getNonce(); ?>">
+            <div id="columns-wrap"></div>
+
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="form-control" style="margin-top: 20px;">
+        <div style="width:200px; float: left; font-weight: bold; margin-top: 20px;"></div>
+        <div style="float: left;">
+            <button type="submit">Save</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</form>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -59,9 +77,17 @@ foreach ($dataListValues as $row) {
         $('#submit-csv-form').ajaxForm(function(data) {    
             try {
                 var decodedData = JSON.parse(data);
-                if (decodedData.status === '1') {
-                    var columns = data.columns;
-                    console.log(columns);
+                if (decodedData.status == '1') {
+                    var columns = decodedData.columns;
+                    
+                    var checkboxesHtml = '';
+                    for (var i in columns) {
+                        checkboxesHtml += '<div><input type="radio" name="column" value="' + columns[i] + '"> ' + columns[i] + '</div>';
+                    }
+                    $('#columns-wrap').html(checkboxesHtml);
+                    $('#columns-wrap input[type=radio]:first').prop('checked', 'checked');
+                    $('#pick-column-and-save').show();
+                    $('#pick-column-and-save').append('<input name="filePath" type="hidden" value="' + decodedData.filePath + '">');
                 } else {
                     //alert(decodedData.message || "Sorry, something went wrong. Please try again.");
                     console.log(data);

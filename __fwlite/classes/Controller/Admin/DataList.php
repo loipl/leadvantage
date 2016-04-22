@@ -71,6 +71,7 @@ class Controller_Admin_DataList extends CrudControllerWithCM {
                 fclose($file);
                 
                 $response['status'] = 1;
+                $response['filePath'] = $filenameWithPath;
                 $response['columns'] = $header;
             }
         } else {
@@ -91,5 +92,36 @@ class Controller_Admin_DataList extends CrudControllerWithCM {
             
         }
         
+    }
+    
+    public function pickColumnAndSaveAction() {
+        $dataListValueModel = SingletonRegistry::getSingleInstance('Model_DataListValue');
+        
+//        $filename = "C:/xampp/htdocs/leadvantage/uploads/zipcode.csv";
+//        $column = "zipcode";
+        $filename = filter_input(INPUT_POST, 'filePath');
+        $column = filter_input(INPUT_POST, 'column');
+        $id = filter_input(INPUT_GET, 'id');
+        
+        $file   = fopen($filename, "r");
+        $header = fgetcsv($file);
+        $valueList = array();
+        $columnIndex = array_search($column, $header);
+
+        while(!feof($file)) {
+            $row = fgetcsv($file);
+            if (isset($row[$columnIndex])) {
+                $valueList[] = $row[$columnIndex];
+            }
+        }       
+                
+        $valueList = array_unique($valueList);
+        fclose($file);
+        $dataListValueModel->insertMultiple($id, $valueList);
+
+//        $filename = filter_input(INPUT_POST, 'filePath');
+//        $column = filter_input(INPUT_POST, 'column');
+
+        App::getFrontController()->redirectToCP($this, array('action' =>  'listValue'), array('id' => $id));
     }
 }
