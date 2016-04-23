@@ -124,4 +124,15 @@ class Controller_Admin_DataList extends CrudControllerWithCM {
 
         App::getFrontController()->redirectToCP($this, array('action' =>  'listValue'), array('id' => $id));
     }
+    
+    public function deleteValueAction() {
+        $dataListValueModel = SingletonRegistry::getSingleInstance('Model_DataListValue');
+        $id = filter_input(INPUT_GET, 'id');
+        
+        $dataListValueObject = $dataListValueModel->get($id);
+        $dataListId = $dataListValueObject['data_list_id'];
+        
+        $dataListValueModel->delete($id);
+        App::getFrontController()->redirectToCP($this, array('action' =>  'listValue'), array('id' => $dataListId));
+    }
 }
