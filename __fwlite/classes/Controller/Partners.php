@@ -617,7 +617,8 @@ class Controller_Partners extends Controller {
         $this->out['filterMatches'] = $filterMatches;
 
         $this->out['filters']       = $origFilters = $filters;
-
+        $this->out['dataList']      = SingletonRegistry::getSingleInstance('Model_DataList')->listAllDataListToSelect();
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $old = $this->normalizeFilterPostValues('old', $id, $data);
             $new = $this->normalizeFilterPostValues('new', $id, $data);
@@ -1119,10 +1120,15 @@ class Controller_Partners extends Controller {
                     'field_type_id' => $ftype,
                     'system_field'  => $sysField,
                     'match_type'    => '' . (int)$_POST['match'][$section][$id],
-                    'match_value'   => $_POST['value'][$section][$id],
                     'argument'      => $_POST['argument'][$section][$id],
                     'is_active'     => empty($_POST['is_active'][$section][$id]) ? '0' : '1',
             );
+            
+            if (abs($arr['match_type']) === 9) {
+                $arr['match_value'] = $_POST['select-value'][$section][$id];
+            } else {
+                $arr['match_value'] = $_POST['value'][$section][$id];
+            }
             $result[$id]     = $arr;
         }
         return $result;

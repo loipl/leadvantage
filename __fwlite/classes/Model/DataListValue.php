@@ -23,5 +23,15 @@ class Model_DataListValue extends CrudModelCaching {
         return $this->db->query($sql);
     }
     //--------------------------------------------------------------------------
+    
+    public function checkValueExistInDataList($dataListID, $value) {
+        $result = $this->listAllWhere(array('data_list_id' => $dataListID));
+        foreach ($result as $row) {
+            if ($row['value'] === $value) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

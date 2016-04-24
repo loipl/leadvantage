@@ -109,6 +109,9 @@ class Engine_Utilities {
                 case Model_PartnerFilter::FILTER_MATCH_REGEX:
                     $result = preg_match($searchVal, $value);
                     break;
+                case Model_PartnerFilter::FILTER_IN_DATA_LIST:
+                    $result = SingletonRegistry::getSingleInstance('Model_DataListValue')->checkValueExistInDataList($searchVal, $value);
+                    break;
             }
             if ($result) {
                 break;

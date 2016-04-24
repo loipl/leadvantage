@@ -13,10 +13,19 @@ class Model_DataList extends CrudModelCaching {
 
     }
     
-//    public function listAll() {
-//        $sql = "SELECT * FROM `$this->tableName` ";
-//        return $this->db->getArray($sql);
-//    }
+    public function listAllDataListToSelect() {
+        $dataList = $this->listAll();
+        
+        $result = array();
+        
+        if (!empty($dataList)) {
+            foreach ($dataList as $row) {
+                $result[$row['id']] = $row['name'];
+            }
+        }
+        
+        return $result;
+    }
     //--------------------------------------------------------------------------
 }
 

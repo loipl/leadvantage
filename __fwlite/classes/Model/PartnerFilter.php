@@ -20,6 +20,7 @@ class Model_PartnerFilter extends CrudModelCaching {
     const FILTER_MATCH_LESS_THAN           = 6;
     const FILTER_MATCH_STRLEN              = 7;
     const FILTER_MATCH_REGEX               = 8;
+    const FILTER_IN_DATA_LIST              = 9;
 
     protected static $filterActions = array(
         self::FILTER_ACTION_DONT_DELIVER       => "Do not deliver",
@@ -51,6 +52,9 @@ class Model_PartnerFilter extends CrudModelCaching {
         
         self::FILTER_MATCH_REGEX         => 'matches REGEX',
         -8                               => 'does not match REGEX',
+        
+        self::FILTER_IN_DATA_LIST        => 'in data list',
+        -9                               => 'not in data list',
 
     );
 

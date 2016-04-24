@@ -82,6 +82,10 @@ div.rule-argument {
 .custom-autocomplete-category {
     font-weight: bold;
 }
+
+select.filter-value {
+    width: 178px !important;
+}
 </style>
 
     <div class="head" id="filter-screen">
@@ -213,6 +217,18 @@ var filterMatches = [<?php
     }
 ?>];
                 
+var dataList = [<?php
+    $addComa = false;
+    foreach ($dataList as $k => $v) {
+        if ($addComa) {
+            echo ', ';
+        } else {
+            $addComa = true;
+        }
+        echo "[$k, '" . escapeAttrVal($v) . "']";
+    }
+?>];
+                
 var allFtypes = <?php echo json_encode($allFtypes); ?>;
 var ftypes = <?php echo json_encode($ftypes); ?>;
 
@@ -267,13 +283,27 @@ $(document).ready(function() {
             $('#add-new-filter').click();
         });
 
+        
+        $('.filter-condition').live('change', function(){
+            var value = $(this).val();
+            var id = $(this).attr('id');
+            var nameSuffix = id.replace('match', '');
+            if (Math.abs(value) == 9) {
+                $('input[name="value'+ nameSuffix + '"]').hide();
+                $('select[name="select-value'+ nameSuffix + '"]').show();
+            } else {
+                $('input[name="value'+ nameSuffix + '"]').show();
+                $('select[name="select-value'+ nameSuffix + '"]').hide();
+            }
+        });
+
         <?php if ($data['ping_post_type'] == Model_Partner::PING_POST_TYPE_PING): ?>
             $(".filter-action option[value='2']").remove();
         <?php endif; ?>
 });
 
 function addNewBlankFilter() {
-        newDeliveryRuleStart ++;
+    newDeliveryRuleStart ++;
 	addDeliveryFilter(1, newCounter++, <?php echo $firstActionId; ?>, 0, '', <?php echo $firstMatchId; ?>, '', '', 1, newDeliveryRuleStart);
 };
 
@@ -323,8 +353,18 @@ function addDeliveryFilter(isNew, id, action, fieldTypeId, sysField, matchType, 
     html += '<option value="0"></option>';
     html += "</select></td>\n";
 
-    html += "\t\t" + '<td><select name="match' + nameSuffix + '">' + getSelectOptions(filterMatches, matchType) + "</select></td>\n";
-    html += "\t\t" + '<td><input  name="value' + nameSuffix + '">' + "</td>\n";
+    html += "\t\t" + '<td><select class="filter-condition" id="match' + nameSuffix + '" name="match' + nameSuffix + '">' + getSelectOptions(filterMatches, matchType) + "</select></td>\n";
+    var style = "";
+    var selectStyle = "display:none";
+    if (Math.abs(matchType) == 9) {
+        style = "display:none";
+        selectStyle = "";
+    }
+    html += "\t\t" + "<td>";
+    html += '<input style="' + style + '" class="filter-value" id="value' + nameSuffix + '" name="value' + nameSuffix + '">';
+    html += '<select style="' + selectStyle + '" class="filter-value" id="select-value' + nameSuffix + '" name="select-value' + nameSuffix + '">' + getSelectOptions(dataList, value) + "</select>";
+    html += "</td>\n";
+    
 	html += '<td class="lastcan"><img src="/img/icons/cross.png" title="Delete this field" onclick="deleteRow($(this));"></td></tr>';
 	$('#delivery-filters-table tbody').append(html);
 
@@ -433,8 +473,8 @@ function getSelectOptions(options, id) {
 	var ret = '';
 	for (var i = 0; i < options.length; i++) {
 		var arr = options[i];
-		// var s = (arr[0] == id) ? ' selected="selected"' : '';
-		ret += '<option value="' + arr[0] + '">' + arr[1] + "</option>\n";
+        var s = (arr[0] == id) ? ' selected="selected"' : '';
+		ret += '<option value="' + arr[0] + '"' + s + '>' + arr[1]+ "</option>\n";
 	}
 	return ret;
 };
